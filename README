@@ -1,0 +1,10 @@
+dependance (pour libsndfile)
+git
+autogen
+autoconf
+automake
+
+commencer par executer install_env.sh:
+
+sh install_env.sh
+
