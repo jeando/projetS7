@@ -1,0 +1,9 @@
+*.o
+*~
+*.swp
+bin
+libsndfile
+sndfile-tools
+openal-soft
+project
+
