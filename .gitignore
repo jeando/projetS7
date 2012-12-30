@@ -1,6 +1,8 @@
 *.o
 *~
 *.swp
+*.wav
+obj
 bin
 libsndfile
 sndfile-tools
