@@ -1,16 +1,16 @@
-SOURCES = main.cpp ft.cpp
+SOURCES = main.cpp ft.cpp MyAL.cpp
 TEMPLATE_SOURCE = 
 LIBS = -lopenal $(shell sdl-config --libs) -lsndfile -lSDL_gfx
-OBJECTS	=	$(SOURCES:.cpp=.o)
+OBJECTS	=$(addprefix obj/, $(SOURCES:.cpp=.o))
 TARGET = project
-
+EXE_NAME = project
+OUTPUT_DIRECTORY = bin
 
 INCL_COMMON_FONCTION_DIR = none
 
 INSTALL_DIR = ./bin
 COMPRESSED_FILE = libsndfile
 
-EXE_NAME=project
 
 INCL = -I$(INCL_DIR)
 
@@ -24,20 +24,27 @@ LINK_CXX = g++
 LINK_CC = gcc
 
 
+project: $(OBJECTS) $(OUTPUT_DIRECTORY)
+	$(LINK_CXX) $(OBJECTS) -o $(OUTPUT_DIRECTORY)/$(EXE_NAME) $(LIBS)
+
+$(OUTPUT_DIRECTORY):
+	mkdir -p $(OUTPUT_DIRECTORY)
 
 launch: project
 	./$(EXE_NAME)
 
-project: $(OBJECTS)
-	$(LINK_CXX) $(OBJECTS) -o $(EXE_NAME) $(LIBS)
-
-%o: %cpp $(TEMPLATE_SOURCE)
+obj/%o: src/%cpp $(TEMPLATE_SOURCE) obj
 	$(CXX) -o $@ -c $<
+
+obj:
+	mkdir -p obj
 
 clean:
 	-rm -f *.o a.out *.ps \#* *~
 	-rm -f *.stackdump core
 	-rm -f $(EXE_NAME)
+	-rm -rf $(OUTPUT_DIRECTORY)/$(EXE_NAME)
+	-rm -rf obj/*.o
 	-make extra_clean
 
 install:
