@@ -39,6 +39,8 @@ obj/%o: src/%cpp $(TEMPLATE_SOURCE) obj
 obj:
 	mkdir -p obj
 
+clean$(TARGET):clean
+
 clean:
 	-rm -f *.o a.out *.ps \#* *~
 	-rm -f *.stackdump core
