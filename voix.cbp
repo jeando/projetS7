@@ -16,15 +16,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="MyAL.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="MyAL.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="main.cpp">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="src/MyAL.cpp" />
+		<Unit filename="src/MyAL.h" />
+		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<DoxyBlocks>
 				<comment_style block="0" line="0" />
@@ -39,6 +33,7 @@
 				<search_path add="/usr/include/c++/4.7.2/" />
 				<search_path add="/usr/include/c++/4.7.2/bits" />
 				<search_path add="/usr/include/boost/" />
+				<search_path add="/usr/include/AL" />
 			</code_completion>
 			<envvars />
 			<lib_finder disable_auto="1" />
