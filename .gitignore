@@ -3,6 +3,9 @@
 *.swp
 *.wav
 *.layout
+configure
+Makefile.in
+Makefile
 obj
 bin
 libsndfile
