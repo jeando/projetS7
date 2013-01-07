@@ -6,6 +6,7 @@ AC_INIT([reconnaissance_voix], [0.1])
 AM_INIT_AUTOMAKE(reconnaissance_voix, 0.1)
 
 CXXFLAGS="-g -ansi -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -D_DEBUG_ "
+CXXFLAGS="-g -ansi -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -D_DEBUG_ -std=c++0x"
 #CXXFLAGS="-g -ansi -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -D_DEBUG_ -std=c++11"
 
 # Checks for programs.
