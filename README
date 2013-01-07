@@ -1,5 +1,5 @@
-dependance (pour libsndfile)
 git
+dependance (pour libsndfile)
 autogen
 autoconf
 automake

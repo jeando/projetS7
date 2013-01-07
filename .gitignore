@@ -9,4 +9,6 @@ libsndfile
 sndfile-tools
 openal-soft
 project
+sdlgfx
+autom4te.cache
 

@@ -14,7 +14,7 @@
 #include<cmath>
 #include<SDL/SDL.h>
 #include<SDL/SDL_gfxPrimitives.h>
-#include"../cpp/TNS/ft.h"
+#include"ft.h"
 //#include<cstdio>
 #include <stdexcept>
 #include<fstream>
