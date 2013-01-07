@@ -1,7 +1,14 @@
 #include "MyAL.h"
 #include<iostream>
 
+/*
+*Classe qui gère la carte son: surcouche à la librairie OpenAL
+*/
 
+
+/**
+* constructeur pour initialiser la librairie
+*/
 MyAL::MyAL(std::string _device)
 :device(nullptr),context(nullptr)
 {
@@ -16,6 +23,9 @@ MyAL::~MyAL()
     alcCloseDevice(device);
 }
 
+/**
+* initialise la carte son (sortie)
+*/
 bool MyAL::ini_device(std::string _device)
 {
     if(!(device = alcOpenDevice(_device.size()==0?nullptr:_device.c_str())))
@@ -24,6 +34,10 @@ bool MyAL::ini_device(std::string _device)
         return false;
     return alcMakeContextCurrent(context);
 }
+
+/**
+* recupere la liste des peripheriques de sortie possibles
+*/
 std::vector<std::string> MyAL::get_devices()
 {
     std::vector<std::string> devices;
@@ -38,6 +52,10 @@ std::vector<std::string> MyAL::get_devices()
     }
     return devices;
 }
+
+/**
+* recupere la liste des peripheriques d'entree possibles
+*/
 std::vector<std::string> MyAL::get_capture_devices()
 {
     std::vector<std::string> devices;
@@ -52,6 +70,10 @@ std::vector<std::string> MyAL::get_capture_devices()
     }
     return devices;
 }
+
+/**
+* constructeur pour capturer un son
+*/
 AL_Capture::AL_Capture(std::string _device ,std::string _capture_device,
                    ALenum _format, ALsizei _sample_rate, ALsizei _sample_size)
 :MyAL(_device), format(_format), sample_rate(_sample_rate), sample_size(_sample_size)
@@ -63,6 +85,10 @@ AL_Capture::~AL_Capture()
 {
     alcCaptureCloseDevice(capture_device);
 }
+
+/**
+* initialise le micro
+*/
 bool AL_Capture::ini_capture_device(std::string _device)
 {
     if (alcIsExtensionPresent(device, "ALC_EXT_CAPTURE") == AL_FALSE)
@@ -70,6 +96,10 @@ bool AL_Capture::ini_capture_device(std::string _device)
     capture_device = alcCaptureOpenDevice(_device.size()==0?NULL:_device.c_str(), sample_rate, format, sample_size);//NULL : periph par defaut
     return capture_device;
 }
+
+/**
+*lance l'enregistrement
+*/
 void AL_Capture::start(std::vector<ALshort>& _samples, std::mutex* _mutex)
 {
     continuer = true;
@@ -80,6 +110,10 @@ void AL_Capture::start(std::vector<ALshort>& _samples, std::mutex* _mutex)
     else
         captureThread = std::thread(&AL_Capture::record_without_mutex, this);
 }
+
+/**
+* capture "vraiment" le son
+*/
 inline void AL_Capture::capture()
 {
     //*
@@ -92,6 +126,11 @@ inline void AL_Capture::capture()
         alcCaptureSamples(capture_device, &((*capture_samples)[start]), samples_available);
     }//*/
 }
+
+/**
+* on specifie qu'on ecrit sur un "truc" et qu'on est le seul a pouvoir le faire
+* (pas de double acces)
+*/
 void AL_Capture::record_with_mutex(std::mutex* _mutex)
 {
     std::chrono::milliseconds dura(20);
@@ -102,6 +141,10 @@ void AL_Capture::record_with_mutex(std::mutex* _mutex)
         std::this_thread::sleep_for(dura);
     }
 }
+
+/**
+* sans la securite
+*/
 void AL_Capture::record_without_mutex()
 {
     std::chrono::milliseconds dura(20);
@@ -110,16 +153,28 @@ void AL_Capture::record_without_mutex()
       //  std::this_thread::sleep_for(dura);
     }
 }
+
+/**
+* arret de la capture
+*/
 void AL_Capture::stop()
 {
     alcCaptureStop(capture_device);
     continuer = false;
     captureThread.join();
 }
+
+/**
+*enregistrement du son
+*/
 void AL_Capture::save_sound(const std::string& file_name)
 {
     MyAL::save_sound(file_name, *capture_samples, sample_rate, 1);
 }
+
+/**
+*enregistrement du son
+*/
 void MyAL::save_sound(const std::string& file_name, const std::vector<ALshort>& samples,
                    ALsizei _sample_rate, ALsizei _nb_channel)
 {
