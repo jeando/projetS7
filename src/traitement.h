@@ -6,7 +6,9 @@
 #include"ft.h"
 
 std::vector<double> autocorrelation(std::vector<double> input);
-std::vector<double> decoupage(std::vector<double> input);
+template<int DELTA>
+std::vector<double> decoupage(std::vector<double> input, unsigned int t0);
+
 std::vector<std::vector<double> > spectrogramme(std::vector<double> input);
 
 #endif
