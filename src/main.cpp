@@ -46,6 +46,6 @@ int main()
 		//modifier convertir en double
 		samples_double.push_back(samples[i]);
 	}
-	std::vector<double> dec = decoupage<160>(samples_double,783);
+	std::vector<double> dec = decoupage(samples_double,783,80);
 	std::cout << dec.size() << std::endl;
 }

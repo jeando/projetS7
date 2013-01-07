@@ -1,6 +1,6 @@
 #include"traitement.h"
 #include<cmath>
-
+#include<iostream>
 /**
 *fonction autocorrelation: permet de lisser la courbe
 */
@@ -24,27 +24,26 @@ std::vector<double> autocorrelation(std::vector<double> input)
 * decoupe le signal en une bande de taille delta et de centre t0
 * Et rajoute des 0 pour aller a la puissance de 2 superieure la plus proche
 */
-template<int DELTA>
-std::vector<double> decoupage(std::vector<double> input, unsigned int t0)
+std::vector<double> decoupage(std::vector<double> input, unsigned int t0, const unsigned int DELTA)
 {
 	std::vector<double> output;
-	unsigned int t = t0 - DELTA;
+	int tt = t0 - DELTA;
 	unsigned int tmax = t0 + DELTA;
 
 	// si les bornes despassent du signal d'entree ==> on verifie les problemes aux limites
-	if(t<0)t=0;
+	if(tt<0)tt=0;
 	if(tmax>input.size()-1)tmax=input.size()-1;
 
 	//recupere la bande qui nous interesse
-	for(; t<tmax;t++){
+	for(unsigned int t = tt; t<tmax;t++){
 		output.push_back(input[t]);
 	}
 
 	//rajoute les 0 pour aller a la puissance de 2 superieure la plus proche
 	double puissanceDe2 = log2(2*DELTA+1);
 	int p2 = ceil(puissanceDe2);
-	int taille=pow(p2,2);
-	for(unsigned int k=input.size(); k<taille;k++)
+	unsigned int taille=pow(2,p2);
+	for(unsigned int k=output.size(); k<taille;k++)
 	{
 		output.push_back(0);
 	}
