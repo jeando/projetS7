@@ -6,6 +6,8 @@
 configure
 Makefile.in
 Makefile
+src/Makefile
+src/Makefile.in
 obj
 bin
 libsndfile
