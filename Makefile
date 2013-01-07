@@ -50,7 +50,7 @@ POST_UNINSTALL = :
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(top_srcdir)/configure AUTHORS COPYING \
-	ChangeLog INSTALL NEWS depcomp install-sh missing
+	ChangeLog INSTALL NEWS TODO depcomp install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -138,7 +138,7 @@ CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -ansi -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -D_DEBUG_ -std=c++11
+CXXFLAGS = -g -ansi -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -D_DEBUG_ -std=c++0x
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"reconnaissance_voix\" -DPACKAGE_TARNAME=\"reconnaissance_voix\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"reconnaissance_voix\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"reconnaissance_voix\" -DVERSION=\"0.1\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE__BOOL=1
 DEPDIR = .deps

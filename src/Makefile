@@ -61,7 +61,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_project_voix_OBJECTS = main.$(OBJEXT) MyAL.$(OBJEXT) ft.$(OBJEXT)
+am_project_voix_OBJECTS = main.$(OBJEXT) MyAL.$(OBJEXT) ft.$(OBJEXT) \
+	traitement.$(OBJEXT)
 project_voix_OBJECTS = $(am_project_voix_OBJECTS)
 am__DEPENDENCIES_1 =
 project_voix_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -104,7 +105,7 @@ CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -g -ansi -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -D_DEBUG_ -std=c++11
+CXXFLAGS = -g -ansi -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -D_DEBUG_ -std=c++0x
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"reconnaissance_voix\" -DPACKAGE_TARNAME=\"reconnaissance_voix\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"reconnaissance_voix\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"reconnaissance_voix\" -DVERSION=\"0.1\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE__BOOL=1
 DEPDIR = .deps
@@ -186,7 +187,7 @@ top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
 AM_CXXFLAGS = $(INTI_CFLAGS) $(SDL_CFLAGS)
-project_voix_SOURCES = main.cpp MyAL.cpp MyAL.h ft.cpp ft.h
+project_voix_SOURCES = main.cpp MyAL.cpp MyAL.h ft.cpp ft.h traitement.h traitement.cpp
 project_voix_LDADD = $(INTI_LIBS) $(SDL_LIBS)
 test1_LDADD = $(INTI_LIBS) $(SDL_LIBS)
 test1_SOURCES = main.cpp.back.cpp ft.cpp ft.h
@@ -281,6 +282,7 @@ include ./$(DEPDIR)/MyAL.Po
 include ./$(DEPDIR)/ft.Po
 include ./$(DEPDIR)/main.Po
 include ./$(DEPDIR)/main.cpp.back.Po
+include ./$(DEPDIR)/traitement.Po
 
 .cpp.o:
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
