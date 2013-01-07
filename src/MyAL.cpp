@@ -1,5 +1,7 @@
 #include "MyAL.h"
 #include<iostream>
+
+
 MyAL::MyAL(std::string _device)
 :device(nullptr),context(nullptr)
 {
