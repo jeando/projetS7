@@ -20,6 +20,11 @@
 #include<fstream>
 #include<cstdlib>
 
+// "<<3" = "*8"
+#define MAX_ALSHORT_VAL  ((1<<((sizeof(ALshort)<<3)-1))-1)
+
+#define MIN_ALSHORT_VAL  (-(1<<((sizeof(ALshort)<<3)-1)))
+
 ALCdevice* CaptureDevice;
 void getDevices(std::vector<std::string>& devices)
 {
@@ -320,7 +325,7 @@ int main()
             if(lataille>200){
                 mutex_Samples.lock();
                 for(unsigned int i=0;i<200;i++){
-                    y[i]=Samples[i];
+                    y[i]=Samples[i]*1.0/MAX_ALSHORT_VAL;
                 }
                 Samples.erase(Samples.begin(), Samples.begin()+200);
                 mutex_Samples.unlock();
@@ -392,8 +397,13 @@ int main()
     for (ALint i = 0; i < NbQueued; ++i)
         alSourceUnqueueBuffers(Source, 1, &Buffer);
     std::cout << " ddddddd" << Samples.size() << std::endl;
-
-    dura = std::chrono::milliseconds(1000);
+	short min = MIN_ALSHORT_VAL;
+	unsigned int max = MAX_ALSHORT_VAL;
+	std::cout << min << " " << max << std::endl;
+	std::cout << min << " " << max << " " << sizeof(ALshort) <<  std::endl;
+    
+	
+	dura = std::chrono::milliseconds(1000);
     std::this_thread::sleep_for(dura);
     alBufferData(Buffers[0], Format, &Samples[0], Samples.size() * sizeof(ALushort), SampleRate);
     alSourceQueueBuffers(Source, 1, &Buffers[0]);
@@ -411,6 +421,23 @@ int main()
     alDeleteSources(1, &Source);
     shutdownOpenAL();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int test1(){
     initOpenAL();
 

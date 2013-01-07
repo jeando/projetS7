@@ -44,7 +44,7 @@ int main()
 	std::vector<double> samples_double;
 	for(unsigned int i=0; i<samples.size();i++){
 		//modifier convertir en double
-		samples_double.push_back(samples[i]);
+		samples_double.push_back(samples[i]/MAX_ALSHORT_VAL);
 	}
 	std::vector<double> dec = decoupage(samples_double,783,80);
 	std::cout << dec.size() << std::endl;
