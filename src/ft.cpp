@@ -1,5 +1,5 @@
 #include"ft.h"
-
+//test
 #define _USE_MATH_DEFINES
 #include<cmath>
 
