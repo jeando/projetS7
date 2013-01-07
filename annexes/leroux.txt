@@ -1,0 +1,28 @@
+sujet : concevoir une maquette d'un système simple de reconnaissance de 
+mots (reconnaissance vocale monolocuteur pour commencer)
+
+la base : découpe de l'évolution au cours du temps de l'énergie du 
+signal dans une vingtaine (éventuellement moins)
+de bandes de fréquence et comparaision à des évolution pour des mots connus
+
+mise en oeuvre en langage c++
+
+je suggère de bien visualiser les différentes étapes, à partir de 
+l'acquisition du signal par un microphone
+puis son traitement  : découpe en séquence de l'ordre de 20 ms analyse 
+de Fourier et mesure de l'énergie
+dans chacune des bandes de fréquences (éventuellement transformation du 
+type cepstre)
+mise en oeuvre d'une méthode de comparaison  simple (dynamic time warping ?)
+
+en parallèle approfondir une recherche bibliographique
+sur la reconnaissance de parole par modèles de markov cachés
+ou autre par exemple  une approche à la mode et semble t il prometteuse 
+(d'après frédéric précioso)
+
+
+      Deep-Neural-Network Speech Recognition Debuts
+
+
+http://blogs.technet.com/b/inside_microsoft_research/archive/2012/06/14/deep-neural-network-speech-recognition-debuts.aspx
+-- 
