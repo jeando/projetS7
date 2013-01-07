@@ -1,5 +1,5 @@
 #include"MyAL.h"
-
+#include"traitement.h"
 #include<iostream>
 int main()
 {
@@ -41,4 +41,11 @@ int main()
     std::cout << samples.size() << std::endl;
     //on enregistre le son
     alc.save_sound("test.wav");
+	std::vector<double> samples_double;
+	for(unsigned int i=0; i<samples.size();i++){
+		//modifier convertir en double
+		samples_double.push_back(samples[i]);
+	}
+	std::vector<double> dec = decoupage<160>(samples_double,783);
+	std::cout << dec.size() << std::endl;
 }
