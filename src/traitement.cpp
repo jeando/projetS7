@@ -61,7 +61,7 @@ std::vector<double> amplitude_pond_log(std::vector<std::complex<double> > input)
 	std::vector<double> output;
 	for(unsigned int i=0; i<input.size(); i++)
 	{
-		output.push_back(log10(0.0000000001+sqrt(std::norm(input[i]))*pow(M_PI*i/512,0.6)));
+		output.push_back(log10(0.0000000001+sqrt(std::norm(input[i]))*pow(M_PI*i/input.size(),0.6)));//non nul / recuperer l'amplitude de la frq cmpl / ponderation cf ppt => negliger frequences basses / log ?
 	}
 	return output;
 }
@@ -86,13 +86,21 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 	}
 	return output;
 }
-void fenetre_hanning(std::vector<double> input)
+
+/**
+* pour eviter les grosses discontinuites aux bords
+*/
+void fenetre_hamming(std::vector<double> input)
 {
 	for(unsigned int i=0; i<input.size(); i++)
 	{
-		input[i]*=(0.54-0.46*cos(2*M_PI*i/(input.size()-1)));
+		input[i]*=(0.54-0.46*cos(2*M_PI*i/(input.size()-1)));//coeff minimal aux bords, max au centre
 	}
 }
+
+/**
+*
+*/
 std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int sample_rate)
 {
 	std::vector<std::vector<double> > output;
@@ -101,20 +109,25 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 	int p2 = ceil(puissanceDe2);
 	unsigned int taille=pow(2,p2);
 	int i = input.size()%taille;
+	//on rajoute des points pour arriver a un multiple du nombre de tranches, qui soit une puissance de 2 ==> nbr de tranches entier (on complete juste la derniere tranche)
 	for(int k=0; k<i; k++)
 	{
 		input.push_back(0);
 	}
+
+	//pour chaque tranche
 	for(std::vector<double>::iterator it = input.begin();
 			std::distance(it,input.end())>0; it+=taille/2)
 	{
 		std::vector<double> tmp(taille);
-		std::copy(it, it+taille, tmp.begin());
-		fenetre_hanning(tmp);
+		std::copy(it, it+taille, tmp.begin());//decoupage / selection tranche
+		fenetre_hamming(tmp);//pas grave car recoupement
 		tmp=amplitude_pond_log(fft(tmp));
 
 		//	= amplitude(fft(decoupage(inputautocor, *it, sample_rate*30/1000)));
-		//decaler(tmp);
+		//decaler(tmp);//centre en 0
+
+
 	//	echelle_mel(tmp,sample_rate);
 		
 		output.push_back(tmp);
