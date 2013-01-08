@@ -30,6 +30,7 @@ class MyAL
     public:
         MyAL(std::string _device="");
         virtual ~MyAL();
+		virtual ALsizei getSampleRate() = 0;
     protected:
         ALCdevice* device;
         ALCcontext* context;
@@ -45,6 +46,7 @@ class AL_Capture : public MyAL
         void start(std::vector<ALshort>& samples, std::mutex* mutex_of_sample = nullptr);
         void stop();
         void save_sound(const std::string& file_name);
+		ALsizei getSampleRate();
     protected:
         ALCdevice* capture_device;
         ALenum format;//     = AL_FORMAT_MONO16;

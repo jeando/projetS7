@@ -1,6 +1,8 @@
 #include"MyAL.h"
 #include"traitement.h"
 #include<iostream>
+#include<SDL/SDL.h>
+#include<SDL/SDL_gfxPrimitives.h>
 int main()
 {
    // MyAL al;
@@ -44,8 +46,34 @@ int main()
 	std::vector<double> samples_double;
 	for(unsigned int i=0; i<samples.size();i++){
 		//modifier convertir en double
+		//samples_double.push_back(samples[i]);
 		samples_double.push_back(samples[i]/MAX_ALSHORT_VAL);
 	}
-	std::vector<double> dec = decoupage(samples_double,783,80);
+	std::vector<double> dec = decoupage(samples_double,783,30*alc.getSampleRate()/1000);
 	std::cout << dec.size() << std::endl;
+	std::vector<std::vector<double> > spectro
+		= spectrogramme(samples_double,alc.getSampleRate());
+	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Surface* screen(nullptr);
+	screen = SDL_SetVideoMode(spectro.size(),256,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
+	SDL_FillRect(screen, nullptr, SDL_MapRGB(screen->format, 0, 0, 0));
+	double max(0);
+	for(unsigned int x=0; x<spectro.size(); x++)
+	{
+		for(unsigned int y=0; y<spectro[x].size(); y++){
+			if(spectro[x][y]>max)max=spectro[x][y];
+		}
+	}
+	for(unsigned int x=0; x<spectro.size(); x++)
+	{
+		for(unsigned int y=0; y<spectro[x].size(); y++)
+		{
+			pixelColor(screen, x, y, ((int)(256*spectro[x][y]/max))<<16|0xFF);
+		//	pixelColor(screen, x, y, ((int)(spectro[x][y]))<<16|0xFF);
+		}
+		SDL_Flip(screen);
+	}
+	SDL_Flip(screen);
+    std::this_thread::sleep_for(dura);
+	std::cout << max << std::endl;
 }

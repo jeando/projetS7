@@ -97,6 +97,10 @@ bool AL_Capture::ini_capture_device(std::string _device)
     return capture_device;
 }
 
+ALsizei AL_Capture::getSampleRate()
+{
+	return sample_rate;
+}
 /**
 *lance l'enregistrement
 */
