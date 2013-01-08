@@ -19,6 +19,7 @@
 #define MAX_ALSHORT_VAL  ((1<<((sizeof(ALshort)<<3)-1))-1)
 #define MIN_ALSHORT_VAL  (-(1<<((sizeof(ALshort)<<3)-1)))
 
+
 class MyAL
 {
     public:
