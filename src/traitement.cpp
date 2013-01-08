@@ -114,7 +114,7 @@ void fenetre_hamming(std::vector<double> input)
 std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int sample_rate)
 {
 	std::vector<std::vector<double> > output;
-	input = autocorrelation(input);
+//	input = autocorrelation(input);
 	double puissanceDe2 = log2(sample_rate*30/1000);
 	int p2 = ceil(puissanceDe2);
 	unsigned int taille=pow(2,p2);

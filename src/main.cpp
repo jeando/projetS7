@@ -51,6 +51,14 @@ int main()
 	}
 	std::vector<double> dec = decoupage(samples_double,783,30*alc.getSampleRate()/1000);
 	std::cout << dec.size() << std::endl;
+/*	std::vector<double> signal_auto = autocorrelation(samples_double);
+	std::vector<ALshort> tosave;
+	for(std::vector<double>::iterator it = signal_auto.begin(); it!=signal_auto.end(); it++)
+	{
+		tosave.push_back(*it);
+	}
+	MyAL::save_sound("son_autocorreller.wav", tosave);
+	//*/
 	std::vector<std::vector<double> > spectro
 		= spectrogramme(samples_double,alc.getSampleRate());
 	SDL_Init(SDL_INIT_VIDEO);
