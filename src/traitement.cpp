@@ -56,6 +56,15 @@ std::vector<double> decoupage(std::vector<double> input, unsigned int t0, const 
 
 	return output;
 }
+std::vector<double> amplitude_pond_log(std::vector<std::complex<double> > input)
+{
+	std::vector<double> output;
+	for(unsigned int i=0; i<input.size(); i++)
+	{
+		output.push_back(log10(0.0000000001+sqrt(std::norm(input[i]))*pow(M_PI*i/512,0.6)));
+	}
+	return output;
+}
 std::vector<double> amplitude(std::vector<std::complex<double> > input)
 {
 	std::vector<double> output;
@@ -102,7 +111,8 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 		std::vector<double> tmp(taille);
 		std::copy(it, it+taille, tmp.begin());
 		fenetre_hanning(tmp);
-		tmp=amplitude(fft(tmp));
+		tmp=amplitude_pond_log(fft(tmp));
+
 		//	= amplitude(fft(decoupage(inputautocor, *it, sample_rate*30/1000)));
 		//decaler(tmp);
 	//	echelle_mel(tmp,sample_rate);

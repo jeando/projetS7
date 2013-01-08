@@ -57,22 +57,37 @@ int main()
 	SDL_Surface* screen(nullptr);
 	screen = SDL_SetVideoMode(spectro.size(),256,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
 	SDL_FillRect(screen, nullptr, SDL_MapRGB(screen->format, 0, 0, 0));
-	double max(0);
+	double min( (1<<((sizeof(double)<<3)-1))-1);
+	double max( (-(1<<((sizeof(ALshort)<<3)-1))));
 	for(unsigned int x=0; x<spectro.size(); x++)
 	{
 		for(unsigned int y=0; y<spectro[x].size(); y++){
 			if(spectro[x][y]>max)max=spectro[x][y];
+			if(spectro[x][y]<min)min=spectro[x][y];
 		}
 	}
+	std::cout << "min: "<< min << " max: " << max << std::endl;
 	for(unsigned int x=0; x<spectro.size(); x++)
 	{
 		for(unsigned int y=0; y<spectro[x].size(); y++)
 		{
-			pixelColor(screen, x, y, ((int)(256*spectro[x][y]/max))<<16|0xFF);
+			double color_r = 255*(spectro[x][y]+fabs(min))/max;
+			if(color_r<0)color_r=0;
+			double color_g = 255*((spectro[x][y]+fabs(min))/max+1);
+			if(color_g<0)color_g=0;
+			if(color_g>255)
+				color_g=0;
+			double color_b = 255*((spectro[x][y]+fabs(min))/max+2);
+			if(color_b<0)color_b=0;
+			if(color_b>255)
+				color_b=0;
+//			pixelColor(screen, x, y, ((int)(color))<<16|0xFF);
+			pixelColor(screen, x, y, ((Uint8)color_r)<<24|((Uint8)color_g)<<16|((Uint8)color_b)<<8|0xFF);
 		//	pixelColor(screen, x, y, ((int)(spectro[x][y]))<<16|0xFF);
 		}
 		SDL_Flip(screen);
 	}
+	SDL_Flip(screen);
 	SDL_Flip(screen);
     std::this_thread::sleep_for(dura);
 	std::cout << max << std::endl;
