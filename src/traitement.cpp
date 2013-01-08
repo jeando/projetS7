@@ -61,7 +61,17 @@ std::vector<double> amplitude_pond_log(std::vector<std::complex<double> > input)
 	std::vector<double> output;
 	for(unsigned int i=0; i<input.size(); i++)
 	{
-		output.push_back(log10(0.0000000001+sqrt(std::norm(input[i]))*pow(M_PI*i/input.size(),0.6)));//non nul / recuperer l'amplitude de la frq cmpl / ponderation cf ppt => negliger frequences basses / log ?
+		output.push_back(log(0.0000000001+sqrt(std::norm(input[i]))*pow(M_PI*i/input.size(),0.6)));//non nul / recuperer l'amplitude de la frq cmpl / ponderation cf ppt => negliger frequences basses / log ?
+	}
+	std::cout << output[input.size()/2] << std::endl;
+	return output;
+}
+std::vector<std::complex<double> > demi_signal(std::vector<std::complex<double> > input)
+{
+	std::vector<std::complex<double> > output;
+	for(unsigned int i=0; i<input.size()/2; i++)
+	{
+		output.push_back(input[i]);
 	}
 	return output;
 }
@@ -122,7 +132,7 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 		std::vector<double> tmp(taille);
 		std::copy(it, it+taille, tmp.begin());//decoupage / selection tranche
 		fenetre_hamming(tmp);//pas grave car recoupement
-		tmp=amplitude_pond_log(fft(tmp));
+		tmp=amplitude_pond_log(demi_signal(fft(tmp)));
 
 		//	= amplitude(fft(decoupage(inputautocor, *it, sample_rate*30/1000)));
 		//decaler(tmp);//centre en 0
