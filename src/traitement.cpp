@@ -94,6 +94,14 @@ inline unsigned int i_en_hz(unsigned int i)
 }//*/
 std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 {
+
+
+	/*
+TO_DO
+
+
+
+	   */
 	std::vector<double> output={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	int frqech_sur_2 = sample_rate/2;
 	std::vector<unsigned int> coeff_mel;
@@ -120,6 +128,7 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 	{
 		for(; i_en_Hz(i)<coeff_mel[j]; i++)
 		{
+			
 			output[j]+=input[i]*(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]);//triangle croiss
 			output[j-1]+=input[i]*(1-(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]));//decroiss
 		}

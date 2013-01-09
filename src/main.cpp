@@ -105,13 +105,32 @@ int main()
 		for(unsigned int y=0; y<spectro[x].size(); y++)
 		{
 			double color_r;
-			if(min<0)
+		/*	if(min<0)
 				color_r=((spectro[x][y]+fabs(min))/(max+fabs(min)));
-			else
-				color_r=spectro[x][y]/max;
-			double color_g=color_r;// 255*((spectro[x][y]+fabs(min))/max+1);
-			double color_b=color_r;// 255*((spectro[x][y]+fabs(min))/max+2);
-			color_r*=3;
+			else*/
+			double val_pix = 255*spectro[x][y]/max;
+			if(color_r<0)color_r=0;
+			double color_g=val_pix;//color_r;// 255*((spectro[x][y]+fabs(min))/max+1);
+			double color_b=0;//color_r;// 255*((spectro[x][y]+fabs(min))/max+2);
+			if(val_pix<255/3.0){
+				color_r=0;
+				color_g=255;
+				color_b=(255-val_pix)*3.0/2;
+			}
+			else if(val_pix<255*2.0/3){
+				color_r=val_pix*3 - 255;
+				color_g=255;
+				color_b=2*255-3*val_pix;
+			}
+			else{
+				color_r=255;
+				color_g=(255-val_pix)*(3.0);
+				color_b=0;
+			}
+			
+
+
+/*			color_r=color_r;
 			color_r-=2;
 			if(color_r<0)color_r=0;
 			color_r*=255;
@@ -121,7 +140,7 @@ int main()
 			color_g*=255;
 			color_b*=3;
 			if(color_b>1)color_b=0;
-			color_g*=255;
+			color_g*=255;*/
 //			pixelColor(screen, x, y, ((int)(color))<<16|0xFF);
 			pixelColor(screen, x, y, ((Uint8)color_r)<<24|((Uint8)color_g)<<16|((Uint8)color_b)<<8|0xFF);
 		//	pixelColor(screen, x, y, ((int)(spectro[x][y]))<<16|0xFF);
