@@ -97,6 +97,7 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 	std::vector<double> output={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	int frqech_sur_2 = sample_rate/2;
 	std::vector<unsigned int> coeff_mel;
+	//calcul des coeff
 	for(int k=1; k<10; k++)//debut lineaire
 	{
 		coeff_mel.push_back(k*100);
@@ -114,6 +115,7 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 		output[0]+=input[i]*(i_en_Hz(i))/(coeff_mel[0]);
 	}
 	i_precedant_1=i;
+	//application des coeff sur l'entree
 	for(int j = 1; j< coeff_mel.size(); j++)
 	{
 		for(; i_en_Hz(i)<coeff_mel[j]; i++)
