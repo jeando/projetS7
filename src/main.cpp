@@ -1,8 +1,10 @@
 #include"MyAL.h"
 #include"traitement.h"
 #include<iostream>
+#include<sstream>
 #include<SDL/SDL.h>
 #include<SDL/SDL_gfxPrimitives.h>
+#include<SDL/SDL_image.h>
 int main()
 {
    // MyAL al;
@@ -59,11 +61,14 @@ int main()
 	}
 	MyAL::save_sound("son_autocorreller.wav", tosave);
 	//*/
+	int redraw = 2;
 	std::vector<std::vector<double> > spectro
-		= spectrogramme(samples_double,alc.getSampleRate());
+		= spectrogramme(samples_double,alc.getSampleRate(),false);
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Surface* screen(nullptr);
 	screen = SDL_SetVideoMode(spectro.size(),256,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
+	while(redraw)
+	{
 	SDL_FillRect(screen, nullptr, SDL_MapRGB(screen->format, 0, 0, 0));
 	double min( (1<<((sizeof(double)<<3)-1))-1);
 	double max( (-(1<<((sizeof(ALshort)<<3)-1))));
@@ -91,7 +96,7 @@ int main()
 			vlineRGBA(screen, y, 400, 400-spectro[x][y]/ymax*400.0,spectro[x][y]/ymax*255.0, spectro[x][y]/ymax*255.0-255, 0, 255);
 		}
 		SDL_Flip(screen);
-    std::this_thread::sleep_for(dura/32);
+//    std::this_thread::sleep_for(dura/32);
 
     }
     SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
@@ -125,6 +130,13 @@ int main()
 	}
 	SDL_Flip(screen);
 	SDL_Flip(screen);
-    std::this_thread::sleep_for(dura*8);
+	std::ostringstream oss("");
+	oss << "test_" << redraw << ".bmp";
+	SDL_SaveBMP(screen, oss.str().c_str());
+    std::this_thread::sleep_for(dura);
 	std::cout << max << std::endl;
+	spectro = spectrogramme(samples_double,alc.getSampleRate());
+	redraw--;
+	}
+
 }

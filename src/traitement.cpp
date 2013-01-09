@@ -85,14 +85,45 @@ std::vector<double> amplitude(std::vector<std::complex<double> > input)
 	}
 	return output;
 }
+#define i_en_Hz(i) (i * sample_rate / ( 2 * input.size() ))
+
+/*
+inline unsigned int i_en_hz(unsigned int i)
+{
+	return i * sample_rate / ( 2 * input.size() );
+}//*/
 std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 {
 	std::vector<double> output={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	int frqech_sur_2 = sample_rate/2;
-	for(unsigned int i=input.size()/2; i<input.size(); i++)
+	std::vector<unsigned int> coeff_mel;
+	for(int k=1; k<10; k++)
 	{
-		unsigned int k = i-input.size();
-	//	output[]
+		coeff_mel.push_back(k*100);
+	}
+	for(int k=10; k<21; k++)
+	{
+		coeff_mel.push_back((k-10)*400-(k-20)*100);
+	}
+	unsigned int i = 0;
+	unsigned int i_precedant_1 = 0;
+	unsigned int i_precedant_2 = 0;
+	for(; i_en_Hz(i)<coeff_mel[0]; i++)
+	{
+		//output[0]+=input[i]*(i_en_Hz(i))/(coeff_mel[0]);
+		output[0]+=input[i];//*(i_en_Hz(i))/(coeff_mel[0]);
+	}
+	i_precedant_1=i;
+	for(int j = 1; j< coeff_mel.size(); j++)
+	{
+		for(; i_en_Hz(i)<coeff_mel[j]; i++)
+		{
+			output[j]+=input[i];//*(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]);
+			output[j-1]+=input[i];//*(1-(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]));
+		}
+		output[j-1]/=(i_precedant_1-i_precedant_2);
+		i_precedant_2=i_precedant_1;
+		i_precedant_1=i;
 	}
 	return output;
 }
@@ -111,7 +142,7 @@ void fenetre_hamming(std::vector<double> input)
 /**
 *
 */
-std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int sample_rate)
+std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int sample_rate, bool with_mel)
 {
 	std::vector<std::vector<double> > output;
 //	input = autocorrelation(input);
@@ -133,7 +164,10 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 		std::copy(it, it+taille, tmp.begin());//decoupage / selection tranche
 		fenetre_hamming(tmp);//pas grave car recoupement
 		tmp=amplitude_pond_log(demi_signal(fft(tmp)));
-
+		if(with_mel)
+		{
+			tmp=echelle_mel(tmp, sample_rate);
+		}
 		//	= amplitude(fft(decoupage(inputautocor, *it, sample_rate*30/1000)));
 		//decaler(tmp);//centre en 0
 
