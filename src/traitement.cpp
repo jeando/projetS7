@@ -110,7 +110,7 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 	unsigned int i_precedant_2 = 0;
 	for(; i_en_Hz(i)<coeff_mel[0]; i++)
 	{
-		output[0]+=input[i]*(i_en_Hz(i))/(coeff_mel[0]);
+	//	output[0]+=input[i]*(i_en_Hz(i))/(coeff_mel[0]);
 		output[0]+=input[i]*(i_en_Hz(i))/(coeff_mel[0]);
 	}
 	i_precedant_1=i;
