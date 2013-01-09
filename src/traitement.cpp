@@ -93,43 +93,6 @@ inline unsigned int i_en_hz(unsigned int i)
 	return i * sample_rate / ( 2 * input.size() );
 }//*/
 #define mel(i) (1000*log(1+i/1000)/log(2))
-std::vector<double> echelle_mel_new(std::vector<double> input, int sample_rate)
-{
-	std::vector<double> output={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-	int frqech_sur_2 = sample_rate/2;
-	std::vector<unsigned int> coeff_mel;
-	std::vector<unsigned int> coeff_mel2;
-	//calcul des coeff
-	for(int k=0; k<20; k++)//debut lineaire
-	{
-		coeff_mel2.push_back(k*mel(frqech_sur_2)/20);
-		coeff_mel.push_back(k*(frqech_sur_2)/20);
-	}
-	unsigned int i = 0;
-	unsigned int i_precedant_1 = 0;
-	unsigned int i_precedant_2 = 0;
-	for(; i_en_Hz(i)<coeff_mel2[0]; i++)
-	{
-	//	output[0]+=input[i]*(i_en_Hz(i))/(coeff_mel[0]);
-		output[0]+=input[i]*(mel(i_en_Hz(i)))/(coeff_mel[0]);
-	}
-	i_precedant_1=i;
-	//application des coeff sur l'entree
-	for(int j = 1; j< coeff_mel2.size(); j++)
-	{
-		for(; mel(i_en_Hz(i))<coeff_mel2[j]; i++)
-		{
-			
-			output[j]+=input[i]*(mel(i_en_Hz(i))-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]);//triangle croiss
-			output[j-1]+=input[i]*(1-(mel(i_en_Hz(i))-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]));//decroiss
-		}
-		output[j-1]/=(i-i_precedant_2);
-		i_precedant_2=i_precedant_1;
-		i_precedant_1=i;
-	}
-	output[output.size()-1]/=(i_precedant_1-i_precedant_2);
-	return output;
-}
 std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 {
 
@@ -188,19 +151,19 @@ void fenetre_hamming(std::vector<double> input)
 		input[i]*=(0.54-0.46*cos(2*M_PI*i/(input.size()-1)));//coeff minimal aux bords, max au centre
 	}
 }
-#define T double
+template<typename T>
 T distance(std::vector<T> x, std::vector<T> y)
 {
 	T distance(0);
 	for(unsigned int i = 0; i<x.size(); i++)
 	{
-		distance+=(x[i]*x[i]+y[i]*y[i]);
+		distance+=(pow(x[i]-y[i],2));
 	}
 	return distance;
 }
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref, int delta=20)
+		std::vector<std::vector<double> > ref, int delta)
 {
 	std::vector<double> dist;//(mesure.size());
 	int n(0);//mesure iterateur
@@ -220,7 +183,7 @@ std::vector<double> dynamic_time_warping(
 			}
 		}
 		m=indice_min;
-		dist.push_back(min);
+		dist.push_back(sqrt(min));
 	}
 	return dist;
 }

@@ -15,5 +15,8 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate);
  * decale de v.size()/2 le signal v
  */
 void decaler(std::vector<double>& v);
+std::vector<double> dynamic_time_warping(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref, int delta=20);
 #endif
 
