@@ -118,8 +118,8 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 	{
 		for(; i_en_Hz(i)<coeff_mel[j]; i++)
 		{
-			output[j]+=input[i]*(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]);
-			output[j-1]+=input[i]*(1-(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]));
+			output[j]+=input[i]*(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]);//triangle croiss
+			output[j-1]+=input[i]*(1-(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]));//decroiss
 		}
 		output[j-1]/=(i_precedant_1-i_precedant_2);
 		i_precedant_2=i_precedant_1;
