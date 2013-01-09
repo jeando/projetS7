@@ -127,6 +127,7 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
 		i_precedant_2=i_precedant_1;
 		i_precedant_1=i;
 	}
+	output[output.size()-1]/=(i_precedant_1-i_precedant_2);
 	return output;
 }
 
