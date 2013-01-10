@@ -252,7 +252,7 @@ void traitement(std::vector<double> y)
                 y.push_back(sample);
             }//*/
 //autocorrelation
-            std::vector<double> autocorrelation;
+           /* std::vector<double> autocorrelation;
             for(unsigned int tau = 0; tau<y.size(); tau++)
             {
                 double temp(0);
@@ -262,7 +262,10 @@ void traitement(std::vector<double> y)
                 }
                 autocorrelation.push_back(temp);
             }
+
             std::vector<std::complex<double>> aaa = fft(autocorrelation);
+            //*/
+			std::vector<std::complex<double>> aaa = fft(y);
             double ymax=0;
             for(unsigned int k=0;k<y.size();k++){
                 y[k]=log(sqrt(std::norm(aaa[k])));
