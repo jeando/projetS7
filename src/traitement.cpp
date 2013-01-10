@@ -151,16 +151,6 @@ void fenetre_hamming(std::vector<double> input)
 		input[i]*=(0.54-0.46*cos(2*M_PI*i/(input.size()-1)));//coeff minimal aux bords, max au centre
 	}
 }
-template<typename T>
-T distance(std::vector<T> x, std::vector<T> y)
-{
-	T distance(0);
-	for(unsigned int i = 0; i<x.size(); i++)
-	{
-		distance+=(pow(x[i]-y[i],2));
-	}
-	return distance;
-}
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref, int delta)
@@ -184,6 +174,7 @@ std::vector<double> dynamic_time_warping(
 		}
 		m=indice_min;
 		dist.push_back(sqrt(min));
+//		dist.push_back(sqrt(min*sqrt(distance(ref[m]))));
 	}
 	return dist;
 }

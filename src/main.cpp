@@ -2,6 +2,7 @@
 #include"traitement.h"
 #include<iostream>
 #include<sstream>
+#include<string>
 #include<SDL/SDL.h>
 #include<SDL/SDL_gfxPrimitives.h>
 #include<SDL/SDL_image.h>
@@ -41,7 +42,7 @@ int main()
     AL_Capture alc(vs[audio_choix],vs2[capture_choix]);//port audio / micro
     alc.start(samples);
     //dors dura milliseconds
-    std::this_thread::sleep_for(dura);
+    std::this_thread::sleep_for(dura/10);
     alc.stop();//arret enregistrement
     std::cout << samples.size() << std::endl;
     //on enregistre le son
@@ -54,23 +55,70 @@ int main()
 	}
 	std::vector<double> dec = decoupage(samples_double,783,30*alc.getSampleRate()/1000);
 	std::cout << dec.size() << std::endl;
-/*	std::vector<double> signal_auto = autocorrelation(samples_double);
-	std::vector<ALshort> tosave;
-	for(std::vector<double>::iterator it = signal_auto.begin(); it!=signal_auto.end(); it++)
-	{
-		tosave.push_back(*it);
-	}
-	MyAL::save_sound("son_autocorreller.wav", tosave);
-	//*/
 	std::vector<std::vector<double> > spectro
 		= spectrogramme(samples_double,alc.getSampleRate(),false);
+
+    std::chrono::milliseconds dura_2(600);
+	//std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag","un","deux","trois","quatre","cinq","six"};
+//	std::vector<std::string> vect_mot={"gauche","droite"};//,"haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
+	std::vector<std::string> vect_mot={"gauche","gauche","droite","droite"};//,"haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
+//	std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
+	std::vector<std::vector<std::vector<double> > > vect_spectro;
+	std::vector<double> vect_distance;
+	std::string tmp_str;
+	for(std::string s : vect_mot)
+	{
+		std::cout << "dites le mot "<< s << std::endl;
+		std::cin >> tmp_str;
+		samples.clear();
+    	alc.start(samples);
+    	std::this_thread::sleep_for(dura_2);
+    	alc.stop();
+		std::cout << "fin enreg" << std::endl;
+		samples_double.clear();
+		for(unsigned int i=0; i<samples.size();i++){
+			samples_double.push_back(samples[i]);
+		}
+		vect_spectro.push_back(spectrogramme(samples_double,alc.getSampleRate(),false));
+	}
+	std::string mot_a_tester;
+	std::cout << "entrez le mot que vous voulez dire et dites le" << std::endl;
+	while(tmp_str!="0"||tmp_str!="quit"||tmp_str!=":q"||tmp_str!="exit")
+	{
+		std::cout <<	"tappez  exit pour quitter, autre chose pour continuer" << std::endl;
+		std::cin >> tmp_str;
+		samples.clear();
+    	alc.start(samples);
+	    std::this_thread::sleep_for(dura_2);
+    	alc.stop();
+		samples_double.clear();
+		for(unsigned int i=0; i<samples.size();i++){
+			samples_double.push_back(samples[i]);
+		}
+		std::vector<std::vector<double> > spectro_a_tester
+		= spectrogramme(samples_double,alc.getSampleRate(),false);
+		vect_distance.clear();
+		for(auto it = vect_spectro.begin(); it!=vect_spectro.end(); it++){
+			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,30)));
+		}
+		int min_val(vect_distance[0]);
+		int min_indice(0);
+		for(int i=0; i<vect_distance.size();i++){
+			std::cout<<vect_mot[i]<<" : " << vect_distance[i] << std::endl;
+			if(vect_distance[i]<min_val){
+				min_val=vect_distance[i];
+				min_indice=i;
+			}
+		}
+		std::cout << "Vous avez dit le mot : " << vect_mot[min_indice]<<std::endl;
+	}	
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Surface* screen(nullptr);
 	screen = SDL_SetVideoMode(spectro.size(),256,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
 	for(unsigned int x=0; x<spectro.size(); x++)
 	{
 		draw_vect(screen, spectro[x]);	
-    	std::this_thread::sleep_for(dura/32);
+    	std::this_thread::sleep_for(dura/128);
 	}
 	
 	draw_mat(screen,spectro);
@@ -81,4 +129,7 @@ int main()
 	draw_mat(screen,spectro);
 	SDL_SaveBMP(screen, "spectro_court.bmp");
     std::this_thread::sleep_for(dura);
+
+
+
 }

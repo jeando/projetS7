@@ -18,5 +18,28 @@ void decaler(std::vector<double>& v);
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref, int delta=20);
+
+//templates fonctions	
+template<typename T>
+T distance(std::vector<T> x)
+{
+	T distance(0);
+	for(unsigned int i = 0; i<x.size(); i++)
+	{
+		distance+=(pow(x[i],2));
+//		distance+=fabs(x[i]);
+	}
+	return distance;
+}
+template<typename T>
+T distance(std::vector<T> x, std::vector<T> y)
+{
+	T distance(0);
+	for(unsigned int i = 0; i<x.size(); i++)
+	{
+		distance+=(pow(x[i]-y[i],2));
+	}
+	return distance;
+}
 #endif
 

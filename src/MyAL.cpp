@@ -106,6 +106,15 @@ ALsizei AL_Capture::getSampleRate()
 */
 void AL_Capture::start(std::vector<ALshort>& _samples, std::mutex* _mutex)
 {
+	//vide buffer
+    ALCint samples_available;
+    alcGetIntegerv(capture_device, ALC_CAPTURE_SAMPLES, 1, &samples_available);
+    if (samples_available > 0)
+    {
+		std::vector<ALshort> tmp(samples_available);
+        alcCaptureSamples(capture_device, &tmp[0], samples_available);
+    }
+
     continuer = true;
     capture_samples = &_samples;
     alcCaptureStart(capture_device);
