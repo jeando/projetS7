@@ -78,7 +78,7 @@ int main()
     std::this_thread::sleep_for(dura);
 	
 	spectro = spectrogramme(samples_double,alc.getSampleRate());
-	SDL_SaveBMP(screen, "spectro_court.bmp");
 	draw_mat(screen,spectro);
+	SDL_SaveBMP(screen, "spectro_court.bmp");
     std::this_thread::sleep_for(dura);
 }
