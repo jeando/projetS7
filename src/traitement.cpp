@@ -220,3 +220,11 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 	}
 	return output;
 }
+std::vector<std::vector<double> > equalize_spectrogramme(
+		std::vector<std::vector<double> > spectro,
+		double val_min, double val_max)
+{
+	double max = get_max_val(spectro);	
+	
+
+}

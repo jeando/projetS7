@@ -1,4 +1,5 @@
 #include"sdl.h"
+#include"util_tmp.h"
 #include<algorithm>
 //assert than val_pixel \in [0, 255]
 inline unsigned int get_couleur(double val_pix)
@@ -39,14 +40,15 @@ void draw_mat(SDL_Surface* screen, std::vector<std::vector<T> > vect)
 	
 	screen = SDL_SetVideoMode(vect.size(),vect[0].size(),screen->format->BitsPerPixel,screen->flags);
 	SDL_FillRect(screen, nullptr, SDL_MapRGB(screen->format,0,0,0));
-	T max(*std::max_element(vect[0].begin(),vect[0].end()));
+	/*T max(*std::max_element(vect[0].begin(),vect[0].end()));
 	T max_tmp;
 	for(typename std::vector<std::vector<T> >::iterator it= vect.begin()+1;it!=vect.end();it++)
 	{
 		max_tmp = *std::max_element(it->begin(),it->end());
 		if(max_tmp>max)
 			max=max_tmp;
-	}
+	}*/
+	T max(get_max_val(vect));
 	unsigned int pos_x(0), pos_y(0);
 //	for(unsigned int x(0), x< 
 	for(typename std::vector<std::vector<T> >::iterator it= vect.begin();it!=vect.end();it++)

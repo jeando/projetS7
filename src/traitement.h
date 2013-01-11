@@ -2,7 +2,7 @@
 #define TRAITEMENT_H
 
 #include<vector>
-
+#include"util_tmp.h"
 #include"ft.h"
 
 std::vector<double> autocorrelation(std::vector<double> input);
@@ -15,6 +15,11 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate);
  * decale de v.size()/2 le signal v
  */
 void decaler(std::vector<double>& v);
+std::vector<std::vector<double> > equalize_spectrogramme(
+		std::vector<std::vector<double> > spectro,
+		double val_min = 0, double val_max = 255);
+
+
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref, int delta=20);
