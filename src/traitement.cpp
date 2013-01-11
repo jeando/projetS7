@@ -156,6 +156,13 @@ std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref, int delta)
 {
+	return dynamic_time_warping(mesure, ref, delta, 0, ref.begin()->size());
+}
+std::vector<double> dynamic_time_warping(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref, int delta,
+		unsigned int indice_debut, unsigned int indice_fin)
+{
 	std::vector<double> dist;//(mesure.size());
 	unsigned int n(0);//mesure iterateur
 	unsigned int m(0);//ref iterateur
@@ -166,7 +173,7 @@ std::vector<double> dynamic_time_warping(
 		unsigned int indice_min;
 		for(unsigned int k = (m<delta?0:(m-delta)); k< m+delta && k<ref.size(); k++)
 		{
-			tmp_dst = distance(mesure[n],ref[k]);
+			tmp_dst = distance(mesure[n],ref[k],indice_debut, indice_fin);
 			if(tmp_dst<min)
 			{
 				min = tmp_dst;
@@ -243,6 +250,8 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 	return spectro2;
 
 }
+
+/*
 unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 {
 	std::vector<double> norme;
@@ -271,3 +280,4 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 	}
 	
 }
+//*/

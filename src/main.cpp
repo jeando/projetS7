@@ -39,7 +39,16 @@ int main()
     std::chrono::milliseconds dura_2(1000);
 	//std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag","un","deux","trois","quatre","cinq","six"};
 //	std::vector<std::string> vect_mot={"gauche","droite"};//,"haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
-	std::vector<std::string> vect_mot={"gauche","gauche ","droite","droite ","haut","haut ", "bas", "bas "};//,"diag"};//,"un","deux","trois","quatre","cinq","six"};
+	std::vector<std::string> vect_mot={
+		"gauche",
+		"gauche ",
+		"droite",
+		"droite ",
+		"haut",
+		"haut ",
+		"bas",
+		"bas "
+	};//,"diag"};//,"un","deux","trois","quatre","cinq","six"};
 //	std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Surface* screen(nullptr);
@@ -65,7 +74,7 @@ int main()
 		std::ostringstream oss("");
 		oss << "spectro_ref_" << s << ".bmp";
 		SDL_SaveBMP(screen, oss.str().c_str());
-		indice_debut(vect_spectro.back());
+		//indice_debut(vect_spectro.back());
 	}
 	std::string mot_a_tester;
 	std::cout << "entrez le mot que vous voulez dire et dites le" << std::endl;
@@ -94,16 +103,27 @@ int main()
 		for(auto it = vect_spectro.begin(); it!=vect_spectro.end(); it++){
 			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
 		}
-		int min_val(vect_distance[0]);
-		int min_indice(0);
+		double min_1_val(vect_distance[0]);
+		int min_1_indice(0);
+		double min_2_val(vect_distance[0]);
+		int min_2_indice(0);
 		for(unsigned int i=0; i<vect_distance.size();i++){
 			std::cout<<vect_mot[i]<<" : " << vect_distance[i] << std::endl;
-			if(vect_distance[i]<min_val){
-				min_val=vect_distance[i];
-				min_indice=i;
+			if(vect_distance[i]<min_1_val){
+				min_2_val = min_1_val;
+				min_2_indice = min_1_indice;
+				min_1_val=vect_distance[i];
+				min_1_indice=i;
 			}
 		}
-		std::cout << "Vous avez dit le mot : " << vect_mot[min_indice]<<std::endl;
+		double d1 = (distance(dynamic_time_warping(spectro_a_tester,
+						vect_spectro[min_1_indice],10,0,spectro_a_tester.begin()->size()/2)));
+		double d2 = (distance(dynamic_time_warping(spectro_a_tester,
+						vect_spectro[min_2_indice],10,0,spectro_a_tester.begin()->size()/2))); 
+
+		std::cout << d1 <<std::endl;
+		std::cout << d2 <<std::endl;
+		std::cout << "Vous avez dit le mot : " << vect_mot[min_1_indice]<<std::endl;
 	}	
 	for(unsigned int x=0; x<spectro.size(); x++)
 	{

@@ -22,7 +22,11 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref, int delta=20);
+		std::vector<std::vector<double> > ref, int delta=10);
+std::vector<double> dynamic_time_warping(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref, int delta,
+		unsigned int indice_debut, unsigned int indice_fin);
 
 unsigned int indice_debut(std::vector<std::vector<double> > spectro);
 //templates fonctions	
@@ -38,10 +42,15 @@ T distance(std::vector<T> x)
 	return distance;
 }
 template<typename T>
-T distance(std::vector<T> x, std::vector<T> y)
+inline T distance(std::vector<T> x, std::vector<T> y)
+{
+	return distance(x,y,0,x.size());
+}
+template<typename T>
+inline T distance(std::vector<T> x, std::vector<T> y, unsigned int indice_debut, unsigned int indice_fin)
 {
 	T distance(0);
-	for(unsigned int i = 0; i<x.size(); i++)
+	for(unsigned int i = indice_debut; i<indice_fin; i++)
 	{
 		distance+=(pow(x[i]-y[i],2));
 	}
