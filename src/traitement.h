@@ -24,6 +24,7 @@ std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref, int delta=20);
 
+unsigned int indice_debut(std::vector<std::vector<double> > spectro);
 //templates fonctions	
 template<typename T>
 T distance(std::vector<T> x)

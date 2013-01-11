@@ -64,7 +64,7 @@ std::vector<double> amplitude_pond_log(std::vector<std::complex<double> > input)
 	{
 		output.push_back(log(0.0000000001+sqrt(std::norm(input[i]))*pow(M_PI*i/input.size(),0.6)));//non nul / recuperer l'amplitude de la frq cmpl / ponderation cf ppt => negliger frequences basses / log ?
 	}
-	std::cout << output[input.size()/2] << std::endl;
+//	std::cout << output[input.size()/2] << std::endl;
 	return output;
 }
 std::vector<std::complex<double> > demi_signal(std::vector<std::complex<double> > input)
@@ -242,4 +242,32 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 	}
 	return spectro2;
 
+}
+unsigned int indice_debut(std::vector<std::vector<double> > spectro)
+{
+	std::vector<double> norme;
+	for(std::vector<std::vector<double> >::iterator it = spectro.begin();
+			it!=spectro.end();it++)
+	{
+		norme.push_back(sqrt(distance(*it)));
+		//norme.push_back(distance(*it));
+		//std::cout << norme.back() << std::endl;
+	}
+	std::vector<double> norme_2;
+	norme_2.push_back(2*norme[0]+norme[1]);
+	for(unsigned int i=1; i<norme.size()-1; i++)
+	{
+		norme_2.push_back((norme[i-1]+norme[i]+norme[i+1])/3);
+	}
+	norme_2.push_back(2*norme[norme.size()-1]+norme[norme.size()-2]);
+	norme=norme_2;
+	norme_2.clear();
+	norme_2.push_back(0);
+	for(unsigned int i=1; i<norme.size()-1; i++)
+	{
+		norme_2.push_back(norme[i-1]-2*norme[i]+norme[i+1]);
+//		norme_2.push_back(norme[i]-norme[i-1]);
+		std::cout << norme_2.back() << std::endl;
+	}
+	
 }

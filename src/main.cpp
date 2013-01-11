@@ -36,11 +36,14 @@ int main()
 	std::vector<std::vector<double> > spectro_court
 		= spectrogramme(samples_double,alc.getSampleRate());
 
-    std::chrono::milliseconds dura_2(600);
+    std::chrono::milliseconds dura_2(1000);
 	//std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag","un","deux","trois","quatre","cinq","six"};
 //	std::vector<std::string> vect_mot={"gauche","droite"};//,"haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
-	std::vector<std::string> vect_mot={"gauche","gauche","droite","droite","haut","haut", "bas", "bas"};//,"diag"};//,"un","deux","trois","quatre","cinq","six"};
+	std::vector<std::string> vect_mot={"gauche","gauche ","droite","droite ","haut","haut ", "bas", "bas "};//,"diag"};//,"un","deux","trois","quatre","cinq","six"};
 //	std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
+	SDL_Init(SDL_INIT_VIDEO);
+	SDL_Surface* screen(nullptr);
+	screen = SDL_SetVideoMode(spectro.size(),256,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
 	std::vector<std::vector<std::vector<double> > > vect_spectro;
 	std::vector<double> vect_distance;
 	std::string tmp_str;
@@ -58,11 +61,18 @@ int main()
 			samples_double.push_back(samples[i]);
 		}
 		vect_spectro.push_back(equalize_spectrogramme(spectrogramme(samples_double,alc.getSampleRate())));
+		draw_mat(screen,vect_spectro.back());
+		std::ostringstream oss("");
+		oss << "spectro_ref_" << s << ".bmp";
+		SDL_SaveBMP(screen, oss.str().c_str());
+		indice_debut(vect_spectro.back());
 	}
 	std::string mot_a_tester;
 	std::cout << "entrez le mot que vous voulez dire et dites le" << std::endl;
+	int nb_test(0);
 	while(tmp_str!="0"&&tmp_str!="quit"&&tmp_str!=":q"&&tmp_str!="exit")
 	{
+		nb_test++;
 		std::cout <<	"tappez  exit pour quitter, autre chose pour continuer" << std::endl;
 		std::cin >> tmp_str;
 		samples.clear();
@@ -75,6 +85,11 @@ int main()
 		}
 		std::vector<std::vector<double> > spectro_a_tester
 		= equalize_spectrogramme(spectrogramme(samples_double,alc.getSampleRate()));
+		draw_mat(screen,spectro_a_tester);
+		std::ostringstream oss("");
+		oss << "spectro_test_" << nb_test << ".bmp";
+		SDL_SaveBMP(screen, oss.str().c_str());
+		std::cout << oss.str().c_str() << "ecrit" << std::endl;
 		vect_distance.clear();
 		for(auto it = vect_spectro.begin(); it!=vect_spectro.end(); it++){
 			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
@@ -90,9 +105,6 @@ int main()
 		}
 		std::cout << "Vous avez dit le mot : " << vect_mot[min_indice]<<std::endl;
 	}	
-	SDL_Init(SDL_INIT_VIDEO);
-	SDL_Surface* screen(nullptr);
-	screen = SDL_SetVideoMode(spectro.size(),256,32,SDL_HWSURFACE | SDL_DOUBLEBUF);
 	for(unsigned int x=0; x<spectro.size(); x++)
 	{
 		draw_vect(screen, spectro[x]);	
