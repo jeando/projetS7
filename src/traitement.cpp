@@ -2,6 +2,7 @@
 #include<cmath>
 #include<iostream>
 #include<algorithm>
+#include<limits>
 void decaler(std::vector<double>& v)
 {
     double temp;
@@ -104,17 +105,17 @@ log(mel(
 
 	   */
 	std::vector<double> output={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-	int frqech_sur_2 = sample_rate/2;
+	double coef_pour_mel = log(sample_rate/2000.0)/10.0;
 	std::vector<unsigned int> coeff_mel;
 	//calcul des coeff
-	for(int k=1; k<10; k++)//debut lineaire
+	for(int k=1; k<10; k++)//debut lineaire jusqu a 1000 Hz
 	{
 		coeff_mel.push_back(k*100);
 	}
 	for(int k=10; k<21; k++)//fin exponentielle
 	{
-		//coeff_mel.push_back((k-10)*400-(k-20)*100);
-		coeff_mel.push_back(1000*pow(M_E,0.2*M_LN2*(k-10)));
+//		coeff_mel.push_back(1000*pow(M_E,0.2*M_LN2*(k-10)));
+		coeff_mel.push_back(1000*pow(M_E,coef_pour_mel*(k-10)));
 	}
 	unsigned int i = 0;
 	unsigned int i_precedant_1 = 0;
@@ -125,7 +126,7 @@ log(mel(
 	}
 	i_precedant_1=i;
 	//application des coeff sur l'entree
-	for(int j = 1; j< coeff_mel.size(); j++)
+	for(unsigned int j = 1; j< coeff_mel.size(); j++)
 	{
 		for(; i_en_Hz(i)<coeff_mel[j]; i++)
 		{
@@ -156,14 +157,14 @@ std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > ref, int delta)
 {
 	std::vector<double> dist;//(mesure.size());
-	int n(0);//mesure iterateur
-	int m(0);//ref iterateur
+	unsigned int n(0);//mesure iterateur
+	unsigned int m(0);//ref iterateur
 	for(;n<mesure.size(); n++)
 	{
-		double min((1<<((sizeof(int)<<3)-1))-1);// le plus grand int
+		double min(std::numeric_limits<double>::max());
 		double tmp_dst;
-		int indice_min;
-		for(int k = (m-delta<0?0:(m-delta)); k< m+delta && k<ref.size(); k++)
+		unsigned int indice_min;
+		for(unsigned int k = (m<delta?0:(m-delta)); k< m+delta && k<ref.size(); k++)
 		{
 			tmp_dst = distance(mesure[n],ref[k]);
 			if(tmp_dst<min)

@@ -43,7 +43,7 @@ void draw_mat(SDL_Surface* screen, std::vector<std::vector<T> > vect)
 	T max_tmp;
 	for(typename std::vector<std::vector<T> >::iterator it= vect.begin()+1;it!=vect.end();it++)
 	{
-		T max_tmp = *std::max_element(it->begin(),it->end());
+		max_tmp = *std::max_element(it->begin(),it->end());
 		if(max_tmp>max)
 			max=max_tmp;
 	}

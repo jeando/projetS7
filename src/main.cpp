@@ -10,39 +10,15 @@
 int main()
 {
    // MyAL al;
-    std::vector<std::string> vs = MyAL::get_devices();
-    std::vector<std::string> vs2 = MyAL::get_capture_devices();
-   int audio_choix = 0;
-   int capture_choix = 0;
-   int k=0;
-
-   //choix haut-parleurs
-   std::cout << "devices :" << std::endl;
-   for(std::string s : vs)
-        std::cout << "\t" << k++ << ") "<< s << std::endl;
-    if(vs.size()>1){
-        std::cout << "choix : ";
-        std::cin >> audio_choix;
-    }
-    k=0;
-
-    //choix micro (si 1 seul choix => pas de choix)
-   std::cout << "capture devices :" << std::endl;
-   for(std::string s : vs2)
-        std::cout << "\t" << k++ << ") "<< s << std::endl;
-    if(vs2.size()>1){
-        std::cout << "choix : ";
-        std::cin >> capture_choix;
-    }
-
     //enregistrement:
     std::chrono::milliseconds dura(4000);
     std::vector<ALshort> samples;
     //enregistre
-    AL_Capture alc(vs[audio_choix],vs2[capture_choix]);//port audio / micro
+    AL_Capture alc(MyAL::choisir_device(),MyAL::choisir_capture_device());//port audio / micro
     alc.start(samples);
     //dors dura milliseconds
-    std::this_thread::sleep_for(dura/10);
+    //std::this_thread::sleep_for(dura/10);
+    std::this_thread::sleep_for(dura);
     alc.stop();//arret enregistrement
     std::cout << samples.size() << std::endl;
     //on enregistre le son
@@ -53,10 +29,12 @@ int main()
 		samples_double.push_back(samples[i]);
 		//samples_double.push_back(samples[i]/MAX_ALSHORT_VAL);
 	}
-	std::vector<double> dec = decoupage(samples_double,783,30*alc.getSampleRate()/1000);
-	std::cout << dec.size() << std::endl;
+//	std::vector<double> dec = decoupage(samples_double,783,30*alc.getSampleRate()/1000);
+//	std::cout << dec.size() << std::endl;
 	std::vector<std::vector<double> > spectro
 		= spectrogramme(samples_double,alc.getSampleRate(),false);
+	std::vector<std::vector<double> > spectro_court
+		= spectrogramme(samples_double,alc.getSampleRate());
 
     std::chrono::milliseconds dura_2(600);
 	//std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag","un","deux","trois","quatre","cinq","six"};
@@ -83,7 +61,7 @@ int main()
 	}
 	std::string mot_a_tester;
 	std::cout << "entrez le mot que vous voulez dire et dites le" << std::endl;
-	while(tmp_str!="0"||tmp_str!="quit"||tmp_str!=":q"||tmp_str!="exit")
+	while(tmp_str!="0"&&tmp_str!="quit"&&tmp_str!=":q"&&tmp_str!="exit")
 	{
 		std::cout <<	"tappez  exit pour quitter, autre chose pour continuer" << std::endl;
 		std::cin >> tmp_str;
@@ -99,11 +77,11 @@ int main()
 		= spectrogramme(samples_double,alc.getSampleRate());
 		vect_distance.clear();
 		for(auto it = vect_spectro.begin(); it!=vect_spectro.end(); it++){
-			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,30)));
+			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
 		}
 		int min_val(vect_distance[0]);
 		int min_indice(0);
-		for(int i=0; i<vect_distance.size();i++){
+		for(unsigned int i=0; i<vect_distance.size();i++){
 			std::cout<<vect_mot[i]<<" : " << vect_distance[i] << std::endl;
 			if(vect_distance[i]<min_val){
 				min_val=vect_distance[i];
@@ -125,11 +103,8 @@ int main()
 	SDL_SaveBMP(screen, "spectro_long.bmp");
     std::this_thread::sleep_for(dura);
 	
-	spectro = spectrogramme(samples_double,alc.getSampleRate());
-	draw_mat(screen,spectro);
+	draw_mat(screen,spectro_court);
 	SDL_SaveBMP(screen, "spectro_court.bmp");
     std::this_thread::sleep_for(dura);
-
-
-
+	return EXIT_SUCCESS;
 }

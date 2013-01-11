@@ -22,7 +22,11 @@
 
 class MyAL
 {
+	private:
+		static std::string choisir_device(std::vector<std::string> lst_device);
     public:
+		static std::string choisir_device();
+		static std::string choisir_capture_device();
         static std::vector<std::string> get_devices();
         static std::vector<std::string> get_capture_devices();
         static std::vector<ALshort> load_sound(const std::string& file_name);

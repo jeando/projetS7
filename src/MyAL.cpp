@@ -1,6 +1,5 @@
 #include "MyAL.h"
 #include<iostream>
-
 /*
 *Classe qui gère la carte son: surcouche à la librairie OpenAL
 */
@@ -22,7 +21,37 @@ MyAL::~MyAL()
     alcDestroyContext(context);
     alcCloseDevice(device);
 }
-
+std::string MyAL::choisir_capture_device()
+{
+	std::cout << "capture devices :" << std::endl;
+	return choisir_device(MyAL::get_capture_devices());	
+}
+std::string MyAL::choisir_device()
+{
+	std::cout << "devices :" << std::endl;
+	return choisir_device(MyAL::get_devices());
+}
+std::string MyAL::choisir_device(std::vector<std::string> vs)
+{
+	int k(0);
+	for(std::string s : vs)
+		std::cout << "\t" << k++ << ") "<< s << std::endl;
+	std::cout << "choix : ";
+	if(vs.size()==0){
+		std::cout << "aucun" << std::endl;
+			throw std::ios_base::failure("enable to load drivers");
+		return "";
+	}
+	if(vs.size()==1){
+		std::cout << "0" << std::endl; 
+		return vs[0];
+	}
+	int choix(-1);
+	do{
+		std::cin >> choix;
+	}while(choix<0||choix>=vs.size());
+	return vs[choix];
+}
 /**
 * initialise la carte son (sortie)
 */
