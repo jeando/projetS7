@@ -193,11 +193,14 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 	unsigned int taille=pow(2,p2);
 	int i = input.size()%taille;
 	//on rajoute des points pour arriver a un multiple du nombre de tranches, qui soit une puissance de 2 ==> nbr de tranches entier (on complete juste la derniere tranche)
-	for(int k=0; k<i; k++)
+	/*
+	//for(int k=0; k<i; k++)
+	for(int k=0; k<taille-i; k++)
 	{
 		input.push_back(0);
 	}
-
+	//*/
+	input.resize(input.size()-i);	
 	//pour chaque tranche
 	for(std::vector<double>::iterator it = input.begin();
 			std::distance(it,input.end())>0; it+=taille/2)
@@ -224,7 +227,19 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 		std::vector<std::vector<double> > spectro,
 		double val_min, double val_max)
 {
-	double max = get_max_val(spectro);	
-	
+	double max = get_max_val(spectro);
+	double min = get_min_val(spectro);
+	std::vector<std::vector<double> > spectro2(spectro.size());
+	for(std::vector<std::vector<double> >::iterator
+			it1=spectro.begin(), it2=spectro2.begin(); it1!=spectro.end(); it1++, it2++)
+	{
+		*it2=std::vector<double>(it1->size());
+		for(std::vector<double>::iterator it_1 = it1->begin(), it_2=it2->begin(); it_1!=it1->end(); it_1++, it_2++)
+		{
+//			*it_2=val_max * (*it_1) / max;
+			*it_2=(*it_1-min) * (val_max - val_min) /( max - min) + val_min;
+		}
+	}
+	return spectro2;
 
 }

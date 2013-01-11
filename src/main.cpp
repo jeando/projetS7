@@ -57,7 +57,7 @@ int main()
 		for(unsigned int i=0; i<samples.size();i++){
 			samples_double.push_back(samples[i]);
 		}
-		vect_spectro.push_back(spectrogramme(samples_double,alc.getSampleRate()));
+		vect_spectro.push_back(equalize_spectrogramme(spectrogramme(samples_double,alc.getSampleRate())));
 	}
 	std::string mot_a_tester;
 	std::cout << "entrez le mot que vous voulez dire et dites le" << std::endl;
@@ -74,7 +74,7 @@ int main()
 			samples_double.push_back(samples[i]);
 		}
 		std::vector<std::vector<double> > spectro_a_tester
-		= spectrogramme(samples_double,alc.getSampleRate());
+		= equalize_spectrogramme(spectrogramme(samples_double,alc.getSampleRate()));
 		vect_distance.clear();
 		for(auto it = vect_spectro.begin(); it!=vect_spectro.end(); it++){
 			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
