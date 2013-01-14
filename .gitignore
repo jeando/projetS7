@@ -11,8 +11,10 @@ src/Makefile
 src/Makefile.in
 src/*/Makefile
 src/*/Makefile.in
-*/.deps
-*/*/.deps
+src/.deps
+src/*/.deps
+src/test1
+src/project_voix
 obj
 bin
 libsndfile
@@ -26,8 +28,5 @@ config.log
 config.status
 depcomp
 install-sh
-src/.deps
-src/test1
-src/project_voix
 
 
