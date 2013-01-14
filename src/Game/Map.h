@@ -16,8 +16,12 @@ class Map
         ~Map();
         void load_map(std::string nom);
         void save_map(std::string nom);
+        //on redessine tout (ne pas oublier croa_croa!)
         void draw(SDL_Surface* screen);
-        void update(SDL_Surface* screen, unsigned int x, unsigned int y);
+        //on dessine sur la grenouille le fond et on dessine la grenouille sur la nouvelle position
+        void update(SDL_Surface* screen);//, unsigned int x, unsigned int y);
+        bool change_speed(int vx, int vy);
+
 
     private:
         SDL_Suface* my_map;
