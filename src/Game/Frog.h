@@ -8,7 +8,9 @@ class Frog
     public:
         Frog(std::string nom);
         const std::string nom_image;
-    private:
+
+        int position_x;
+        int position_y;
         int vitesse_x;
         int vitesse_y;
         int etat_x;
