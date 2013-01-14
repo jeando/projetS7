@@ -12,9 +12,8 @@ using namespace std;
 **/
 Drawable::Drawable(string img)
 {
-    SDL_Surface* my_image = NULL;
-    const char* img = image.c_str();
-    my_image = IMG_Load( img );
+    const char* image = img.c_str();
+    my_image = IMG_Load( image );
 }
 
 /**
@@ -23,7 +22,8 @@ Drawable::Drawable(string img)
 */
 void Drawable::set_image(string img)
 {
-    image=img;
+    const char* image = img.c_str();
+    my_image = IMG_Load( image );
 }
 
 /**
