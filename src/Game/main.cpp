@@ -12,6 +12,6 @@ int main()
         SDL_Flip(screen);
 
 
-        sleep(10);
+		system("sleep 10");
         SDL_Quit();
 }
