@@ -42,12 +42,7 @@ T distance(std::vector<T> x)
 	return distance;
 }
 template<typename T>
-inline T distance(std::vector<T> x, std::vector<T> y)
-{
-	return distance(x,y,0,x.size());
-}
-template<typename T>
-inline T distance(std::vector<T> x, std::vector<T> y, unsigned int indice_debut, unsigned int indice_fin)
+inline T distance(std::vector<T>& x, std::vector<T>& y, unsigned int indice_debut, unsigned int indice_fin)
 {
 	T distance(0);
 	for(unsigned int i = indice_debut; i<indice_fin; i++)
@@ -55,6 +50,11 @@ inline T distance(std::vector<T> x, std::vector<T> y, unsigned int indice_debut,
 		distance+=(pow(x[i]-y[i],2));
 	}
 	return distance;
+}
+template<typename T>
+inline T distance(std::vector<T>& x, std::vector<T>& y)
+{
+	return distance(x,y,0,(int)x.size());
 }
 #endif
 
