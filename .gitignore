@@ -4,6 +4,7 @@
 *.wav
 *.bmp
 *.layout
+install_env.sh.back
 configure
 Makefile.in
 Makefile
