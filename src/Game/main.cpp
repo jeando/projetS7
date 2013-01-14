@@ -1,4 +1,4 @@
-#include "Drawable.h"
+#include "Map.h"
 
 int main()
 {
@@ -6,8 +6,10 @@ int main()
         SDL_Init(SDL_INIT_VIDEO);
         SDL_Surface * screen(SDL_SetVideoMode(1520, 840, 32, SDL_HWSURFACE));
 
-        Drawable dr("frog.png");
-        dr.draw(screen);
+        Map m("map1",screen);
+        m.draw(screen);
+
+        SDL_Flip(screen);
 
 
         sleep(10);

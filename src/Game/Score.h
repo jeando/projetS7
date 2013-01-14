@@ -6,6 +6,7 @@ class Score
     public:
         Score();
         void increment();
+        void decrement();
         int get_score();
 
     private:

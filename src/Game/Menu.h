@@ -12,9 +12,16 @@ class Action
         void choix_utilisateur(Action prec);
         void options(Action prec);
         void quitter(Action prec);
-        void retrour(Action prec);
+        void retour(Action prec);
 
         void choisir_map();
+        void modif_audio();
+        void modif_video();
+        void re_enregister();
+        void creer_nouvel_utilisateur();
+        void modif_touches();
+
+
     private:
         Action* precedente;
 };

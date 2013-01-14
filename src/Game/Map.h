@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <iostream>
 #include <vector>
+#include <map>
 
 #include "Item.h"
 #include "Frog.h"
@@ -12,7 +13,7 @@
 class Map
 {
     public:
-        Map(std::string which_map);
+        Map(std::string which_map, SDL_Surface* screen);
         ~Map();
         void load_map(std::string nom);
         void save_map(std::string nom);
@@ -25,11 +26,12 @@ class Map
 
 
     private:
-        SDL_Surface* my_map;
+        SDL_Surface* surface;
         unsigned int size_box_x;//111
         unsigned int size_box_y;//71
         unsigned int w_map;
         std::vector<Item*> list_items;
         Frog croa_croa;
+        std::map<std::string,SDL_Surface*> surfaces_map;
 };
 #endif // MAP_H_INCLUDED

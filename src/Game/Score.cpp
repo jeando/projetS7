@@ -11,6 +11,11 @@ void Score::increment()
     score++;
 }
 
+void Score::decrement()
+{
+    score--;
+}
+
 int Score::get_score()
 {
     return score;
