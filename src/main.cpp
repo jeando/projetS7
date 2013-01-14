@@ -60,6 +60,8 @@ int main()
 	{
 		std::cout << "dites le mot "<< s << std::endl;
 		std::cin >> tmp_str;
+		if(!(tmp_str!="0"&&tmp_str!="quit"&&tmp_str!=":q"&&tmp_str!="exit"))
+			return EXIT_SUCCESS;
 		samples.clear();
     	alc.start(samples);
     	std::this_thread::sleep_for(dura_2);
@@ -74,7 +76,7 @@ int main()
 		std::ostringstream oss("");
 		oss << "spectro_ref_" << s << ".bmp";
 		SDL_SaveBMP(screen, oss.str().c_str());
-		//indice_debut(vect_spectro.back());
+		std::cout << indice_debut(vect_spectro.back()) << std::endl;
 	}
 	std::string mot_a_tester;
 	std::cout << "entrez le mot que vous voulez dire et dites le" << std::endl;
@@ -101,6 +103,7 @@ int main()
 		std::cout << oss.str().c_str() << "ecrit" << std::endl;
 		vect_distance.clear();
 		for(auto it = vect_spectro.begin(); it!=vect_spectro.end(); it++){
+			//vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
 			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
 		}
 		double min_1_val(vect_distance[0]);

@@ -216,6 +216,7 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 		std::copy(it, it+taille, tmp.begin());//decoupage / selection tranche
 		fenetre_hamming(tmp);//pas grave car recoupement
 		tmp=amplitude_pond_log(demi_signal(fft(tmp)));
+//		tmp=amplitude_pond_log((fft(tmp)));
 		if(with_mel)
 		{
 			tmp=echelle_mel(tmp, sample_rate);
@@ -234,8 +235,8 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 		std::vector<std::vector<double> > spectro,
 		double val_min, double val_max)
 {
-	double max = get_max_val(spectro);
-	double min = get_min_val(spectro);
+	double max = get_max_val(filtre_gaussien(spectro));
+	double min = get_min_val(filtre_gaussien(spectro));
 	std::vector<std::vector<double> > spectro2(spectro.size());
 	for(std::vector<std::vector<double> >::iterator
 			it1=spectro.begin(), it2=spectro2.begin(); it1!=spectro.end(); it1++, it2++)
@@ -251,18 +252,185 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 
 }
 
-/*
+std::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double> > spectro)
+{
+	std::vector<std::vector<double> > spectro2;
+	spectro2.push_back(std::vector<double>(spectro[0].size()));
+	spectro2.push_back(std::vector<double>(spectro[1].size()));
+	for(unsigned int x=1; x<spectro.size()-1; x++)
+	{
+		spectro2.push_back(std::vector<double>(spectro[x+1].size()));
+		spectro2[x][0]=spectro2[x][spectro2[x].size()-1]=0;
+		for(unsigned int y=1; y<spectro[x].size()-1; y++)
+		{
+			//gaussienne
+			// 1 2 1
+			// 2 4 2 //milieu : 3 ou 4 ?
+			// 1 2 1
+			spectro2[x][y]=spectro[x-1][y+1]+2*spectro[x-1][y]+spectro[x-1][y-1];
+			spectro2[x][y]+=2*spectro[x][y+1]+4*spectro[x][y]+2*spectro[x][y-1];
+			spectro2[x][y]+=spectro[x+1][y+1]+2*spectro[x+1][y]+spectro[x+1][y-1];
+			spectro2[x][y]/=9;
+		}
+	}
+	return spectro2;
+
+}
+//*
 unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 {
-	std::vector<double> norme;
-	for(std::vector<std::vector<double> >::iterator it = spectro.begin();
-			it!=spectro.end();it++)
+	std::vector<double> norme_bf, norme_hf;
+	std::vector<std::vector<double> > spectro2;
+	spectro2.push_back(std::vector<double>(spectro[0].size()));
+	spectro2.push_back(std::vector<double>(spectro[1].size()));
+	for(unsigned int x=1; x<spectro.size()-1; x++)
 	{
-		norme.push_back(sqrt(distance(*it)));
-		//norme.push_back(distance(*it));
-		//std::cout << norme.back() << std::endl;
+		spectro2.push_back(std::vector<double>(spectro[x+1].size()));
+		spectro2[x][0]=spectro2[x][spectro2[x].size()-1]=0;
+		for(unsigned int y=1; y<spectro[x].size()-1; y++)
+		{
+			//gaussienne
+			// 1 2 1
+			// 2 4 2 //milieu : 3 ou 4 ?
+			// 1 2 1
+			
+	//		// 0 0 0
+	//		// 1-2 1
+	//		// 0 0 0
+			spectro2[x][y]=spectro[x-1][y+1]+2*spectro[x-1][y]+spectro[x-1][y-1];
+			spectro2[x][y]+=2*spectro[x][y+1]+4*spectro[x][y]+2*spectro[x][y-1];
+			spectro2[x][y]+=spectro[x+1][y+1]+2*spectro[x+1][y]+spectro[x+1][y-1];
+			spectro2[x][y]/=9;
+			//spectro2[x][y]=spectro[x-1][y]+2*spectro[x][y]+spectro[x+1][y];
+		}
 	}
-	std::vector<double> norme_2;
+	for(unsigned int y=0; y<spectro[0].size(); y++)
+	{
+		spectro2[0][y]=spectro2[1][y];
+		spectro2[spectro2.size()-1][y]=spectro2[spectro2.size()-2][y];
+	}
+	spectro=spectro2;
+	for(std::vector<std::vector<double> >::iterator it = spectro.begin();
+			it!=spectro.end()-1;it++)
+	{
+		norme_bf.push_back(sqrt(distance(*it,*(it+1), 0, it->size()/2)));
+		norme_hf.push_back(sqrt(distance(*it,*(it+1),it->size()/2, it->size())));
+		//norme.push_back(distance(*it));
+		std::cout << norme_bf.back() << " " << norme_hf.back() << std::endl;
+	}
+	double max_hf = * std::max_element(norme_hf.begin(), norme_hf.end());
+	double max_bf = * std::max_element(norme_bf.begin(), norme_bf.end());
+	std::vector<unsigned int> indice_hf;
+	std::vector<unsigned int> indice_bf;
+	unsigned int nb_hf(0), nb_bf(0);
+	for(unsigned int i=0; i<norme_hf.size(); i++)
+	{
+		if(norme_hf[i]>max_hf*2.0/3)
+		{
+			if(indice_hf.size()==0||indice_hf.back()!=i-nb_hf)
+			{
+				indice_hf.push_back(i);
+				nb_hf=1;
+			}
+			else{
+				nb_hf++;
+			}
+		}
+		if(norme_bf[i]>max_hf*2.0/3){
+			if(indice_bf.size()==0||indice_bf.back()!=i-nb_bf)
+			{
+				indice_bf.push_back(i);
+				nb_bf=1;
+			}
+			else{
+				nb_bf++;
+			}
+		}
+	}
+	std::vector<std::pair<double,double> > energie_bf;
+	for(unsigned int i : indice_bf){
+		double e_tmp_inf(0);
+		double e_tmp_sup(0);
+		for(unsigned j = i<10?0:i-10;j<i; j++)
+		{
+			e_tmp_inf+=distance(spectro[j]);
+		}
+		for(unsigned j = i;j<i+10&&j<spectro.size(); j++)
+		{
+			e_tmp_sup+=distance(spectro[j]);
+		}
+		energie_bf.push_back({e_tmp_inf,e_tmp_sup});
+	}
+	std::vector<unsigned int> bon_indice_bf;
+//	std::vector<unsigned int> bon_indice_bf;
+	bool good;
+	for(unsigned int i : indice_bf){
+		good=true;
+		for(unsigned j = i;j<i+5&&j<spectro.size(); j++)
+		{
+			if(sqrt(distance(spectro[i-1],spectro[j],0,spectro[i].size()/2)<max_bf*2.0/3))
+			{
+				good=false;
+				break;
+			}
+		}
+		if(good)
+		{
+			bon_indice_bf.push_back(i);
+		}
+	}/*
+	std::vector<std::pair<double,double> > energie_hf;
+	for(unsigned int i : indice_hf){
+		double e_tmp_inf(0);
+		double e_tmp_sup(0);
+		for(unsigned j = i<10?0:i-10;j<i; j++)
+		{
+			e_tmp_inf+=distance(spectro[j]);
+		}
+		for(unsigned j = i;j<i+10&&j<spectro.size(); j++)
+		{
+			e_tmp_sup+=distance(spectro[j]);
+		}
+		energie_hf.push_back({e_tmp_inf,e_tmp_sup});
+	}
+	std::cout << "bf" << std::endl;
+	for(unsigned int i =0; i<indice_bf.size(); i++)
+		std::cout << indice_bf[i] << " "
+			<< energie_bf[i].first << " "
+			<< energie_bf[i].second << std::endl;
+	std::cout << "hf" << std::endl;
+	for(unsigned int i =0; i<indice_hf.size(); i++)
+		std::cout << indice_hf[i] << " "
+			<< energie_hf[i].first << " "
+			<< energie_hf[i].second << std::endl;
+*/
+	for(unsigned int i =0; i<indice_bf.size(); i++)
+		std::cout << indice_bf[i] << std::endl;
+	std::cout << "bon" << std::endl;
+	for(unsigned int i =0; i<bon_indice_bf.size(); i++)
+		std::cout << bon_indice_bf[i] << std::endl;
+return -1;
+
+/*	
+	double max_val(norme[0]);
+	unsigned int indice_1(0);
+	unsigned int indice_2(0);
+	unsigned int indice_3(0);
+	//prendre 3 max _ val
+	for(unsigned int i=1; i<norme.size(); i++)
+	{
+		if(norme[i]>max_val){
+			max_val=norme[i];
+			indice_3=indice_2;
+			indice_2=indice_1;
+			indice_1=i;
+		}
+	}
+	return indice_1;
+	if(indice_1<indice_3)
+		return (indice_1<indice_2 ? indice_1 : indice_2);
+	return (indice_2<indice_3 ? indice_2 : indice_3);
+	/*std::vector<double> norme_2;
 	norme_2.push_back(2*norme[0]+norme[1]);
 	for(unsigned int i=1; i<norme.size()-1; i++)
 	{
@@ -278,6 +446,6 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 //		norme_2.push_back(norme[i]-norme[i-1]);
 		std::cout << norme_2.back() << std::endl;
 	}
-	
+	//*/
 }
 //*/
