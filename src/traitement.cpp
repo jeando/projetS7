@@ -252,8 +252,28 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 
 }
 
-sdt::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double> > spectro)
+std::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double> > spectro)
 {
+	std::vector<std::vector<double> > spectro2;
+	spectro2.push_back(std::vector<double>(spectro[0].size()));
+	spectro2.push_back(std::vector<double>(spectro[1].size()));
+	for(unsigned int x=1; x<spectro.size()-1; x++)
+	{
+		spectro2.push_back(std::vector<double>(spectro[x+1].size()));
+		spectro2[x][0]=spectro2[x][spectro2[x].size()-1]=0;
+		for(unsigned int y=1; y<spectro[x].size()-1; y++)
+		{
+			//gaussienne
+			// 1 2 1
+			// 2 4 2 //milieu : 3 ou 4 ?
+			// 1 2 1
+			spectro2[x][y]=spectro[x-1][y+1]+2*spectro[x-1][y]+spectro[x-1][y-1];
+			spectro2[x][y]+=2*spectro[x][y+1]+4*spectro[x][y]+2*spectro[x][y-1];
+			spectro2[x][y]+=spectro[x+1][y+1]+2*spectro[x+1][y]+spectro[x+1][y-1];
+			spectro2[x][y]/=9;
+		}
+	}
+	return spectro2;
 
 }
 //*
