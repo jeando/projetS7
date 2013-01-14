@@ -154,18 +154,18 @@ void fenetre_hamming(std::vector<double> input)
 }
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref, int delta)
+		std::vector<std::vector<double> > ref,unsigned int delta)
 {
 	return dynamic_time_warping(mesure, ref, delta, 0, ref.begin()->size());
 }
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref, int delta,
-		unsigned int indice_debut, unsigned int indice_fin)
+		std::vector<std::vector<double> > ref,unsigned int delta,
+		unsigned int _indice_debut, unsigned int _indice_fin)
 {
 	std::vector<double> dist;//(mesure.size());
-	unsigned int n(0);//mesure iterateur
-	unsigned int m(0);//ref iterateur
+	unsigned int n(indice_debut(mesure));//mesure iterateur
+	unsigned int m(indice_debut(ref));//ref iterateur
 	for(;n<mesure.size(); n++)
 	{
 		double min(std::numeric_limits<double>::max());
@@ -173,7 +173,7 @@ std::vector<double> dynamic_time_warping(
 		unsigned int indice_min;
 		for(unsigned int k = (m<delta?0:(m-delta)); k< m+delta && k<ref.size(); k++)
 		{
-			tmp_dst = distance(mesure[n],ref[k],indice_debut, indice_fin);
+			tmp_dst = distance(mesure[n],ref[k],_indice_debut, _indice_fin);
 			if(tmp_dst<min)
 			{
 				min = tmp_dst;
@@ -273,57 +273,32 @@ std::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double
 			spectro2[x][y]/=9;
 		}
 	}
-	return spectro2;
-
-}
-//*
-unsigned int indice_debut(std::vector<std::vector<double> > spectro)
-{
-	std::vector<double> norme_bf, norme_hf;
-	std::vector<std::vector<double> > spectro2;
-	spectro2.push_back(std::vector<double>(spectro[0].size()));
-	spectro2.push_back(std::vector<double>(spectro[1].size()));
-	for(unsigned int x=1; x<spectro.size()-1; x++)
-	{
-		spectro2.push_back(std::vector<double>(spectro[x+1].size()));
-		spectro2[x][0]=spectro2[x][spectro2[x].size()-1]=0;
-		for(unsigned int y=1; y<spectro[x].size()-1; y++)
-		{
-			//gaussienne
-			// 1 2 1
-			// 2 4 2 //milieu : 3 ou 4 ?
-			// 1 2 1
-			
-	//		// 0 0 0
-	//		// 1-2 1
-	//		// 0 0 0
-			spectro2[x][y]=spectro[x-1][y+1]+2*spectro[x-1][y]+spectro[x-1][y-1];
-			spectro2[x][y]+=2*spectro[x][y+1]+4*spectro[x][y]+2*spectro[x][y-1];
-			spectro2[x][y]+=spectro[x+1][y+1]+2*spectro[x+1][y]+spectro[x+1][y-1];
-			spectro2[x][y]/=9;
-			//spectro2[x][y]=spectro[x-1][y]+2*spectro[x][y]+spectro[x+1][y];
-		}
-	}
 	for(unsigned int y=0; y<spectro[0].size(); y++)
 	{
 		spectro2[0][y]=spectro2[1][y];
 		spectro2[spectro2.size()-1][y]=spectro2[spectro2.size()-2][y];
 	}
-	spectro=spectro2;
+	return spectro2;
+}
+//*
+unsigned int indice_debut(std::vector<std::vector<double> > spectro)
+{
+	std::vector<double> norme_bf, norme_hf;
+	spectro=filtre_gaussien(spectro);
 	for(std::vector<std::vector<double> >::iterator it = spectro.begin();
 			it!=spectro.end()-1;it++)
 	{
 		norme_bf.push_back(sqrt(distance(*it,*(it+1), 0, it->size()/2)));
 		norme_hf.push_back(sqrt(distance(*it,*(it+1),it->size()/2, it->size())));
 		//norme.push_back(distance(*it));
-		std::cout << norme_bf.back() << " " << norme_hf.back() << std::endl;
+	//	std::cout << norme_bf.back() << " " << norme_hf.back() << std::endl;
 	}
 	double max_hf = * std::max_element(norme_hf.begin(), norme_hf.end());
 	double max_bf = * std::max_element(norme_bf.begin(), norme_bf.end());
 	std::vector<unsigned int> indice_hf;
 	std::vector<unsigned int> indice_bf;
 	unsigned int nb_hf(0), nb_bf(0);
-	for(unsigned int i=0; i<norme_hf.size(); i++)
+	for(unsigned int i=1; i<norme_hf.size(); i++)
 	{
 		if(norme_hf[i]>max_hf*2.0/3)
 		{
@@ -336,7 +311,7 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 				nb_hf++;
 			}
 		}
-		if(norme_bf[i]>max_hf*2.0/3){
+		if(norme_bf[i]>max_bf*2.0/3){
 			if(indice_bf.size()==0||indice_bf.back()!=i-nb_bf)
 			{
 				indice_bf.push_back(i);
@@ -347,6 +322,10 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 			}
 		}
 	}
+	if(indice_bf.size()==1)
+		return indice_bf.back();
+
+
 	std::vector<std::pair<double,double> > energie_bf;
 	for(unsigned int i : indice_bf){
 		double e_tmp_inf(0);
@@ -378,7 +357,11 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 		{
 			bon_indice_bf.push_back(i);
 		}
-	}/*
+	}
+	for(int i : bon_indice_bf)
+		std::cout << i << std::endl;
+	return bon_indice_bf[0];
+	/*
 	std::vector<std::pair<double,double> > energie_hf;
 	for(unsigned int i : indice_hf){
 		double e_tmp_inf(0);
