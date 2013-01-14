@@ -24,10 +24,10 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref, int delta=10);
+		std::vector<std::vector<double> > ref,unsigned int delta=10);
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref, int delta,
+		std::vector<std::vector<double> > ref,unsigned int delta,
 		unsigned int indice_debut, unsigned int indice_fin);
 
 unsigned int indice_debut(std::vector<std::vector<double> > spectro);

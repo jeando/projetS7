@@ -18,7 +18,7 @@ int main()
     alc.start(samples);
     //dors dura milliseconds
     //std::this_thread::sleep_for(dura/10);
-    std::this_thread::sleep_for(dura);
+    std::this_thread::sleep_for(dura/10);
     alc.stop();//arret enregistrement
     std::cout << samples.size() << std::endl;
     //on enregistre le son
@@ -41,13 +41,13 @@ int main()
 //	std::vector<std::string> vect_mot={"gauche","droite"};//,"haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
 	std::vector<std::string> vect_mot={
 		"gauche",
-		"gauche ",
+		//"gauche ",
 		"droite",
-		"droite ",
+		//"droite ",
 		"haut",
-		"haut ",
+		//"haut ",
 		"bas",
-		"bas "
+		//"bas "
 	};//,"diag"};//,"un","deux","trois","quatre","cinq","six"};
 //	std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
 	SDL_Init(SDL_INIT_VIDEO);
@@ -119,6 +119,7 @@ int main()
 				min_1_indice=i;
 			}
 		}
+		/*
 		double d1 = (distance(dynamic_time_warping(spectro_a_tester,
 						vect_spectro[min_1_indice],10,0,spectro_a_tester.begin()->size()/2)));
 		double d2 = (distance(dynamic_time_warping(spectro_a_tester,
@@ -126,6 +127,7 @@ int main()
 
 		std::cout << d1 <<std::endl;
 		std::cout << d2 <<std::endl;
+		//*/
 		std::cout << "Vous avez dit le mot : " << vect_mot[min_1_indice]<<std::endl;
 	}	
 	for(unsigned int x=0; x<spectro.size(); x++)
