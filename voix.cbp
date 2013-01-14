@@ -16,6 +16,18 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="src/Game/Frog.cpp" />
+		<Unit filename="src/Game/Frog.h" />
+		<Unit filename="src/Game/Game.cpp" />
+		<Unit filename="src/Game/Game.h" />
+		<Unit filename="src/Game/Item.cpp" />
+		<Unit filename="src/Game/Item.h" />
+		<Unit filename="src/Game/Menu.cpp" />
+		<Unit filename="src/Game/Menu.h" />
+		<Unit filename="src/Game/Score.cpp" />
+		<Unit filename="src/Game/Score.h" />
+		<Unit filename="src/Map.cpp" />
+		<Unit filename="src/Map.h" />
 		<Unit filename="src/MyAL.cpp" />
 		<Unit filename="src/MyAL.h" />
 		<Unit filename="src/main.cpp" />

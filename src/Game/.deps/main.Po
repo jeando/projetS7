@@ -1,1 +1,1 @@
-# dummy
+main.o: main.cpp
