@@ -60,5 +60,6 @@ AC_TYPE_SIZE_T
 
 AC_CONFIG_FILES([Makefile
                  src/Makefile
-                 src/Game/Makefile])
+                 src/Game/Makefile
+				 src/test/Makefile])
 AC_OUTPUT
