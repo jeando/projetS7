@@ -29,5 +29,7 @@ config.log
 config.status
 depcomp
 install-sh
-
+INSTALL
+COPYING
+missing
 
