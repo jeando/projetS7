@@ -1,0 +1,12 @@
+Pseudocode
+
+ForwardBackward(guessState, sequenceIndex):
+    if sequenceIndex is past the end of the sequence, return 1
+    if (guessState, sequenceIndex) has been seen before, return saved result
+    result = 0
+    for each neighboring state n:
+        result = result + (transition probability from guessState to n given observation element at sequenceIndex)
+                        * ForwardBackward(n, sequenceIndex+1)
+    save result for (guessState, sequenceIndex)
+    return result
+
