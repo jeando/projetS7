@@ -235,8 +235,8 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 		std::vector<std::vector<double> > spectro,
 		double val_min, double val_max)
 {
-	double max = get_max_val(spectro);
-	double min = get_min_val(spectro);
+	double max = get_max_val(filtre_gaussien(spectro));
+	double min = get_min_val(filtre_gaussien(spectro));
 	std::vector<std::vector<double> > spectro2(spectro.size());
 	for(std::vector<std::vector<double> >::iterator
 			it1=spectro.begin(), it2=spectro2.begin(); it1!=spectro.end(); it1++, it2++)
@@ -336,7 +336,7 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 				nb_hf++;
 			}
 		}
-		if(norme_bf[i]>max_hf*2.0/3)
+		if(norme_bf[i]>max_hf*2.0/3){
 			if(indice_bf.size()==0||indice_bf.back()!=i-nb_bf)
 			{
 				indice_bf.push_back(i);
@@ -345,6 +345,7 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 			else{
 				nb_bf++;
 			}
+		}
 	}
 	std::vector<std::pair<double,double> > energie_bf;
 	for(unsigned int i : indice_bf){
@@ -361,7 +362,7 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 		energie_bf.push_back({e_tmp_inf,e_tmp_sup});
 	}
 	std::vector<unsigned int> bon_indice_bf;
-	std::vector<unsigned int> bon_indice_bf;
+//	std::vector<unsigned int> bon_indice_bf;
 	bool good;
 	for(unsigned int i : indice_bf){
 		good=true;
