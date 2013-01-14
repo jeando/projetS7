@@ -6,8 +6,8 @@ using namespace std;
 Map::Map(string nom, SDL_Surface* screen)
 :surface(SDL_CreateRGBSurface(screen->flags, screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask)),
-    size_box_x(111), size_box_y(71),
-w_map(14),croa_croa(Frog("frog"))
+    size_box_x(37), size_box_y(24),
+w_map(41),croa_croa(Frog("frog"))
 {
     load_map(nom);
 }
@@ -37,8 +37,8 @@ void Map::load_map(string nom)
 
     list_items[5] = new Item("wall");
     list_items[19] = new Item("wall");
-    list_items[1] = new Item("end");
-    list_items[2] = new Item("begin");
+    list_items[1079] = new Item("end");
+    list_items[0] = new Item("begin");
 }
 
 void Map::draw(SDL_Surface* screen)
@@ -66,4 +66,37 @@ void Map::draw(SDL_Surface* screen)
         rect2.x=size_box_x*croa_croa.position_x;
         rect2.y=size_box_y*croa_croa.position_y;
         SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
+        SDL_Flip(screen);
+}
+
+void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
+{
+        SDL_Rect rect;
+        rect.x=size_box_x*croa_croa.position_x;
+        rect.y=size_box_y*croa_croa.position_y;
+        rect.w=size_box_x;
+        rect.h=size_box_y;
+        SDL_BlitSurface(surface,&rect,screen,&rect);
+
+        croa_croa.position_x+=croa_croa.vitesse_x;
+        croa_croa.position_y+=croa_croa.vitesse_y;
+
+
+        croa_croa.etat_x += abs(croa_croa.vitesse_x) + abs(croa_croa.vitesse_y);
+        while(croa_croa.etat_x>3)
+        {
+            croa_croa.etat_x-=4;
+        }
+
+        SDL_Rect rect1;
+        rect1.x=size_box_x*(croa_croa.etat_x);
+        rect1.y=size_box_y*(croa_croa.etat_y);
+        rect1.w=size_box_x;
+        rect1.h=size_box_y;
+
+        SDL_Rect rect2;
+        rect2.x=size_box_x*croa_croa.position_x;
+        rect2.y=size_box_y*croa_croa.position_y;
+        SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
+        SDL_Flip(screen);
 }

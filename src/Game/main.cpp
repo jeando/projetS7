@@ -9,8 +9,11 @@ int main()
         Map m("map1",screen);
         m.draw(screen);
 
-        SDL_Flip(screen);
-
+        for(int i=0; i<30; i++)
+        {
+            m.update(screen);
+            system("sleep 0.3");
+        }
 
 		system("sleep 10");
         SDL_Quit();
