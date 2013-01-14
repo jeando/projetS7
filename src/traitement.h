@@ -14,6 +14,8 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate);
 /*!
  * decale de v.size()/2 le signal v
  */
+std::vector<std::vector<double> > filtre_gaussien(
+		std::vector<std::vector<double> > spectro);
 void decaler(std::vector<double>& v);
 std::vector<std::vector<double> > equalize_spectrogramme(
 		std::vector<std::vector<double> > spectro,
