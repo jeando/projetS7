@@ -10,6 +10,7 @@ class Drawable {
         Drawable(std::string img);
         virtual ~Drawable();
         virtual void draw(SDL_Surface* screen);
+        void set_image(std::string img);
 
     protected:
         SDL_Surface* my_image;
