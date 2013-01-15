@@ -3,8 +3,13 @@ dependance (pour libsndfile)
 autogen
 autoconf
 automake
+libtool
 
-commencer par executer install_env.sh:
 
-sh install_env.sh
+
+commencer par executer autogen.sh puis rebuild.sh
+
+sh autogen.sh
+sh rebuild.sh
+
 

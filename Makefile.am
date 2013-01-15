@@ -1,1 +1,1 @@
-SUBDIRS = src src/Game
+SUBDIRS = src src/Game src/test

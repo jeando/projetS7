@@ -1,0 +1,5 @@
+bin_PROGRAMS = test
+
+AM_CXXFLAGS = $(INTI_CFLAGS) $(SDL_CFLAGS)
+test_SOURCES = test.cpp
+test_LDADD = $(INTI_LIBS) $(SDL_LIBS)

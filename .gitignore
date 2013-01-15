@@ -2,12 +2,20 @@
 *~
 *.swp
 *.wav
+*.bmp
 *.layout
+install_env.sh.back
 configure
 Makefile.in
 Makefile
 src/Makefile
 src/Makefile.in
+src/*/Makefile
+src/*/Makefile.in
+src/.deps
+src/*/.deps
+src/test1
+src/project_voix
 obj
 bin
 libsndfile
@@ -21,8 +29,7 @@ config.log
 config.status
 depcomp
 install-sh
-src/.deps
-src/test1
-src/project_voix
-
+INSTALL
+COPYING
+missing
 
