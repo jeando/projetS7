@@ -1,20 +1,14 @@
-#include "Map.h"
+#include "Game.h"
 
 int main()
 {
         //configuration de la fenetre
         SDL_Init(SDL_INIT_VIDEO);
         SDL_Surface * screen(SDL_SetVideoMode(1520, 840, 32, SDL_HWSURFACE));
+        SDL_WM_SetIcon(IMG_Load(".../../images/icone.png"), NULL);
 
-        Map m("map1",screen);
-        m.draw(screen);
+        Game g(screen);
+        g.start();
 
-        for(int i=0; i<30; i++)
-        {
-            m.update(screen);
-            system("sleep 0.3");
-        }
-
-		system("sleep 10");
         SDL_Quit();
 }

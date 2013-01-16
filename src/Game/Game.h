@@ -7,18 +7,22 @@
 #include "Map.h"
 class Menu;
 
+enum events_audio {SON_HAUT, SON_BAS, SON_GAUCHE, SON_DROITE};
+
 class Game
 {
     public:
-        Game();
+        Game(SDL_Surface* scre);
         ~Game();
         void start();
         void pause();
-        void gestion();
+        bool gestionSDL_Event();
+        bool gestion_Audio();
 
     private:
+        SDL_Surface* screen;
         Menu* menu;
-        Map* map;
+        Map map;
         Score score;
 };
 
