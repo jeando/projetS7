@@ -6,7 +6,7 @@ using namespace std;
 Map::Map(string nom, SDL_Surface* screen)
 :surface(SDL_CreateRGBSurface(screen->flags, screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask)),
-size_box_x(37), size_box_y(24), w_map(41),croa_croa(Frog("frog"))
+size_box_x(30), size_box_y(30), w_map(50), h_map(27),croa_croa(Frog("frog"))
 {
     load_map(nom);
 }
@@ -26,7 +26,7 @@ Map::~Map()
 
 void Map::load_map(string nom)
 {
-    list_items.resize(w_map*w_map);
+    list_items.resize(w_map*h_map);
     cout << nom << endl;
     surfaces_map["wall"]=IMG_Load( "../../images/wall.png" );
     surfaces_map["end"]=IMG_Load( "../../images/end.png" );
@@ -103,11 +103,10 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
 bool Map::change_speed(int vx, int vy)
 {
     int coord = (croa_croa.position_x+vx)+(w_map+1)*(croa_croa.position_y+vy);
-    cout << "coord a atteindre: " << coord << endl;
     if((coord<list_items.size() //limite basse
+        && croa_croa.position_x+vx<w_map//limite droite
         && coord>0 //limite haute
         && croa_croa.position_x+vx>=0 //limite gauche
-        && croa_croa.position_x+vx<=w_map//limite droite
         )
        && ((list_items[coord]!=nullptr && list_items[coord]->nom_image=="wall")
             || list_items[coord]==nullptr))//gestion des elements presents sur le terrain
@@ -153,6 +152,5 @@ bool Map::change_speed(int vx, int vy)
         croa_croa.vitesse_y = vy;
         return true;
     }
-    cout << "test3" << endl;
     return false;
 }

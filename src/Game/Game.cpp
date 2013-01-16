@@ -53,34 +53,42 @@ bool Game::gestionSDL_Event()
 
 bool Game::gestion_Audio()
 {
-    events_audio test = SON_DROITE;//a changer avec la fonction adequoite
+    events_audio test = SON_BAS;//a changer avec la fonction adequoite
+    bool deplacement = true;
     switch(test)
     {
         case SON_HAUT:
-            map.change_speed(0,-1);
+            deplacement = map.change_speed(0,-1);
             break;
         case SON_BAS:
-            map.change_speed(0,1);
+            deplacement = map.change_speed(0,1);
             break;
         case SON_GAUCHE:
-            map.change_speed(-1,0);
+            deplacement = map.change_speed(-1,0);
             break;
         case SON_DROITE:
-            map.change_speed(1,0);
+            deplacement = map.change_speed(1,0);
             break;
         default:
             break;
     }
-    return true;
+    return deplacement;
 }
 
 
 void Game::start()
 {
-    while(gestionSDL_Event() && gestion_Audio())
+    while(gestionSDL_Event())
     {
-        map.update(screen);
-        system("sleep 0.3");
+        if(gestion_Audio())
+        {
+            map.update(screen);
+            system("sleep 0.3");
+        }
+        else
+        {
+            cout << "deplacement impossible" << endl;
+        }
     }
     return;
 }
