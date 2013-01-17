@@ -70,6 +70,8 @@ void Map::draw(SDL_Surface* screen)
 
 void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
 {
+    if(is_deplacement_possible(croa_croa.vitesse_x, croa_croa.vitesse_y))
+    {
         SDL_Rect rect;
         rect.x=size_box_x*croa_croa.position_x;
         rect.y=size_box_y*croa_croa.position_y;
@@ -98,9 +100,11 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
         rect2.y=size_box_y*croa_croa.position_y;
         SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
         SDL_Flip(screen);
+    }
+
 }
 
-bool Map::change_speed(int vx, int vy)
+bool Map::is_deplacement_possible(int vx, int vy)
 {
     int coord = (croa_croa.position_x+vx)+(w_map+1)*(croa_croa.position_y+vy);
     if((coord<list_items.size() //limite basse
@@ -110,6 +114,15 @@ bool Map::change_speed(int vx, int vy)
         )
        && ((list_items[coord]!=nullptr && list_items[coord]->nom_image=="wall")
             || list_items[coord]==nullptr))//gestion des elements presents sur le terrain
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Map::change_speed(int vx, int vy)
+{
+    if(is_deplacement_possible(vx, vy))
     {
         if(vx>0)
         {

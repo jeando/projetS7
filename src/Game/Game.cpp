@@ -80,15 +80,12 @@ void Game::start()
 {
     while(gestionSDL_Event())
     {
-        if(gestion_Audio())
-        {
-            map.update(screen);
-            system("sleep 0.3");
-        }
-        else
+        if(!gestion_Audio())
         {
             cout << "deplacement impossible" << endl;
         }
+        map.update(screen);
+        system("sleep 0.3");
     }
     return;
 }
