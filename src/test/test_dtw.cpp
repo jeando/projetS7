@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 	for(auto a : samples_ref){
 		vdist.push_back(distance(dynamic_time_warping(spectro,
 					spectrogramme(MyAL::sample_to_double(
-							a.first), a.second.samplerate))));
+							a.first), a.second.samplerate),4)));
 		std::cout << vdist.back() << std::endl;
 	}
 	int min(vdist[0]);

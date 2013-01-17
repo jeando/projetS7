@@ -17,18 +17,20 @@ int main(int argc, char** argv)
     std::this_thread::sleep_for(dura);
     alc.stop();
 
+	alc.save_sound("test.wav");
+
 	std::vector<std::vector<double> > spectro =  spectrogramme(MyAL::sample_to_double(samples), alc.getSampleRate());
 	std::vector<double> vdist;
 	for(auto a : samples_ref){
 		vdist.push_back(distance(dynamic_time_warping(spectro,
 					spectrogramme(MyAL::sample_to_double(
-							a.first), a.second.samplerate))));
-		std::cout << vdist.back() << std::endl;
+							a.first), a.second.samplerate),6)));
 	}
 	int min(vdist[0]);
 	int min_indice(0);
-	for(unsigned int i=1; i<vdist.size(); i++)
+	for(unsigned int i=0; i<vdist.size(); i++)
 	{
+		std::cout << vdist[i] << std::endl;
 		if(vdist[i]<min){
 			min=vdist[i];
 			min_indice=i;

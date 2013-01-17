@@ -15,7 +15,7 @@ std::vector<double> echelle_mel(std::vector<double> input, int sample_rate);
  * decale de v.size()/2 le signal v
  */
 std::vector<std::vector<double> > filtre_gaussien(
-		std::vector<std::vector<double> > spectro);
+		std::vector<std::vector<double> > spectro, int size = 3);
 void decaler(std::vector<double>& v);
 std::vector<std::vector<double> > equalize_spectrogramme(
 		std::vector<std::vector<double> > spectro,
@@ -30,18 +30,23 @@ std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > ref,unsigned int delta,
 		unsigned int indice_debut, unsigned int indice_fin);
 
-unsigned int indice_debut(std::vector<std::vector<double> > spectro);
+int indice_debut(std::vector<std::vector<double> > spectro);
 //templates fonctions	
 template<typename T>
-T distance(std::vector<T> x)
+T distance(std::vector<T> x, unsigned int indice_debut, unsigned int indice_fin)
 {
 	T distance(0);
-	for(unsigned int i = 0; i<x.size(); i++)
+	for(unsigned int i = indice_debut; i<indice_fin; i++)
 	{
 		distance+=(pow(x[i],2));
 //		distance+=fabs(x[i]);
 	}
 	return distance;
+}
+template<typename T>
+T distance(std::vector<T> x)
+{
+	return distance(x,0,(int)x.size());
 }
 template<typename T>
 inline T distance(std::vector<T>& x, std::vector<T>& y, unsigned int indice_debut, unsigned int indice_fin)
