@@ -53,7 +53,7 @@ void Map::load_map(string nom)
     croa_croa.position_x=debut_x;
     croa_croa.position_y=debut_y;
 
-    for(int i=20; i<=47; i++)
+    for(int i=24; i<=47; i++)
     {
         list_items[48*1+i] = new Item("wall");
     }
@@ -136,7 +136,7 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
 
 bool Map::is_deplacement_possible(int vx, int vy)
 {
-    int coord = (croa_croa.position_x+vx)+(w_map+1)*(croa_croa.position_y+vy);
+    int coord = (croa_croa.position_x+vx)+w_map*(croa_croa.position_y+vy);
     if((coord<list_items.size() //limite basse
         && croa_croa.position_x+vx<w_map//limite droite
         && coord>0 //limite haute
