@@ -244,7 +244,7 @@ void MyAL::save_sound(const std::string& file_name, const std::vector<ALshort>& 
     }
     SNDFILE* file = sf_open(file_name.c_str(), SFM_WRITE, &file_info);
     if (!file){
-        std::cerr << "open file failure ! Exit saving !" << std::endl;
+        std::cerr << "open file " <<file_name.c_str() << "failure ! Exit saving !" << std::endl;
         return;
     }
     sf_writef_short(file, &samples[0], samples.size());
