@@ -1,4 +1,4 @@
-bin_PROGRAMS = test test_load_sound test_draw_spectro test_draw_spectro_mel test_save_sound
+bin_PROGRAMS = test test_load_sound test_draw_spectro test_draw_spectro_mel test_save_sound test_dtw test_dtw_enreg
 
 AM_CXXFLAGS = $(INTI_CFLAGS) $(SDL_CFLAGS)
 test_SOURCES = test.cpp
@@ -11,3 +11,7 @@ test_draw_spectro_SOURCES = test_draw_spectro.cpp ../MyAL.cpp ../MyAL.h ../trait
 test_draw_spectro_LDADD = $(INTI_LIBS) $(SDL_LIBS)
 test_draw_spectro_mel_SOURCES = test_draw_spectro_mel.cpp ../MyAL.cpp ../MyAL.h ../traitement.h ../traitement.cpp ../sdl.h ../ft.cpp ../ft.h
 test_draw_spectro_mel_LDADD = $(INTI_LIBS) $(SDL_LIBS)
+test_dtw_SOURCES = test_dtw.cpp ../MyAL.cpp ../MyAL.h ../traitement.h ../traitement.cpp ../ft.cpp ../ft.h
+test_dtw_LDADD = $(INTI_LIBS) $(SDL_LIBS)
+test_dtw_enreg_SOURCES = test_dtw_enreg.cpp ../MyAL.cpp ../MyAL.h ../traitement.h ../traitement.cpp ../ft.cpp ../ft.h
+test_dtw_enreg_LDADD = $(INTI_LIBS) $(SDL_LIBS)
