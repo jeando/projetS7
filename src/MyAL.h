@@ -15,7 +15,7 @@
 #include<cstring>
 
 #include<ios>
-
+#define get_stockage_path() "/home/favreau/projetS7/src/"
 #define MAX_ALSHORT_VAL  ((1<<((sizeof(ALshort)<<3)-1))-1)
 #define MIN_ALSHORT_VAL  (-(1<<((sizeof(ALshort)<<3)-1)))
 
@@ -25,11 +25,12 @@ class MyAL
 	private:
 		static std::string choisir_device(std::vector<std::string> lst_device);
     public:
+		static std::vector<double> sample_to_double(const std::vector<ALshort>& samples);
 		static std::string choisir_device();
 		static std::string choisir_capture_device();
         static std::vector<std::string> get_devices();
         static std::vector<std::string> get_capture_devices();
-        static std::vector<ALshort> load_sound(const std::string& file_name);
+        static std::pair<std::vector<ALshort>, SF_INFO> load_sound(std::string file_name);
         static void save_sound(const std::string& file_name, const std::vector<ALshort>& samples,ALsizei _sample_rate = 8000, ALsizei _nb_channel = 1);
     public:
         MyAL(std::string _device="");
@@ -70,8 +71,20 @@ class AL_Play : public MyAL
 {
     public:
         AL_Play(std::string _device="");
+		virtual ~AL_Play();
+		void play();
+        void stop();
+		void put_sound_in_buffer(std::string name);
+		bool is_playing();
+		ALsizei getSampleRate();
+		
     protected:
     private:
+		unsigned int indice_buffer;
+		std::vector<ALshort> samples;
+		SF_INFO sound_info;
+		ALuint source;
+		std::vector<ALuint> buffers;
 };
 class AL_Stream_Play : public AL_Play
 {

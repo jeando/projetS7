@@ -133,7 +133,7 @@ ALuint loadSound(const std::string& Filename,ALuint Buffer)
         case 2 :  Format = AL_FORMAT_STEREO16; break;
         default : return 0;
     }
-    alBufferData(Buffer, Format, &Samples[0], NbSamples * sizeof(ALushort), SampleRate);
+    alBufferData(Buffer, Format, &Samples[0], NbSamples * sizeof(ALshort), SampleRate);
     int erreur;
     if ((erreur=alGetError()) != AL_NO_ERROR){
             std::cout << erreur << " != " << AL_NO_ERROR<< std::endl;

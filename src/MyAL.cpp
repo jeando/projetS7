@@ -1,5 +1,6 @@
 #include "MyAL.h"
 #include<iostream>
+#include<ios>
 /*
 *Classe qui gère la carte son: surcouche à la librairie OpenAL
 */
@@ -21,6 +22,16 @@ MyAL::~MyAL()
     alcDestroyContext(context);
     alcCloseDevice(device);
 }
+std::vector<double> MyAL::sample_to_double(const std::vector<ALshort>& samples)
+{
+	std::vector<double> output(samples.size());
+	for(unsigned int i=0; i< samples.size(); i++)
+	{
+		output[i]=samples[i];
+	}
+	return output;
+}
+
 std::string MyAL::choisir_capture_device()
 {
 	std::cout << "capture devices :" << std::endl;
@@ -239,8 +250,83 @@ void MyAL::save_sound(const std::string& file_name, const std::vector<ALshort>& 
     sf_writef_short(file, &samples[0], samples.size());
     sf_close(file);
 }
-AL_Play::AL_Play(std::string _device)
-:MyAL(_device)
+std::pair<std::vector<ALshort>, SF_INFO> MyAL::load_sound(std::string file_name)
 {
+	SF_INFO file_info;
+//	std::ostringstream oss("");
+//	oss << get_stockage_path()<<file_name;
+	SNDFILE* file = sf_open((get_stockage_path() + file_name).c_str(),
+			SFM_READ, &file_info);
+	if(!file)
+        throw std::ios_base::failure("Can't open sound file");
+	ALsizei nb_samples = static_cast<ALsizei>(file_info.channels
+			* file_info.frames);
+//	ALsizei sample_rate = static_cast<ALsizei>(file_info.samplerate);
+	std::vector<ALshort> samples(nb_samples);
+	if(sf_read_short(file, &samples[0], nb_samples) < nb_samples)
+        throw std::ios_base::failure("Can't load sound");
+	sf_close(file);
+	return std::pair<std::vector<ALshort>, SF_INFO>(samples, file_info);
+}
+AL_Play::AL_Play(std::string _device)
+:MyAL(_device),indice_buffer(0),buffers(1)
+{
+	alGenSources(1, &source);
+	alGenBuffers(buffers.size(), &buffers[0]);
+}
+AL_Play::~AL_Play()
+{
+	alSourceStop(source);
+	ALint nb_queued;
+	ALuint buffer;
+	alGetSourcei(source, AL_BUFFERS_QUEUED, &nb_queued);
+ 	for (ALint i = 0; i < nb_queued; ++i)
+		alSourceUnqueueBuffers(source, AL_BUFFER, &buffer);
+	alSourcei(source, AL_BUFFER, 0);
+	alDeleteBuffers(buffers.size(), &buffers[0]);
+	alDeleteSources(1, &source);
+}
+void AL_Play::play()
+{
+	alSourcePlay(source);
+}
+void AL_Play::stop()
+{
+	alSourceStop(source);
+}
+bool AL_Play::is_playing()
+{
+	ALint status;
+	alGetSourcei(source, AL_SOURCE_STATE, &status);
+	return status == AL_PLAYING;
+}
+ALsizei AL_Play::getSampleRate()
+{
+	return static_cast<ALsizei>(sound_info.samplerate);
+}
+void AL_Play::put_sound_in_buffer(std::string name)
+{
+	std::pair<std::vector<ALshort>, SF_INFO> sound = MyAL::load_sound(name);
+	samples = sound.first;
+	sound_info = sound.second;
+
+	ALenum format;
+	switch(sound_info.channels)
+	{
+		case 1 : format = AL_FORMAT_MONO16; break;
+		case 2 : format = AL_FORMAT_STEREO16; break;
+	}
+	alBufferData(buffers[indice_buffer], format,
+			&samples[0], samples.size()*sizeof(ALshort),
+			static_cast<ALsizei>(sound_info.samplerate));
+	int erreur;
+	if((erreur=alGetError()) != AL_NO_ERROR){
+		std::cout << erreur << " != " << AL_NO_ERROR<< std::endl;
+		return;
+	}
+	alSourceQueueBuffers(source, 1, &buffers[indice_buffer]);
 
 }
+
+
+
