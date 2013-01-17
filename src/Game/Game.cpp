@@ -6,8 +6,6 @@ Game::Game(SDL_Surface* scre)
 :screen(scre), map("map1",scre)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
-
-        map.draw(screen);
 }
 
 Game::~Game()
@@ -22,7 +20,6 @@ void Game::pause()
 
 bool Game::gestionSDL_Event()
 {
-
     SDL_Event event;
     while(SDL_PollEvent(&event))
     {
@@ -78,6 +75,7 @@ bool Game::gestion_Audio()
 
 void Game::start()
 {
+    map.draw(screen);
     while(gestionSDL_Event())
     {
         if(!gestion_Audio())

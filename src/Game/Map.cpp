@@ -39,7 +39,6 @@ void Map::load_map(string nom)
     int debut_y=24;
 
     list_items[47] = new Item("end");
-
     list_items[debut_y*48+debut_x] = new Item("begin");
     croa_croa.position_x=debut_x;
     croa_croa.position_y=debut_y;
