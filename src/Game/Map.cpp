@@ -35,16 +35,46 @@ void Map::load_map(string nom)
     surfaces_map["frog"]=IMG_Load( "../../images/frog.png" );
 
     //chargement de l'image a traiter
-   /* const char* img = nom.c_str();
+    const char* img = nom.c_str();
     SDL_Surface* fond = IMG_Load(img);
 
     //redimentionnement de la map
     w_map = fond->w;
-    h_map = fond->h;*/
+    h_map = fond->h;
     list_items.resize(w_map*h_map);
 
+    SDL_LockSurface(fond); // Vérouillage de la surface
+    Uint8 r, g, b; // Variables servant à stocker la couleur du pixel choisi
+    for(int i=0; i<w_map; i++)
+    {
+        for(int j=0; j<h_map; j++)
+        {
+            SDL_GetRGB(i*surface->w+(j+1), surface->format, &r, &g, &b);
 
-    //creation map
+            //Si le fond etait rouge
+            if( r == 0xFF && ( g != 0xFF ) )
+            {
+                //On ecrit le type du niveau dans le fichier (rouge)
+                cout << "Red Level";
+            }
+            //Si le fond etait vert
+            if( g == 0xFF && ( b != 0xFF ) )
+            {
+                //On ecrit le type du niveau dans le fichier (vert)
+                cout << "Green Level";
+            }
+            //Si le fond etait bleu
+            if( b == 0xFF && ( g != 0xFF ) )
+            {
+                //On ecrit le type du niveau dans le fichier (bleu)
+                cout << "Blue Level";
+            }
+        }
+    }
+
+    SDL_UnlockSurface(fond); //Dévérouillage de la surface
+
+    /*//creation map
     int debut_x=23;
     int debut_y=24;
 
@@ -64,9 +94,9 @@ void Map::load_map(string nom)
     for(int i=2; i<=24; i++)
     {
         list_items[48*i+24] = new Item("wall");
-    }
+    }*/
 
-    //SDL_FreeSurface(fond);
+    SDL_FreeSurface(fond);
 
 }
 
