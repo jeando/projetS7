@@ -257,8 +257,8 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 		std::vector<std::vector<double> > spectro,
 		double val_min, double val_max)
 {
-	double max = get_max_val(filtre_gaussien(spectro));
-	double min = get_min_val(filtre_gaussien(spectro));
+	double max = get_max_val(filtre_gaussien(spectro,3));
+	double min = get_min_val(filtre_gaussien(spectro,3));
 	std::vector<std::vector<double> > spectro2(spectro.size());
 	for(std::vector<std::vector<double> >::iterator
 			it1=spectro.begin(), it2=spectro2.begin(); it1!=spectro.end(); it1++, it2++)

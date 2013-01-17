@@ -110,7 +110,7 @@ int main()
 		}
 		for(auto it = vect_spectro.begin(); it!=vect_spectro.end(); it++){
 			//vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
-			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,3)));
+			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,4)));
 		}
 		double min_1_val(vect_distance[0]);
 		int min_1_indice(0);
