@@ -8,41 +8,55 @@ Menu::Menu(SDL_Surface* scre)
 :game(scre), screen(scre)
 {
     SDL_WM_SetCaption("Menu", nullptr);
+    TTF_Init();
     SDL_FillRect(screen, nullptr, SDL_MapRGB(screen->format, 17, 206, 112));
 
     SDL_Surface* commencer = IMG_Load( "../../images/buttun_begin.png" );
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
 
-    TTF_Font* police = TTF_OpenFont("./Arial.ttf", 85);
+    TTF_Font* police = TTF_OpenFont("./Arial.ttf", 35);
     SDL_Color couleur = {0, 0, 0, 42};
-    ostringstream oss;
 
     //positionnement et affichage des boutons
     rect1.x=620;
     rect1.y=20;
     SDL_BlitSurface(commencer,nullptr,screen,&rect1);
-    oss << "Commencer" << endl;
+    ostringstream oss;
+    oss << " Commencer";
     SDL_Surface* texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,screen,&rect1);
 
     rect2.x=400;
     rect2.y=350;
     SDL_BlitSurface(standard,nullptr,screen,&rect2);
+    ostringstream oss2;
+    oss2 << "   Utilisateur";
+    texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
+    SDL_BlitSurface(texte,nullptr,screen,&rect2);
 
     rect3.x=900;
     rect3.y=350;
     SDL_BlitSurface(standard,nullptr,screen,&rect3);
+    ostringstream oss3;
+    oss3 << "    Options";
+    texte = TTF_RenderText_Blended(police, oss3.str().c_str(), couleur);
+    SDL_BlitSurface(texte,nullptr,screen,&rect3);
 
     rect4.x=620;
     rect4.y=700;
     SDL_BlitSurface(quitter,nullptr,screen,&rect4);
+    ostringstream oss4;
+    oss4 << "     Quitter";
+    texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
+    SDL_BlitSurface(texte,nullptr,screen,&rect4);
 
     SDL_Flip(screen);
     SDL_FreeSurface(commencer);
     SDL_FreeSurface(texte);
     SDL_FreeSurface(standard);
     SDL_FreeSurface(quitter);
+    TTF_Quit();
 }
 
 void Menu::start()
@@ -50,6 +64,7 @@ void Menu::start()
     while(!gestion_clic())
     {
         cout << "on attend le clic" << endl;
+        system("sleep 0.3");
     }
     return;
 }
