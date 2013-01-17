@@ -37,14 +37,21 @@ class MenuItem
         Action* action;
 };
 
-class Menu : MenuItem
+class Menu //: MenuItem
 {
     public:
-        Menu();
+        Menu(SDL_Surface* scre);
+        bool gestion_clic();
+        void start();
 
     private:
         Game game;
-        MenuItem* menu_item;
+        //MenuItem* menu_item;
+        SDL_Surface* screen;
+        SDL_Rect rect1;
+        SDL_Rect rect2;
+        SDL_Rect rect3;
+        SDL_Rect rect4;
 };
 
 #endif // MENU_H_INCLUDED
