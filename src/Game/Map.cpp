@@ -26,13 +26,23 @@ Map::~Map()
 
 void Map::load_map(string nom)
 {
-    list_items.resize(w_map*h_map);
     cout << nom << endl;
+
     surfaces_map["wall"]=IMG_Load( "../../images/wall.png" );
     surfaces_map["end"]=IMG_Load( "../../images/end.png" );
     surfaces_map["begin"]=IMG_Load( "../../images/begin.png" );
     surfaces_map["background"]=IMG_Load( "../../images/background.png" );
     surfaces_map["frog"]=IMG_Load( "../../images/frog.png" );
+
+    //chargement de l'image a traiter
+   /* const char* img = nom.c_str();
+    SDL_Surface* fond = IMG_Load(img);
+
+    //redimentionnement de la map
+    w_map = fond->w;
+    h_map = fond->h;*/
+    list_items.resize(w_map*h_map);
+
 
     //creation map
     int debut_x=23;
@@ -43,7 +53,7 @@ void Map::load_map(string nom)
     croa_croa.position_x=debut_x;
     croa_croa.position_y=debut_y;
 
-    for(int i=24; i<=47; i++)
+    for(int i=20; i<=47; i++)
     {
         list_items[48*1+i] = new Item("wall");
     }
@@ -55,6 +65,8 @@ void Map::load_map(string nom)
     {
         list_items[48*i+24] = new Item("wall");
     }
+
+    //SDL_FreeSurface(fond);
 
 }
 
@@ -130,7 +142,7 @@ bool Map::is_deplacement_possible(int vx, int vy)
         && coord>0 //limite haute
         && croa_croa.position_x+vx>=0 //limite gauche
         )
-       && ((list_items[coord]!=nullptr && list_items[coord]->nom_image=="wall")
+       && ((list_items[coord]!=nullptr && list_items[coord]->nom_image!="wall")
             || list_items[coord]==nullptr))//gestion des elements presents sur le terrain
     {
         return true;
