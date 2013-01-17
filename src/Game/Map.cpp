@@ -6,7 +6,7 @@ using namespace std;
 Map::Map(string nom, SDL_Surface* screen)
 :surface(SDL_CreateRGBSurface(screen->flags, screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask)),
-size_box_x(30), size_box_y(30), w_map(50), h_map(27),croa_croa(Frog("frog"))
+size_box_x(30), size_box_y(30), w_map(48), h_map(25),croa_croa(Frog("frog"))
 {
     load_map(nom);
 }
@@ -34,10 +34,29 @@ void Map::load_map(string nom)
     surfaces_map["background"]=IMG_Load( "../../images/background.png" );
     surfaces_map["frog"]=IMG_Load( "../../images/frog.png" );
 
-    list_items[5] = new Item("wall");
-    list_items[19] = new Item("wall");
-    list_items[1079] = new Item("end");
-    list_items[0] = new Item("begin");
+    //creation map
+    int debut_x=23;
+    int debut_y=24;
+
+    list_items[47] = new Item("end");
+
+    list_items[debut_y*48+debut_x] = new Item("begin");
+    croa_croa.position_x=debut_x;
+    croa_croa.position_y=debut_y;
+
+    for(int i=24; i<=47; i++)
+    {
+        list_items[48*1+i] = new Item("wall");
+    }
+    for(int i=0; i<=24; i++)
+    {
+        list_items[48*i+22] = new Item("wall");
+    }
+    for(int i=2; i<=24; i++)
+    {
+        list_items[48*i+24] = new Item("wall");
+    }
+
 }
 
 void Map::draw(SDL_Surface* screen)
