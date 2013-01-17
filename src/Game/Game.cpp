@@ -3,7 +3,7 @@
 using namespace std;
 
 Game::Game(SDL_Surface* scre)
-:screen(scre), map("map1",scre)
+:screen(scre), map("../../images/lab_test.png",scre)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
 }

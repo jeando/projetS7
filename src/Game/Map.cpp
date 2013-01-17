@@ -44,57 +44,49 @@ void Map::load_map(string nom)
     list_items.resize(w_map*h_map);
 
     SDL_LockSurface(fond); // Vérouillage de la surface
-    Uint8 r, g, b; // Variables servant à stocker la couleur du pixel choisi
+    Uint8* pPixels = ((Uint8*)fond->pixels);
+    Uint8 red, green, blue; // Variables servant à stocker la couleur du pixel choisi
     for(int i=0; i<w_map; i++)
     {
         for(int j=0; j<h_map; j++)
         {
-            SDL_GetRGB(i*surface->w+(j+1), surface->format, &r, &g, &b);
+            //cout << i << " " << j << " ";
+            //SDL_GetRGB(j*w_map+(i+1), fond->format, &red, &green, &blue);
+            red = *(pPixels+4*(j*w_map+(i+1)));
+            green = *(pPixels+4*(j*w_map+(i+1)+1));
+            blue = *(pPixels+4*(j*w_map+(i+1)+2));
+
+            int r = ((int)red);
+            int g = ((int)green);
+            int b = ((int)blue);
+            cout << ((int)r) << " " << ((int)g) << " " << ((int)b) << "|| ";
 
             //Si le fond etait rouge
-            if( r == 0xFF && ( g != 0xFF ) )
+            if( red==0xFF && green==0x00 && blue==0x00)//red==255 && green==0 && blue==0)//==>meme resultat
             {
-                //On ecrit le type du niveau dans le fichier (rouge)
-                cout << "Red Level";
+                list_items[i+j*w_map] = new Item("end");
+
+
             }
             //Si le fond etait vert
-            if( g == 0xFF && ( b != 0xFF ) )
+            if(  red==0x00 && green==0xFF && blue==0x00)//green == 255 && blue==0 && red==0)
             {
-                //On ecrit le type du niveau dans le fichier (vert)
-                cout << "Green Level";
+                list_items[w_map*j+i] = new Item("wall");
             }
             //Si le fond etait bleu
-            if( b == 0xFF && ( g != 0xFF ) )
+            if( red==0x00 && green==0x00 && blue==0xFF)//blue==255 && green==0 && red==0)
             {
-                //On ecrit le type du niveau dans le fichier (bleu)
-                cout << "Blue Level";
+                int debut_x=i;
+                int debut_y=j;
+                list_items[debut_y*w_map+debut_x] = new Item("begin");
+                croa_croa.position_x=debut_x;
+                croa_croa.position_y=debut_y;
             }
         }
+        cout << endl;
     }
 
     SDL_UnlockSurface(fond); //Dévérouillage de la surface
-
-    /*//creation map
-    int debut_x=23;
-    int debut_y=24;
-
-    list_items[47] = new Item("end");
-    list_items[debut_y*48+debut_x] = new Item("begin");
-    croa_croa.position_x=debut_x;
-    croa_croa.position_y=debut_y;
-
-    for(int i=24; i<=47; i++)
-    {
-        list_items[48*1+i] = new Item("wall");
-    }
-    for(int i=0; i<=24; i++)
-    {
-        list_items[48*i+22] = new Item("wall");
-    }
-    for(int i=2; i<=24; i++)
-    {
-        list_items[48*i+24] = new Item("wall");
-    }*/
 
     SDL_FreeSurface(fond);
 
