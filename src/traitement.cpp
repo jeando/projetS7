@@ -164,23 +164,45 @@ std::vector<double> dynamic_time_warping(
 		unsigned int _indice_debut, unsigned int _indice_fin)
 {
 	std::vector<double> dist;//(mesure.size());
-	unsigned int n(indice_debut(mesure));//mesure iterateur
-	unsigned int m(indice_debut(ref));//ref iterateur
-	for(;n<mesure.size(); n++)
+	unsigned int n_ini(indice_debut(mesure));//mesure iterateur
+	unsigned int m_ini(indice_debut(ref));//ref iterateur
+	unsigned int n_end=mesure.size();//mesure iterateur
+	unsigned int m_end=ref.size();//ref iterateur
+	unsigned int n=n_ini;
+	unsigned int m=m_ini;
+	std::cout << m_ini << " " << n_ini << " azertyuiop" <<std::endl;
+	double v_moy = (n_end-n_ini)/(m_end-m_ini);
+	for(;n<n_end; n++)
 	{
 		double min(std::numeric_limits<double>::max());
 		double tmp_dst;
 		unsigned int indice_min;
-		for(unsigned int k = (m<delta?0:(m-delta)); k< m+delta && k<ref.size(); k++)
+		m+=(int)floor(v_moy);
+		for(unsigned int k = (m<delta+m_ini?m_ini:(m-delta)); k< m+delta && k<m_end; k++)
 		{
 			tmp_dst = distance(mesure[n],ref[k],_indice_debut, _indice_fin);
+//			if(pow(tmp_dst,0.5)*pow((1+abs(m-k))<min,0.25))
 			if(tmp_dst<min)
 			{
 				min = tmp_dst;
 				indice_min = k;
 			}
 		}
+		if(min == std::numeric_limits<double>::max())
+		{
+			std::cout << v_moy << std::endl;
+			return dist;
+		}
+		//dist.push_back(abs(indice_min-m));
+//		dist.push_back(sqrt(min)/5*abs(indice_min-m));
+
+		
+		//dist.push_back(pow(min,0.5)*pow(1+abs(indice_min-m),0.25));
+
+
 		m=indice_min;
+//		if(m+v_moy+delta>m_end)
+//			break;
 		dist.push_back(sqrt(min));
 //		dist.push_back(sqrt(min*sqrt(distance(ref[m]))));
 	}
@@ -235,8 +257,8 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 		std::vector<std::vector<double> > spectro,
 		double val_min, double val_max)
 {
-	double max = get_max_val(filtre_gaussien(spectro));
-	double min = get_min_val(filtre_gaussien(spectro));
+	double max = get_max_val(filtre_gaussien(spectro,3));
+	double min = get_min_val(filtre_gaussien(spectro,3));
 	std::vector<std::vector<double> > spectro2(spectro.size());
 	for(std::vector<std::vector<double> >::iterator
 			it1=spectro.begin(), it2=spectro2.begin(); it1!=spectro.end(); it1++, it2++)
@@ -246,13 +268,17 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 		{
 //			*it_2=val_max * (*it_1) / max;
 			*it_2=(*it_1-min) * (val_max - val_min) /( max - min) + val_min;
+			if(*it_2>val_max)
+				*it_2=val_max;
+			if(*it_2<val_min)
+				*it_2=val_min;
 		}
 	}
 	return spectro2;
 
 }
 
-std::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double> > spectro)
+std::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double> > spectro, int size)
 {
 	std::vector<std::vector<double> > spectro2;
 	spectro2.push_back(std::vector<double>(spectro[0].size()));
@@ -263,14 +289,25 @@ std::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double
 		spectro2[x][0]=spectro2[x][spectro2[x].size()-1]=0;
 		for(unsigned int y=1; y<spectro[x].size()-1; y++)
 		{
+			if(size==3)
+			{
 			//gaussienne
 			// 1 2 1
 			// 2 4 2 //milieu : 3 ou 4 ?
 			// 1 2 1
-			spectro2[x][y]=spectro[x-1][y+1]+2*spectro[x-1][y]+spectro[x-1][y-1];
-			spectro2[x][y]+=2*spectro[x][y+1]+4*spectro[x][y]+2*spectro[x][y-1];
-			spectro2[x][y]+=spectro[x+1][y+1]+2*spectro[x+1][y]+spectro[x+1][y-1];
-			spectro2[x][y]/=9;
+				spectro2[x][y]=spectro[x-1][y+1]+2*spectro[x-1][y]+spectro[x-1][y-1];
+				spectro2[x][y]+=2*spectro[x][y+1]+4*spectro[x][y]+2*spectro[x][y-1];
+				spectro2[x][y]+=spectro[x+1][y+1]+2*spectro[x+1][y]+spectro[x+1][y-1];
+				spectro2[x][y]/=16;
+			}
+			else// if(size == 2)
+			{
+				spectro2[x][y]=spectro[x-1][y];
+				spectro2[x][y]+=1*spectro[x][y+1]+2*spectro[x][y]+1*spectro[x][y-1];
+				spectro2[x][y]+=spectro[x+1][y];
+				spectro2[x][y]/=6;
+
+			}
 		}
 	}
 	for(unsigned int y=0; y<spectro[0].size(); y++)
@@ -281,7 +318,8 @@ std::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double
 	return spectro2;
 }
 //*
-unsigned int indice_debut(std::vector<std::vector<double> > spectro)
+//return -1 si pas de debut
+int indice_debut(std::vector<std::vector<double> > spectro)
 {
 	std::vector<double> norme_bf, norme_hf;
 	spectro=filtre_gaussien(spectro);
@@ -322,24 +360,110 @@ unsigned int indice_debut(std::vector<std::vector<double> > spectro)
 			}
 		}
 	}
-	if(indice_bf.size()==1)
+	
+	if(indice_bf.size()==1&&indice_bf.back()<indice_hf.back())
 		return indice_bf.back();
-
+	//if(indice_hf.size()==1&&max_hf>max_bf)
+	if(indice_hf.size()==1&&indice_bf.back()>indice_hf.back())
+		return indice_hf.back();
 
 	std::vector<std::pair<double,double> > energie_bf;
 	for(unsigned int i : indice_bf){
 		double e_tmp_inf(0);
 		double e_tmp_sup(0);
-		for(unsigned j = i<10?0:i-10;j<i; j++)
+		if(i>5&&i+10<spectro.size())
 		{
-			e_tmp_inf+=distance(spectro[j]);
+			for(unsigned j = i-5;j<i; j++)
+			{
+				e_tmp_inf+=distance(spectro[j],0,spectro[j].size()/2);
+			}
+			for(unsigned j = i;j<i+10; j++)
+			{
+				e_tmp_sup+=distance(spectro[j],0,spectro[j].size()/2);
+			}
 		}
-		for(unsigned j = i;j<i+10&&j<spectro.size(); j++)
-		{
-			e_tmp_sup+=distance(spectro[j]);
-		}
-		energie_bf.push_back({e_tmp_inf,e_tmp_sup});
+		energie_bf.push_back({e_tmp_inf/5,e_tmp_sup/10});
 	}
+	std::vector<std::pair<double,double> > energie_hf;
+	for(unsigned int i : indice_hf){
+		double e_tmp_inf(0);
+		double e_tmp_sup(0);
+		if(i>5&&i+10<spectro.size())
+		{
+			for(unsigned j = i-5;j<i; j++)
+			{
+				e_tmp_inf+=distance(spectro[j],
+						spectro[j].size()/2,spectro[j].size());
+			}
+			for(unsigned j = i;j<i+10; j++)
+			{
+				e_tmp_sup+=distance(spectro[j],
+						spectro[j].size()/2,spectro[j].size());
+			}
+		}
+		energie_hf.push_back({e_tmp_inf/5,e_tmp_sup/10});
+	}
+	std::vector<unsigned int> indice_bf_2;
+//	std::cout << "bf " << std::endl;
+	for(unsigned int i =0; i<indice_bf.size(); i++)
+	{
+//		std::cout << indice_bf[i] <<" "<<energie_bf[i].first<<
+//			" "<<energie_bf[i].second<<std::endl;
+		if(energie_bf[i].first<energie_bf[i].second*4.0/5)
+			indice_bf_2.push_back(indice_bf[i]);
+	}
+	std::vector<unsigned int> indice_hf_2;
+//	std::cout << "hf " << std::endl;
+	for(unsigned int i =0; i<indice_hf.size(); i++)
+	{
+//		std::cout << indice_hf[i] <<" "<<energie_hf[i].first<<
+//			" "<<energie_hf[i].second<<std::endl;
+		if(energie_hf[i].first<energie_hf[i].second*4.0/5)
+			indice_hf_2.push_back(indice_hf[i]);
+	}
+//	std::cout << "1 return" << std::endl;
+	if(indice_bf_2.size()==0)
+	{
+//		std::cout << "h" << indice_hf_2.size() << std::endl;
+		if(indice_hf_2.size()==0)
+			return -1;
+		return indice_hf_2[0];
+	}
+	if(indice_hf_2.size()==0)
+		return indice_bf_2[0];
+//	std::cout << "2 return" << std::endl;
+	if(indice_bf_2.size()==1&&indice_bf_2[0]<indice_hf_2[0])
+		return indice_bf_2[0];
+	if(indice_hf_2.size()==1&&indice_bf_2[0]>indice_hf_2[0])
+		return indice_hf_2[0];
+	
+//	std::cout << "a finir " << __FILE__ << " " << __LINE__ << std::endl;
+	
+	if(indice_bf_2[0]<indice_hf_2[0])
+		return indice_bf_2[0];
+	return indice_hf_2[0];
+	
+
+
+
+
+
+/**
+  todo
+  */
+
+
+
+
+
+
+	for(int i : indice_bf_2)
+		std::cout << i << std::endl;
+	std::cout << std::endl;
+	for(int i : indice_hf_2)
+		std::cout << i << std::endl;
+	std::cout << std::endl;
+	
 	std::vector<unsigned int> bon_indice_bf;
 //	std::vector<unsigned int> bon_indice_bf;
 	bool good;

@@ -76,7 +76,9 @@ int main()
 		std::ostringstream oss("");
 		oss << "spectro_ref_" << s << ".bmp";
 		SDL_SaveBMP(screen, oss.str().c_str());
-		std::cout << indice_debut(vect_spectro.back()) << std::endl;
+		int i = indice_debut(vect_spectro.back());
+		std::cout << i << std::endl;
+
 	}
 	std::string mot_a_tester;
 	std::cout << "entrez le mot que vous voulez dire et dites le" << std::endl;
@@ -102,9 +104,13 @@ int main()
 		SDL_SaveBMP(screen, oss.str().c_str());
 		std::cout << oss.str().c_str() << "ecrit" << std::endl;
 		vect_distance.clear();
+		if(indice_debut(spectro_a_tester)==-1){
+			std::cout << "parler plus fort" << std::endl;
+			continue;
+		}
 		for(auto it = vect_spectro.begin(); it!=vect_spectro.end(); it++){
 			//vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
-			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,10)));
+			vect_distance.push_back(distance(dynamic_time_warping(spectro_a_tester, *it,4)));
 		}
 		double min_1_val(vect_distance[0]);
 		int min_1_indice(0);
