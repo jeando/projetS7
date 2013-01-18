@@ -255,7 +255,7 @@ void Choix_Utilisateur::draw()
     ostringstream oss4;
     oss4 << "     Quitter";
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect4);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
     SDL_FreeSurface(commencer);
     SDL_FreeSurface(texte);
