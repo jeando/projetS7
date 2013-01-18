@@ -23,24 +23,24 @@ void Menu::draw()
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
 
-    TTF_Font* police = TTF_OpenFont("./Arial.ttf", 35);
+    TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 35);
     SDL_Color couleur = {0, 0, 0, 42};
 
     //positionnement et affichage des boutons
-    rect1.x=620;
+    /*rect1.x=620;
     rect1.y=20;
     SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
     ostringstream oss;
     oss << " Commencer";
     SDL_Surface* texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);*/
 
     rect2.x=400;
     rect2.y=350;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect2);
     ostringstream oss2;
     oss2 << "   Utilisateur";
-    texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
+    SDL_Surface* texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
 
     rect3.x=900;
@@ -104,14 +104,14 @@ bool Menu::gestion_clic()
                 int x = event.button.x;
                 int y = event.button.y;
 
-                if(x>=rect1.x && x<=(rect1.x+204)
+                /*if(x>=rect1.x && x<=(rect1.x+204)
                    && y>=rect1.y && y<=(rect1.y+43))
                 {
                         cout << "commencer" << endl;
                         Game g(screen,&alsc);
                         g.start();
-                }
-                else if(x>=rect2.x && x<=(rect2.x+204)
+                }*/
+                if(x>=rect2.x && x<=(rect2.x+204)
                    && y>=rect2.y && y<=(rect2.y+43))
                 {
                         cout << "Choix utilisateur" << endl;
