@@ -6,7 +6,7 @@ using namespace std;
 Map::Map(string nom, SDL_Surface* screen)
 :surface(SDL_CreateRGBSurface(screen->flags, screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask)),
-size_box_x(30), size_box_y(30), w_map(48), h_map(25),croa_croa(Frog("frog"))
+size_box_x(30), size_box_y(30), w_map(48), h_map(25),croa_croa(Frog("frog")),cpt_position(0)
 {
     load_map(nom);
 }
@@ -143,6 +143,8 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
 
 
         croa_croa.etat_x += abs(croa_croa.vitesse_x) + abs(croa_croa.vitesse_y);
+	cpt_position++;
+
         while(croa_croa.etat_x>3)
         {
             croa_croa.etat_x-=4;
@@ -159,6 +161,13 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
         rect2.y=size_box_y*croa_croa.position_y;
         SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
         SDL_Flip(screen);
+	if(cpt_position==4){
+		cpt_position^cpt_position; // cpt_position=0 mais avec une étape en moins 
+		//cpt_position=0;
+		croa_croa.vitesse_x=0;
+		croa_croa.vitesse_y=0;
+		return;
+	}
     }
 
 }
@@ -181,6 +190,7 @@ bool Map::is_deplacement_possible(int vx, int vy)
 
 bool Map::change_speed(int vx, int vy)
 {
+    cpt_position=0;
     if(is_deplacement_possible(vx, vy))
     {
         if(vx>0)

@@ -35,5 +35,6 @@ class Map
         std::vector<Item*> list_items;
         Frog croa_croa;
         std::map<std::string,SDL_Surface*> surfaces_map;
+	unsigned int cpt_position;
 };
 #endif // MAP_H_INCLUDED

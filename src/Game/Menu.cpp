@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include"Game.h"
 #include <SDL/SDL_ttf.h>
 #include <iostream>
 #include <sstream>
@@ -87,6 +88,8 @@ bool Menu::gestion_clic()
                    && y>=rect1.y && y<=(rect1.y+43))
                 {
                         cout << "commencer" << endl;
+        Game g(screen);
+        g.start();
                 }
                 else if(x>=rect2.x && x<=(rect2.x+204)
                    && y>=rect2.y && y<=(rect2.y+43))

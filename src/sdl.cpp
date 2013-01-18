@@ -35,10 +35,11 @@ void draw_vect(SDL_Surface* screen, std::vector<T> vect)
 }
 
 template<typename T>
-void draw_mat(SDL_Surface* screen, std::vector<std::vector<T> > vect)
+void draw_mat(SDL_Surface* screen, std::vector<std::vector<T> > vect,
+		unsigned int size_x, unsigned int size_y)
 {
 	
-	screen = SDL_SetVideoMode(vect.size(),vect[0].size(),screen->format->BitsPerPixel,screen->flags);
+	screen = SDL_SetVideoMode(vect.size()*size_x,vect[0].size()*size_y,screen->format->BitsPerPixel,screen->flags);
 	SDL_FillRect(screen, nullptr, SDL_MapRGB(screen->format,0,0,0));
 	/*T max(*std::max_element(vect[0].begin(),vect[0].end()));
 	T max_tmp;
@@ -49,16 +50,26 @@ void draw_mat(SDL_Surface* screen, std::vector<std::vector<T> > vect)
 			max=max_tmp;
 	}*/
 	T max(get_max_val(vect));
-	unsigned int pos_x(0), pos_y(0);
+	//unsigned int pos_x(0), pos_y(0);
 //	for(unsigned int x(0), x< 
+	SDL_Rect rect;
+	rect.x=0;
+	rect.y=0;
+	rect.w=size_x;
+	rect.h=size_y;
 	for(typename std::vector<std::vector<T> >::iterator it= vect.begin();it!=vect.end();it++)
 	{
 		for(typename std::vector<T>::iterator it_2= it->begin();it_2!=it->end();it_2++){
-			pixelColor(screen, pos_x, pos_y ,get_couleur(255* (*it_2)/max));
-			pos_y++;
+
+			SDL_FillRect(screen, &rect, get_couleur(255* (*it_2)/max)>>8);
+//			pixelColor(screen, pos_x, pos_y ,get_couleur(255* (*it_2)/max));
+//			pos_y++;
+			rect.y+=rect.h;
 		}
-		pos_x++;
-		pos_y=0;
+//		pos_x++;
+//		pos_y=0;
+		rect.x+=rect.w;
+		rect.y=0;
 //		std::cout << pos_x << " " << pos_y << std::endl;
 	}
 	SDL_Flip(screen);

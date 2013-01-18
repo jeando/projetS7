@@ -3,7 +3,7 @@
 using namespace std;
 
 Game::Game(SDL_Surface* scre)
-:screen(scre), map("../../images/lab_test.png",scre)
+:screen(scre), map("../../images/lab_test2.png",scre)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
 }
@@ -34,6 +34,30 @@ bool Game::gestionSDL_Event()
                     case SDLK_ESCAPE:
                         return false;
                         break;
+	    case SDLK_z:
+                map.change_speed(0,-1);
+                break;
+            case SDLK_UP:
+                map.change_speed(0,-1);
+                break;
+            case SDLK_q:
+                map.change_speed(-1,0);
+                break;
+            case SDLK_LEFT:
+                map.change_speed(-1,0);
+                break;
+            case SDLK_s:
+                map.change_speed(0,1);
+                break;
+            case SDLK_DOWN:
+                map.change_speed(0,1);
+                break;
+            case SDLK_d:
+                map.change_speed(1,0);
+                break;
+            case SDLK_RIGHT:
+                map.change_speed(1,0);
+                break;
                     default:
                         break;
                 }
@@ -78,10 +102,10 @@ void Game::start()
     map.draw(screen);
     while(gestionSDL_Event())
     {
-        if(!gestion_Audio())
+        /*if(!gestion_Audio())
         {
             cout << "deplacement impossible" << endl;
-        }
+        }*/
         map.update(screen);
         system("sleep 0.3");
     }
