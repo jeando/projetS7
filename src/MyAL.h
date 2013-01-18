@@ -13,7 +13,7 @@
 #include<mutex>
 
 #include<cstring>
-
+#include"traitement.h"
 #include<ios>
 #define get_stockage_path() ""
 //"/home/favreau/projetS7/src/"
@@ -102,6 +102,7 @@ class AL_Stream_Capture : AL_Capture
 		void start_stream_capture();
 	private:
 		bool running;
+		std::mutex mutex_sample;
 		std::vector<ALshort> samples;
 
 };
