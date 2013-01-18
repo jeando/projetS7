@@ -3,10 +3,10 @@
 #include <SDL/SDL_image.h>
 using namespace std;
 
-Map::Map(string nom, SDL_Surface* screen, Joueur* _joueur)
+Map::Map(string nom, SDL_Surface* screen, AL_Stream_Capture* _alsc)
 :surface(SDL_CreateRGBSurface(screen->flags, screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
-	screen->format->Amask)),joueur(_joueur),
+	screen->format->Amask)),alsc(_alsc),
 size_box_x(30), size_box_y(30), w_map(48), h_map(25),croa_croa(Frog("frog")),cpt_position(0)
 {
 
@@ -169,6 +169,7 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
             //cpt_position=0;
             croa_croa.vitesse_x=0;
             croa_croa.vitesse_y=0;
+			alsc->start_stream_capture();		
             return;
         }
     }
