@@ -75,7 +75,7 @@ bool Game::gestionSDL_Event()
 bool Game::gestion_Audio()
 {
     //events_audio test = SON_HAUT;//a changer avec la fonction adequoite
-    events_audio test = alsc->poll_event(joueur);
+    events_audio test = alsc->poll_event(*joueur);
     bool deplacement = true;
     switch(test)
     {
