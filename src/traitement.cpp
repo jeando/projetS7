@@ -3,6 +3,57 @@
 #include<iostream>
 #include<algorithm>
 #include<limits>
+
+events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
+{
+	std::vector<double> vdist;
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_gauche1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_gauche2)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_droite1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_droite2)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_haut1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_haut2)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_bas1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_bas2)));
+	int min(vdist[0]);
+	int min_indice(0);
+	for(unsigned int i=0; i<vdist.size(); i++)
+	{
+		if(vdist[i]<min){
+			min=vdist[i];
+			min_indice=i;
+		}
+	}
+	switch(min_indice)
+	{
+		case 0:
+			return SON_GAUCHE;
+		case 1:
+			return SON_GAUCHE;
+		case 2:
+			return SON_DROITE;
+		case 3:
+			return SON_DROITE;
+		case 4:
+			return SON_HAUT;
+		case 5:
+			return SON_HAUT;
+		case 6:
+			return SON_BAS;
+		default:
+			return SON_BAS;
+}
+
+
+
 void decaler(std::vector<double>& v)
 {
     double temp;

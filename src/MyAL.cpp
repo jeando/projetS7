@@ -382,7 +382,8 @@ label_debut_poll_event:
     	mutex_sample.unlock();
 		goto label_debut_poll_event;
 	}
-	events_audio event = analyse(samples, joueur);
+	events_audio event = analyse(equalize_spectrogramme(
+				spectrogramme(samples,sample_rate), joueur);
 	if(event != RIEN)
 	{
     	mutex_sample.lock();
