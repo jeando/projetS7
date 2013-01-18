@@ -104,7 +104,7 @@ void Game::start()
 {
 	std::cout << __FILE__ << " " << __LINE__ << "remplacer le system sleep 0.3" << std::endl;
     map.draw(screen);
-    while(gestionSDL_Event()||gestion_Audio())
+    while(gestionSDL_Event()&&gestion_Audio())
     {
         /*if(!gestion_Audio())
         {
