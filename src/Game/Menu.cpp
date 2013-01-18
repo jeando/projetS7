@@ -3,6 +3,7 @@
 #include <SDL/SDL_ttf.h>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 using namespace std;
 
 Menu::Menu(SDL_Surface* scre)
@@ -149,11 +150,25 @@ Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
 :screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
     scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask, scre->format->Amask))
 {
+    ifstream liste_utilisateurs("./data/joueur.lst");
+    string tmp;
+    do
+    {
+      liste_utilisateurs>>tmp;
+      if(tmp=="")
+      {
+          break;
+      }
+      list_util.push_back(tmp);
+    }while(true);
+
+
+    liste_utilisateurs.close();
     draw();
     update();
 }
 
-Choix_Utilisateur::draw()
+void Choix_Utilisateur::draw()
 {
     SDL_WM_SetCaption("Choix utilisateur", nullptr);
     TTF_Init();
@@ -167,6 +182,80 @@ Choix_Utilisateur::draw()
     SDL_Color couleur = {0, 0, 0, 42};
     SDL_Surface* texte;
 
+    //colonne utilisateurs
+    SDL_Rect rect1;
+    rect1.x=25;
+    rect1.y=21;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+
+    rect1.x=25;
+    rect1.y=85;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+
+    rect1.x=25;
+    rect1.y=149;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+
+    rect1.x=25;
+    rect1.y=213;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+
+    //colonne changer
+    ostringstream oss;
+    oss << "Re-enregistrer";
+    texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
+
+    rect1.x=25;
+    rect1.y=275;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    rect1.x=85;
+    rect1.y=275;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    rect1.x=149;
+    rect1.y=275;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    rect1.x=213;
+    rect1.y=275;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    ostringstream oss2;
+    oss2 << "Commencer";
+    texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
+
+    rect1.x=25;
+    rect1.y=525;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    rect1.x=85;
+    rect1.y=525;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    rect1.x=149;
+    rect1.y=525;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    rect1.x=213;
+    rect1.y=525;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    rect1.x=275;
+    rect1.y=299;
+    SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
+    ostringstream oss4;
+    oss4 << "     Quitter";
+    texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect4);
 
     SDL_FreeSurface(commencer);
     SDL_FreeSurface(texte);
@@ -175,7 +264,7 @@ Choix_Utilisateur::draw()
     TTF_Quit();
 }
 
-Choix_Utilisateur::update()
+void Choix_Utilisateur::update()
 {
 
 }
