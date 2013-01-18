@@ -345,7 +345,7 @@ void AL_Stream_Capture::start_stream_capture()
 	AL_Capture::start(samples, &mutex_sample);
 }
 
-events_audio AL_Stream_Capture::poll_event()
+events_audio AL_Stream_Capture::poll_event(Joueur joueur)
 {
 	std::vector<double> temp;
 	int indice;
@@ -381,7 +381,7 @@ label_debut_poll_event:
     	mutex_sample.unlock();
 		goto label_debut_poll_event;
 	}
-	events_audio event = analyse(samples);
+	events_audio event = analyse(samples, joueur);
 	if(event != RIEN)
 	{
     	mutex_sample.lock();

@@ -46,7 +46,7 @@ T distance(std::vector<T> x, unsigned int indice_debut, unsigned int indice_fin)
 template<typename T>
 T distance(std::vector<T> x)
 {
-	return distance(x,0,(int)x.size());
+	return distance(x,0,static_cast<int>(x.size()));
 }
 template<typename T>
 inline T distance(std::vector<T>& x, std::vector<T>& y, unsigned int indice_debut, unsigned int indice_fin)
@@ -61,7 +61,7 @@ inline T distance(std::vector<T>& x, std::vector<T>& y, unsigned int indice_debu
 template<typename T>
 inline T distance(std::vector<T>& x, std::vector<T>& y)
 {
-	return distance(x,y,0,(int)x.size());
+	return distance(x,y,0,static_cast<int>(x.size()));
 }
 #endif
 
