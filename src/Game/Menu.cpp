@@ -74,6 +74,7 @@ void Menu::draw()
 
 void Menu::update()
 {
+    SDL_Surface * screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE));
     SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
     SDL_Flip(screen);
 }
@@ -121,6 +122,8 @@ bool Menu::gestion_clic()
                    && y>=rect2.y && y<=(rect2.y+43))
                 {
                         cout << "Choix utilisateur" << endl;
+                        Choix_Utilisateur ch(screen);
+                        ch.start();
                 }
                 else if(x>=rect3.x && x<=(rect3.x+204)
                    && y>=rect3.y && y<=(rect3.y+43))
@@ -150,6 +153,8 @@ Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
 :screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
     scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask, scre->format->Amask))
 {
+    screen = SDL_SetVideoMode(750, 400, 32, SDL_HWSURFACE);
+
     ifstream liste_utilisateurs("./data/joueur.lst");
     string tmp;
     do
@@ -160,8 +165,8 @@ Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
           break;
       }
       list_util.push_back(tmp);
+      tmp="";
     }while(true);
-
 
     liste_utilisateurs.close();
     draw();
@@ -178,7 +183,7 @@ void Choix_Utilisateur::draw()
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
 
-    TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 35);
+    TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 25);
     SDL_Color couleur = {0, 0, 0, 42};
     SDL_Surface* texte;
 
@@ -202,55 +207,55 @@ void Choix_Utilisateur::draw()
 
     //colonne changer
     ostringstream oss;
-    oss << "Re-enregistrer";
+    oss << "  Re-enregistrer";
     texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
 
-    rect1.x=25;
-    rect1.y=275;
+    rect1.y=25;
+    rect1.x=275;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.x=85;
-    rect1.y=275;
+    rect1.y=85;
+    rect1.x=275;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.x=149;
-    rect1.y=275;
+    rect1.y=149;
+    rect1.x=275;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.x=213;
-    rect1.y=275;
+    rect1.y=213;
+    rect1.x=275;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
     ostringstream oss2;
-    oss2 << "Commencer";
+    oss2 << "  Commencer";
     texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
 
-    rect1.x=25;
-    rect1.y=525;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    rect1.y=25;
+    rect1.x=525;
+    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.x=85;
-    rect1.y=525;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    rect1.y=85;
+    rect1.x=525;
+    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.x=149;
-    rect1.y=525;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    rect1.y=149;
+    rect1.x=525;
+    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.x=213;
-    rect1.y=525;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    rect1.y=213;
+    rect1.x=525;
+    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.x=275;
-    rect1.y=299;
+    rect1.y=325;
+    rect1.x=299;
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
@@ -266,5 +271,57 @@ void Choix_Utilisateur::draw()
 
 void Choix_Utilisateur::update()
 {
+    SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
+    SDL_Flip(screen);
+}
 
+void Choix_Utilisateur::start()
+{
+    std::chrono::milliseconds dura(200);
+    while(!gestion_clic())
+    {
+        update();
+	std::this_thread::sleep_for(dura);
+    }
+    return;
+}
+
+bool Choix_Utilisateur::gestion_clic()
+{
+    SDL_Event event;
+    while(SDL_PollEvent(&event))
+    {
+        switch(event.type)
+        {
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym)
+                {
+                    case SDLK_ESCAPE:
+                        return true;
+                        break;
+        			default:
+            			break;
+                }
+            case SDL_MOUSEBUTTONDOWN:
+                {
+                int x = event.button.x;
+                int y = event.button.y;
+
+               if(x>=299 && x<=(299+204)
+                   && y>=325 && y<=(325+43))
+                {
+                        cout << "Quitter" << endl;
+                        return true;
+                }
+                return false;
+                break;
+                }
+            case SDL_QUIT:
+                return true;
+                break;
+            default:
+                break;
+        }
+    }
+    return false;
 }
