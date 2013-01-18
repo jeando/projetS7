@@ -7,12 +7,17 @@ using namespace std;
 
 Menu::Menu(SDL_Surface* scre)
 :alsc(), game(scre, &alsc), screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
-    scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask, scre->format->Amask))
+    scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask, scre->format->Amask)),joueur(nullptr)
 {
     draw();
     update();
 }
 
+Menu::~Menu()
+{
+	delete joueur;
+    SDL_FreeSurface(fene_menu);
+}
 void Menu::draw()
 {
     SDL_WM_SetCaption("Menu", nullptr);
@@ -108,7 +113,7 @@ bool Menu::gestion_clic()
                    && y>=rect1.y && y<=(rect1.y+43))
                 {
                         cout << "commencer" << endl;
-                        Game g(screen,&alsc);
+                        Game g(screen,&alsc,joueur);
                         g.start();
                 }*/
                 if(x>=rect2.x && x<=(rect2.x+204)

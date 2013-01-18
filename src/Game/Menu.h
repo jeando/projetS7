@@ -1,6 +1,7 @@
 #ifndef MENU_H_INCLUDED
 #define MENU_H_INCLUDED
 
+#include"Joueur.h"
 #include "Game.h"
 
 class Action
@@ -41,6 +42,7 @@ class Menu //: MenuItem
 {
     public:
         Menu(SDL_Surface* scre);
+	~Menu();
         bool gestion_clic();
         void start();
         void draw();
@@ -52,6 +54,7 @@ class Menu //: MenuItem
         //MenuItem* menu_item;
         SDL_Surface* screen;
         SDL_Surface* fene_menu;
+	Joueur* joueur;
         SDL_Rect rect1;
         SDL_Rect rect2;
         SDL_Rect rect3;

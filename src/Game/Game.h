@@ -5,8 +5,10 @@
 #include "../MyAL.h"
 #include "Score.h"
 #include "Map.h"
+#include"Joueur.h"
 
 class Menu;
+
 
 //enum events_audio {SON_HAUT, SON_BAS, SON_GAUCHE, SON_DROITE};
 
