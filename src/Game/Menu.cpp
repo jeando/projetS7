@@ -64,7 +64,6 @@ void Menu::start()
 {
     while(!gestion_clic())
     {
-        cout << "on attend le clic" << endl;
         system("sleep 0.3");
     }
     return;
@@ -88,8 +87,8 @@ bool Menu::gestion_clic()
                    && y>=rect1.y && y<=(rect1.y+43))
                 {
                         cout << "commencer" << endl;
-        Game g(screen,&alsc);
-        g.start();
+                        Game g(screen,&alsc);
+                        g.start();
                 }
                 else if(x>=rect2.x && x<=(rect2.x+204)
                    && y>=rect2.y && y<=(rect2.y+43))
@@ -99,15 +98,15 @@ bool Menu::gestion_clic()
                 else if(x>=rect3.x && x<=(rect3.x+204)
                    && y>=rect3.y && y<=(rect3.y+43))
                 {
-                        cout << "Choix utilisateur" << endl;
+                        cout << "Option" << endl;
                 }
                 else if(x>=rect4.x && x<=(rect4.x+204)
                    && y>=rect4.y && y<=(rect4.y+43))
                 {
                         cout << "Quitter" << endl;
+                        return true;
                 }
-
-                return true;
+                return false;
                 break;
                 }
             case SDL_QUIT:
