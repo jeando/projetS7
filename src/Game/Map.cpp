@@ -3,9 +3,10 @@
 #include <SDL/SDL_image.h>
 using namespace std;
 
-Map::Map(string nom, SDL_Surface* screen)
+Map::Map(string nom, SDL_Surface* screen, Joueur* _joueur)
 :surface(SDL_CreateRGBSurface(screen->flags, screen->w,
-    screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask)),
+    screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
+	screen->format->Amask)),joueur(_joueur),
 size_box_x(30), size_box_y(30), w_map(48), h_map(25),croa_croa(Frog("frog")),cpt_position(0)
 {
 
