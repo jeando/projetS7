@@ -19,6 +19,7 @@
 //"/home/favreau/projetS7/src/"
 #define MAX_ALSHORT_VAL  ((1<<((sizeof(ALshort)<<3)-1))-1)
 #define MIN_ALSHORT_VAL  (-(1<<((sizeof(ALshort)<<3)-1)))
+enum events_audio {SON_HAUT, SON_BAS, SON_GAUCHE, SON_DROITE, RIEN};
 
 
 class MyAL
@@ -86,6 +87,14 @@ class AL_Play : public MyAL
 		SF_INFO sound_info;
 		ALuint source;
 		std::vector<ALuint> buffers;
+};
+class AL_Stream_Capture : AL_Capture
+{
+	public:
+
+	private:
+		bool running;
+
 };
 class AL_Stream_Play : public AL_Play
 {
