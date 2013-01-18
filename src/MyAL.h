@@ -96,6 +96,7 @@ class AL_Stream_Capture : AL_Capture
 				ALenum _format = AL_FORMAT_MONO16,
 				ALsizei _sample_rate = 8000,
 				ALsizei _sample_size = 1024/*8000*2*1*/);
+		virtual ~AL_Stream_Capture();
 		events_audio poll_event();
 		events_audio wait_event();
 		void start_stream_capture();

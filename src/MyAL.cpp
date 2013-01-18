@@ -336,6 +336,9 @@ AL_Stream_Capture::AL_Stream_Capture(std::string _device,
 {
 
 }
+AL_Stream_Capture::~AL_Stream_Capture()
+{
+}
 void AL_Stream_Capture::start_stream_capture()
 {
 	running = true;
