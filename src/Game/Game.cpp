@@ -104,6 +104,7 @@ void Game::start()
 {
 	std::cout << __FILE__ << " " << __LINE__ << "remplacer le system sleep 0.3" << std::endl;
     map.draw(screen);
+    std::chrono::milliseconds dura(200);
     while(gestionSDL_Event()&&gestion_Audio())
     {
         /*if(!gestion_Audio())
@@ -111,7 +112,7 @@ void Game::start()
             cout << "deplacement impossible" << endl;
         }*/
         map.update(screen);
-        system("sleep 0.3");
+	std::this_thread::sleep_for(dura);
     }
     return;
 }

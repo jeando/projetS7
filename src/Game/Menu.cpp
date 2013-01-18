@@ -74,9 +74,11 @@ void Menu::update()
 
 void Menu::start()
 {
+    std::chrono::milliseconds dura(200);
     while(!gestion_clic())
     {
-        system("sleep 0.3");
+        update();
+	std::this_thread::sleep_for(dura);
     }
     return;
 }
@@ -94,6 +96,8 @@ bool Menu::gestion_clic()
                     case SDLK_ESCAPE:
                         return true;
                         break;
+        			default:
+            			break;
                 }
             case SDL_MOUSEBUTTONDOWN:
                 {
@@ -132,7 +136,6 @@ bool Menu::gestion_clic()
             default:
                 break;
         }
-        update();
     }
     return false;
 }
