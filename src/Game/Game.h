@@ -13,7 +13,7 @@ class Menu;
 class Game
 {
     public:
-        Game(SDL_Surface* scre);
+        Game(SDL_Surface* scre, AL_Stream_Capture* _alsc);
         ~Game();
         void start();
         void pause();
@@ -22,6 +22,7 @@ class Game
 
     private:
         SDL_Surface* screen;
+	AL_Stream_Capture* alsc;
         Menu* menu;
         Map map;
         Score score;
