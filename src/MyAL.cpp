@@ -383,7 +383,7 @@ label_debut_poll_event:
 		goto label_debut_poll_event;
 	}
 	events_audio event = analyse(equalize_spectrogramme(
-				spectrogramme(samples,sample_rate), joueur);
+				spectrogramme(sample_to_double(samples),sample_rate)), joueur);
 	if(event != RIEN)
 	{
     	mutex_sample.lock();

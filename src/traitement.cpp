@@ -50,6 +50,7 @@ events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
 			return SON_BAS;
 		default:
 			return SON_BAS;
+	}
 }
 
 
