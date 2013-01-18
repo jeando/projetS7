@@ -345,7 +345,7 @@ void AL_Stream_Capture::start_stream_capture()
 	AL_Capture::start(samples, &mutex_sample);
 }
 
-events_audio AL_Stream_Capture::poll_event(Joueur joueur)
+events_audio AL_Stream_Capture::poll_event(Joueur& joueur)
 {
 	std::vector<double> temp;
 	int indice;
@@ -365,7 +365,8 @@ label_debut_poll_event:
 	}
 
     mutex_sample.unlock();
-	indice = indice_debut(equalize_spectrogramme(spectrogramme(temp)));
+	indice = indice_debut(equalize_spectrogramme(spectrogramme(temp,
+				sample_rate)));
 	if(indice == -1)
 	{
     	mutex_sample.lock();
@@ -394,14 +395,14 @@ label_debut_poll_event:
 	std::cout << "erreur inconnu in file : " << __FILE__ << " in line " << __LINE__ << std::endl;
 	return RIEN;	
 }
-events_audio AL_Stream_Capture::wait_event()
+events_audio AL_Stream_Capture::wait_event(Joueur& joueur)
 {
 	events_audio event;
 	if(!running)
 		start_stream_capture();
 	do
 	{
-		event = poll_event();
+		event = poll_event(joueur);
 	}while(event==RIEN);
 	return event;
 }

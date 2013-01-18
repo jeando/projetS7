@@ -14,6 +14,7 @@
 
 #include<cstring>
 #include"traitement.h"
+#include"Game/Joueur.h"
 #include<ios>
 #define get_stockage_path() ""
 //"/home/favreau/projetS7/src/"
@@ -97,8 +98,8 @@ class AL_Stream_Capture : AL_Capture
 				ALsizei _sample_rate = 8000,
 				ALsizei _sample_size = 1024/*8000*2*1*/);
 		virtual ~AL_Stream_Capture();
-		events_audio poll_event();
-		events_audio wait_event();
+		events_audio poll_event(Joueur& joueur);
+		events_audio wait_event(Joueur& joueur);
 		void start_stream_capture();
 	private:
 		bool running;
