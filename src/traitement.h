@@ -4,6 +4,9 @@
 #include<vector>
 #include"util_tmp.h"
 #include"ft.h"
+#include"event_audio.h"
+
+events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur);
 
 std::vector<double> autocorrelation(std::vector<double> input);
 std::vector<double> decoupage(std::vector<double> input, unsigned int t0, const unsigned int DELTA);

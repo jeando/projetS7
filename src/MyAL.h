@@ -13,6 +13,7 @@
 #include<mutex>
 
 #include<cstring>
+#include"event_audio.h"
 #include"traitement.h"
 #include"Game/Joueur.h"
 #include<ios>
@@ -20,7 +21,6 @@
 //"/home/favreau/projetS7/src/"
 #define MAX_ALSHORT_VAL  ((1<<((sizeof(ALshort)<<3)-1))-1)
 #define MIN_ALSHORT_VAL  (-(1<<((sizeof(ALshort)<<3)-1)))
-enum events_audio {SON_HAUT, SON_BAS, SON_GAUCHE, SON_DROITE, RIEN};
 
 
 class MyAL
