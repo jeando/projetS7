@@ -328,7 +328,7 @@ void AL_Play::put_sound_in_buffer(std::string name)
 	alSourceQueueBuffers(source, 1, &buffers[indice_buffer]);
 
 }
-AL_Stream_Capture::AL_StreamCapture(std::string _device,
+AL_Stream_Capture::AL_Stream_Capture(std::string _device,
 		std::string _capture_device,
         ALenum _format, ALsizei _sample_rate, ALsizei _sample_size)
 :AL_Capture(_device, _capture_device, _format, _sample_rate, _sample_size),
@@ -336,7 +336,7 @@ AL_Stream_Capture::AL_StreamCapture(std::string _device,
 {
 
 }
-void AL_Stream_Capture::start()
+void AL_Stream_Capture::start_stream_capture()
 {
 	running = true;
 

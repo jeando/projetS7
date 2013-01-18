@@ -91,7 +91,7 @@ class AL_Play : public MyAL
 class AL_Stream_Capture : AL_Capture
 {
 	public:
-        AL_Capture(std::string _device = "",
+        AL_Stream_Capture(std::string _device = "",
 				std::string _capture_device = "",
 				ALenum _format = AL_FORMAT_MONO16,
 				ALsizei _sample_rate = 8000,
