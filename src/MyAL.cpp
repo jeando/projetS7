@@ -115,7 +115,8 @@ std::vector<std::string> MyAL::get_capture_devices()
 * constructeur pour capturer un son
 */
 AL_Capture::AL_Capture(std::string _device ,std::string _capture_device,
-                   ALenum _format, ALsizei _sample_rate, ALsizei _sample_size)
+                   ALenum _format, ALsizei _sample_rate,
+				   ALsizei _sample_size)
 :MyAL(_device), format(_format), sample_rate(_sample_rate), sample_size(_sample_size)
 {
     if(!ini_capture_device(_capture_device))
@@ -327,6 +328,33 @@ void AL_Play::put_sound_in_buffer(std::string name)
 	alSourceQueueBuffers(source, 1, &buffers[indice_buffer]);
 
 }
+AL_Stream_Capture::AL_StreamCapture(std::string _device,
+		std::string _capture_device,
+        ALenum _format, ALsizei _sample_rate, ALsizei _sample_size)
+:AL_Capture(_device, _capture_device, _format, _sample_rate, _sample_size),
+	running(false)
+{
+
+}
+void AL_Stream_Capture::start()
+{
+	running = true;
 
 
+}
 
+events_audio AL_Stream_Capture::poll_event()
+{
+	return RIEN;
+}
+events_audio AL_Stream_Capture::wait_event()
+{
+	events_audio event;
+	if(!running)
+		start_stream_capture();
+	do
+	{
+		event = poll_event();
+	}while(event==RIEN);
+	return event;
+}

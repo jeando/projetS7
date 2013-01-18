@@ -91,11 +91,17 @@ class AL_Play : public MyAL
 class AL_Stream_Capture : AL_Capture
 {
 	public:
+        AL_Capture(std::string _device = "",
+				std::string _capture_device = "",
+				ALenum _format = AL_FORMAT_MONO16,
+				ALsizei _sample_rate = 8000,
+				ALsizei _sample_size = 1024/*8000*2*1*/);
 		events_audio poll_event();
 		events_audio wait_event();
 		void start_stream_capture();
 	private:
 		bool running;
+		std::vector<ALshort> samples;
 
 };
 class AL_Stream_Play : public AL_Play
