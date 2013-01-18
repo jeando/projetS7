@@ -13,7 +13,7 @@
 class Map
 {
     public:
-        Map(std::string which_map, SDL_Surface* screen);
+        Map(std::string which_map, SDL_Surface* screen, Joueur* joueur);
         ~Map();
         void load_map(std::string nom);
         void save_map(std::string nom);
@@ -28,6 +28,7 @@ class Map
 
     private:
         SDL_Surface* surface;
+		Joueur* joueur;
         unsigned int size_box_x;
         unsigned int size_box_y;
         unsigned int w_map;
