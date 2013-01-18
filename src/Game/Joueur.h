@@ -2,6 +2,7 @@
 #define JOUEUR_H_INCLUDED
 
 #include<iostream>
+#include <vector>
 
 class Joueur
 {
