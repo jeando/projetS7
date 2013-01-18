@@ -7,8 +7,10 @@ int main()
         SDL_Surface * screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE));
         SDL_WM_SetIcon(SDL_LoadBMP("../../images/icone.bmp"), NULL);
 
-        //Game g(screen);
-        //g.start();
+		AL_Stream_Capture alsc;
+		Joueur joueur("moi");
+        Game g(screen, &alsc, joueur);
+        g.start();
 
         Menu m(screen);
         m.start();

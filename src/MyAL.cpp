@@ -388,9 +388,12 @@ label_debut_poll_event:
 	{
     	mutex_sample.lock();
 		samples.erase(samples.begin(),
-				samples.begin()+indice-sample_rate*sizeof(ALshort));
+				samples.begin()+sample_rate*sizeof(ALshort));
     	mutex_sample.unlock();
-
+		AL_Capture::stop();
+    	mutex_sample.lock();
+		samples.clear();
+    	mutex_sample.unlock();
 		return event;
 	}
 	std::cout << "erreur inconnu in file : " << __FILE__ << " in line " << __LINE__ << std::endl;
