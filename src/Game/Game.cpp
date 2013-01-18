@@ -2,8 +2,8 @@
 #include "Menu.h"
 using namespace std;
 
-Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc)
-:screen(scre), alsc(_alsc), map("../../images/lab_test2.png",scre)
+Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)
+:screen(scre), alsc(_alsc), map("../../images/lab_testjp2.png",scre), joueur(&_joueur)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
 }
