@@ -162,7 +162,8 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
         SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
         SDL_Flip(screen);
 	if(cpt_position==4){
-		cpt_position=0;
+		cpt_position^cpt_position; // cpt_position=0 mais avec une étape en moins 
+		//cpt_position=0;
 		croa_croa.vitesse_x=0;
 		croa_croa.vitesse_y=0;
 		return;
