@@ -3,7 +3,7 @@
 #include <SDL/SDL_image.h>
 using namespace std;
 
-Map::Map(string nom, SDL_Surface* screen, Joueur* joueur)
+Map::Map(string nom, SDL_Surface* screen, Joueur* _joueur)
 :surface(SDL_CreateRGBSurface(screen->flags, screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
 	screen->format->Amask)),joueur(_joueur),

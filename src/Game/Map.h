@@ -8,7 +8,7 @@
 
 #include "Item.h"
 #include "Frog.h"
-
+#include"Joueur.h"
 
 class Map
 {
