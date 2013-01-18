@@ -34,32 +34,32 @@ bool Game::gestionSDL_Event()
                     case SDLK_ESCAPE:
                         return false;
                         break;
-	    case SDLK_z:
-                map.change_speed(0,-1);
-                break;
-            case SDLK_UP:
-                map.change_speed(0,-1);
-                break;
-            case SDLK_q:
-                map.change_speed(-1,0);
-                break;
-            case SDLK_LEFT:
-                map.change_speed(-1,0);
-                break;
-            case SDLK_s:
-                map.change_speed(0,1);
-                break;
-            case SDLK_DOWN:
-                map.change_speed(0,1);
-                break;
-            case SDLK_d:
-                map.change_speed(1,0);
-                break;
-            case SDLK_RIGHT:
-                map.change_speed(1,0);
-                break;
-                    default:
+                    case SDLK_z:
+                        map.change_speed(0,-1);
                         break;
+                    case SDLK_UP:
+                        map.change_speed(0,-1);
+                        break;
+                    case SDLK_q:
+                        map.change_speed(-1,0);
+                        break;
+                    case SDLK_LEFT:
+                        map.change_speed(-1,0);
+                        break;
+                    case SDLK_s:
+                        map.change_speed(0,1);
+                        break;
+                    case SDLK_DOWN:
+                        map.change_speed(0,1);
+                        break;
+                    case SDLK_d:
+                        map.change_speed(1,0);
+                        break;
+                    case SDLK_RIGHT:
+                        map.change_speed(1,0);
+                        break;
+                            default:
+                                break;
                 }
                 break;
             case SDL_QUIT:
@@ -104,7 +104,7 @@ void Game::start()
 {
 	std::cout << __FILE__ << " " << __LINE__ << "remplacer le system sleep 0.3" << std::endl;
     map.draw(screen);
-    while(gestionSDL_Event()||gestion_Audio())
+    while(gestionSDL_Event()&&gestion_Audio())
     {
         /*if(!gestion_Audio())
         {
