@@ -106,7 +106,6 @@ bool Menu::gestion_clic()
                         cout << "commencer" << endl;
                         Game g(screen,&alsc);
                         g.start();
-
                 }
                 else if(x>=rect2.x && x<=(rect2.x+204)
                    && y>=rect2.y && y<=(rect2.y+43))
