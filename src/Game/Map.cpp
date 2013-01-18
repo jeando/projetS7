@@ -43,38 +43,50 @@ void Map::load_map(string nom)
     h_map = fond->h;
     list_items.resize(w_map*h_map);
 
-    SDL_LockSurface(fond); // Vérouillage de la surface
-    Uint8* pPixels = ((Uint8*)fond->pixels);
-    Uint8 red, green, blue; // Variables servant à stocker la couleur du pixel choisi
+    Uint8* pPixels = nullptr;
+    int  red, green, blue; // Variables servant à stocker la couleur du pixel choisi
+    int bpp = fond->format->BytesPerPixel;
     for(int i=0; i<w_map; i++)
     {
         for(int j=0; j<h_map; j++)
         {
-            //cout << i << " " << j << " ";
-            //SDL_GetRGB(j*w_map+(i+1), fond->format, &red, &green, &blue);
-            red = *(pPixels+4*(j*w_map+(i+1)));
-            green = *(pPixels+4*(j*w_map+(i+1)+1));
-            blue = *(pPixels+4*(j*w_map+(i+1)+2));
-
-            int r = ((int)red);
-            int g = ((int)green);
-            int b = ((int)blue);
-            cout << ((int)r) << " " << ((int)g) << " " << ((int)b) << "|| ";
+            pPixels = ((Uint8*)fond->pixels)+j*fond->pitch+i*bpp;
+            switch(bpp)
+            {
+                case 3:
+                    if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
+                    {
+                        red = pPixels[0] << 16;
+                        green = pPixels[1] << 8;
+                        blue = pPixels[2];
+                    }
+                    else
+                    {
+                        red = pPixels[0];
+                        green = pPixels[1] << 8;
+                        blue = pPixels[2] << 16;
+                    }
+                    break;
+                case 4:
+                    red = pPixels[0] << 24;
+                    green = pPixels[1] << 16;
+                    blue = pPixels[2] << 8;
+            }
 
             //Si le fond etait rouge
-            if( red==0xFF && green==0x00 && blue==0x00)//red==255 && green==0 && blue==0)//==>meme resultat
+            if( red==fond->format->Rmask && green==0x00 && blue==0x00)
             {
                 list_items[i+j*w_map] = new Item("end");
 
 
             }
             //Si le fond etait vert
-            if(  red==0x00 && green==0xFF && blue==0x00)//green == 255 && blue==0 && red==0)
+            if(  red==0x00 && green==fond->format->Gmask && blue==0x00)
             {
                 list_items[w_map*j+i] = new Item("wall");
             }
             //Si le fond etait bleu
-            if( red==0x00 && green==0x00 && blue==0xFF)//blue==255 && green==0 && red==0)
+            if( red==0x00 && green==0x00 && blue==fond->format->Bmask)
             {
                 int debut_x=i;
                 int debut_y=j;
@@ -83,13 +95,8 @@ void Map::load_map(string nom)
                 croa_croa.position_y=debut_y;
             }
         }
-        cout << endl;
     }
-
-    SDL_UnlockSurface(fond); //Dévérouillage de la surface
-
     SDL_FreeSurface(fond);
-
 }
 
 void Map::draw(SDL_Surface* screen)
