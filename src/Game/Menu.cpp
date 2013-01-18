@@ -6,7 +6,7 @@
 using namespace std;
 
 Menu::Menu(SDL_Surface* scre)
-:alsc(), game(scre, &alsc), screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
+:alsc(), screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
     scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask, scre->format->Amask)),joueur(nullptr)
 {
     draw();

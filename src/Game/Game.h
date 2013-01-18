@@ -25,7 +25,7 @@ class Game
     private:
         SDL_Surface* screen;
 	AL_Stream_Capture* alsc;
-	Joueur* _joueur;
+	Joueur* joueur;
         Menu* menu;
         Map map;
         Score score;

@@ -31,7 +31,6 @@ class Menu
 
     private:
         AL_Stream_Capture alsc;
-        Game game;
         //MenuItem* menu_item;
         SDL_Surface* screen;
         SDL_Surface* fene_menu;
