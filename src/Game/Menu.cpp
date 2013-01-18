@@ -6,7 +6,7 @@
 using namespace std;
 
 Menu::Menu(SDL_Surface* scre)
-:game(scre), screen(scre)
+:alsc(), game(scre, alsc), screen(scre)
 {
     SDL_WM_SetCaption("Menu", nullptr);
     TTF_Init();
@@ -88,7 +88,7 @@ bool Menu::gestion_clic()
                    && y>=rect1.y && y<=(rect1.y+43))
                 {
                         cout << "commencer" << endl;
-        Game g(screen);
+        Game g(screen,alsc);
         g.start();
                 }
                 else if(x>=rect2.x && x<=(rect2.x+204)
