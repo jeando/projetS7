@@ -144,3 +144,38 @@ bool Menu::gestion_clic()
     }
     return false;
 }
+
+Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
+:screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
+    scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask, scre->format->Amask))
+{
+    draw();
+    update();
+}
+
+Choix_Utilisateur::draw()
+{
+    SDL_WM_SetCaption("Choix utilisateur", nullptr);
+    TTF_Init();
+    SDL_FillRect(fene_menu, nullptr, SDL_MapRGB(fene_menu->format, 17, 206, 112));
+
+    SDL_Surface* commencer = IMG_Load( "../../images/buttun_begin.png" );
+    SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
+    SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
+
+    TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 35);
+    SDL_Color couleur = {0, 0, 0, 42};
+    SDL_Surface* texte;
+
+
+    SDL_FreeSurface(commencer);
+    SDL_FreeSurface(texte);
+    SDL_FreeSurface(standard);
+    SDL_FreeSurface(quitter);
+    TTF_Quit();
+}
+
+Choix_Utilisateur::update()
+{
+
+}

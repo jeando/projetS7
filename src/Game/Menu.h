@@ -4,57 +4,38 @@
 #include"Joueur.h"
 #include "Game.h"
 
-class Action
+class Choix_Utilisateur
 {
     public:
-        Action();
-
-        void commencer(Action prec);
-        void choix_utilisateur(Action prec);
-        void options(Action prec);
-        void quitter(Action prec);
-        void retour(Action prec);
-
-        void choisir_map();
-        void modif_audio();
-        void modif_video();
-        void re_enregister();
-        void creer_nouvel_utilisateur();
-        void modif_touches();
+        Choix_Utilisateur(SDL_Surface* scre);
+        bool gestion_clic();
+        void start();
+        void draw();
+        void update();
 
 
     private:
-        Action* precedente;
+        SDL_Surface* screen;
+        SDL_Surface* fene_menu;
 };
 
-class MenuItem
-{
-    public:
-        MenuItem();
-
-    private:
-        SDL_Surface* surface;
-        SDL_Rect rect;
-        Action* action;
-};
-
-class Menu //: MenuItem
+class Menu
 {
     public:
         Menu(SDL_Surface* scre);
-	~Menu();
+        ~Menu();
         bool gestion_clic();
         void start();
         void draw();
         void update();
 
     private:
-	AL_Stream_Capture alsc;
+        AL_Stream_Capture alsc;
         Game game;
         //MenuItem* menu_item;
         SDL_Surface* screen;
         SDL_Surface* fene_menu;
-	Joueur* joueur;
+        Joueur* joueur;
         SDL_Rect rect1;
         SDL_Rect rect2;
         SDL_Rect rect3;
