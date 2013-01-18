@@ -2,12 +2,13 @@
 #define GAME_H_INCLUDED
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-
+#include "../MyAL.h"
 #include "Score.h"
 #include "Map.h"
+
 class Menu;
 
-enum events_audio {SON_HAUT, SON_BAS, SON_GAUCHE, SON_DROITE};
+//enum events_audio {SON_HAUT, SON_BAS, SON_GAUCHE, SON_DROITE};
 
 class Game
 {
