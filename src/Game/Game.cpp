@@ -2,8 +2,8 @@
 #include "Menu.h"
 using namespace std;
 
-Game::Game(SDL_Surface* scre)
-:screen(scre), map("../../images/lab_test2.png",scre)
+Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc)
+:screen(scre), alsc(_alsc), map("../../images/lab_test2.png",scre)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
 }
@@ -74,7 +74,8 @@ bool Game::gestionSDL_Event()
 
 bool Game::gestion_Audio()
 {
-    events_audio test = SON_HAUT;//a changer avec la fonction adequoite
+    //events_audio test = SON_HAUT;//a changer avec la fonction adequoite
+    events_audio test = alsc->poll_event();
     bool deplacement = true;
     switch(test)
     {
@@ -90,17 +91,19 @@ bool Game::gestion_Audio()
         case SON_DROITE:
             deplacement = map.change_speed(1,0);
             break;
+        case RIEN:
+            break;
         default:
             break;
     }
-    return deplacement;
+    return true;
 }
 
 
 void Game::start()
 {
     map.draw(screen);
-    while(gestionSDL_Event())
+    while(gestionSDL_Event()||gestion_Audio())
     {
         /*if(!gestion_Audio())
         {
