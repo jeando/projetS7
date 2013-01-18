@@ -81,8 +81,6 @@ bool Menu::gestion_clic()
                 int x = event.button.x;
                 int y = event.button.y;
 
-                cout << "vous aves clique en " << x << " et " << y << endl;
-
                 if(x>=rect1.x && x<=(rect1.x+204)
                    && y>=rect1.y && y<=(rect1.y+43))
                 {
