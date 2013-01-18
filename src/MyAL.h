@@ -91,7 +91,9 @@ class AL_Play : public MyAL
 class AL_Stream_Capture : AL_Capture
 {
 	public:
-
+		events_audio poll_event();
+		events_audio wait_event();
+		void start_stream_capture();
 	private:
 		bool running;
 
