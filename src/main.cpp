@@ -41,13 +41,13 @@ int main()
 //	std::vector<std::string> vect_mot={"gauche","droite"};//,"haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
 	std::vector<std::string> vect_mot={
 		"gauche",
-		//"gauche ",
+		"gauche ",
 		"droite",
-		//"droite ",
+		"droite ",
 		"haut",
-		//"haut ",
+		"haut ",
 		"bas",
-		//"bas "
+		"bas "
 	};//,"diag"};//,"un","deux","trois","quatre","cinq","six"};
 //	std::vector<std::string> vect_mot={"gauche","droite","haut","bas","diag"};//,"un","deux","trois","quatre","cinq","six"};
 	SDL_Init(SDL_INIT_VIDEO);
