@@ -4,6 +4,8 @@
 #include"Joueur.h"
 #include "Game.h"
 
+#include <vector>
+
 class Choix_Utilisateur
 {
     public:
@@ -17,6 +19,7 @@ class Choix_Utilisateur
     private:
         SDL_Surface* screen;
         SDL_Surface* fene_menu;
+        std::vector<std::string> list_util;
 };
 
 class Menu
