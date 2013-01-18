@@ -342,13 +342,57 @@ AL_Stream_Capture::~AL_Stream_Capture()
 void AL_Stream_Capture::start_stream_capture()
 {
 	running = true;
-
-
+	AL_Capture::start(samples, &mutex_sample);
 }
 
 events_audio AL_Stream_Capture::poll_event()
 {
-	return RIEN;
+	std::vector<double> temp;
+	int indice;
+label_debut_poll_event:
+    mutex_sample.lock();
+	if(sample_rate*sizeof(ALshort)<samples.size())
+	{
+		for(unsigned int i = 0; i<sample_rate*sizeof(ALshort); i++)
+		{
+			temp.push_back(samples[i]);
+		}
+	}
+	else
+	{
+    	mutex_sample.unlock();
+		return RIEN;
+	}
+
+    mutex_sample.unlock();
+	indice = indice_debut(equalize_spectrogramme(spectrogramme(temp)));
+	if(indice == -1)
+	{
+    	mutex_sample.lock();
+		samples.erase(samples.begin(), samples.begin()+sample_rate*sizeof(ALshort)/2);
+    	mutex_sample.unlock();
+		goto label_debut_poll_event;
+	}
+	if(indice > sample_rate*sizeof(ALshort)*4.0/10)
+	{
+    	mutex_sample.lock();
+		samples.erase(samples.begin(),
+				samples.begin()+indice-sample_rate*sizeof(ALshort)*4.0/10);
+    	mutex_sample.unlock();
+		goto label_debut_poll_event;
+	}
+	events_audio event = analyse(samples);
+	if(event != RIEN)
+	{
+    	mutex_sample.lock();
+		samples.erase(samples.begin(),
+				samples.begin()+indice-sample_rate*sizeof(ALshort));
+    	mutex_sample.unlock();
+
+		return event;
+	}
+	std::cout << "erreur inconnu in file : " << __FILE__ << " in line " << __LINE__ << std::endl;
+	return RIEN;	
 }
 events_audio AL_Stream_Capture::wait_event()
 {
