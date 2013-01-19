@@ -498,7 +498,7 @@ void AL_Stream_Capture::poll_event_thread()
 		{
     		mutex_sample.lock();
 			samples.erase(samples.begin(),
-				samples.begin()+indice-temp.size()*4.0/10);
+				samples.begin()+indice-ceil(temp.size()*4.0/10));
     		mutex_sample.unlock();
 			continue;
 		}
