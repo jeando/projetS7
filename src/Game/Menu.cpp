@@ -18,7 +18,6 @@ Menu::~Menu()
 {
 	delete joueur;
     SDL_FreeSurface(fene_menu);
-	std::cout << "z" << std::endl;
 }
 void Menu::draw()
 {
