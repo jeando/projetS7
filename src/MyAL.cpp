@@ -117,7 +117,7 @@ std::vector<std::string> MyAL::get_capture_devices()
 AL_Capture::AL_Capture(std::string _device ,std::string _capture_device,
                    ALenum _format, ALsizei _sample_rate,
 				   ALsizei _sample_size)
-:MyAL(_device), format(_format), sample_rate(_sample_rate), sample_size(_sample_size)
+:MyAL(_device), format(_format), sample_rate(_sample_rate), sample_size(_sample_size),continuer(false)
 {
     if(!ini_capture_device(_capture_device))
         throw std::ios_base::failure("Can't load capture device");
@@ -148,22 +148,25 @@ ALsizei AL_Capture::getSampleRate()
 */
 void AL_Capture::start(std::vector<ALshort>& _samples, std::mutex* _mutex)
 {
-	//vide buffer
-    ALCint samples_available;
-    alcGetIntegerv(capture_device, ALC_CAPTURE_SAMPLES, 1, &samples_available);
-    if (samples_available > 0)
-    {
-		std::vector<ALshort> tmp(samples_available);
-        alcCaptureSamples(capture_device, &tmp[0], samples_available);
-    }
+	if(!continuer){
+		//vide buffer
+//		capture();
+    	ALCint samples_available;
+    	alcGetIntegerv(capture_device, ALC_CAPTURE_SAMPLES, 1, &samples_available);
+    	if (samples_available > 0)
+    	{
+			std::vector<ALshort> tmp(samples_available);
+        	alcCaptureSamples(capture_device, &tmp[0], samples_available);
+    	}
 
-    continuer = true;
-    capture_samples = &_samples;
-    alcCaptureStart(capture_device);
-    if(_mutex)
-        captureThread = std::thread(&AL_Capture::record_with_mutex, this, _mutex);
-    else
-        captureThread = std::thread(&AL_Capture::record_without_mutex, this);
+    	continuer = true;
+    	capture_samples = &_samples;
+    	alcCaptureStart(capture_device);
+    	if(_mutex)
+        	captureThread = std::thread(&AL_Capture::record_with_mutex, this, _mutex);
+    	else
+        	captureThread = std::thread(&AL_Capture::record_without_mutex, this);
+	}
 }
 
 /**

@@ -12,8 +12,10 @@ int main()
 //        Game g(screen, &alsc, joueur);
   //      g.start();
 
-       Menu m(screen);
-        m.start();
-
+       Menu* m = new Menu(screen);
+        m->start();
+	std::cout << "aaaaaaaaaaaa" << std::endl;
+		delete m;
+	std::cout << "aaaaaaaaaaaa" << std::endl;
         SDL_Quit();
 }
