@@ -19,14 +19,15 @@ class Map
         void save_map(std::string nom);
 
         //on redessine tout (ne pas oublier croa_croa!)
-        void draw(SDL_Surface* screen);
+        void draw();
         //on dessine sur la grenouille le fond et on dessine la grenouille sur la nouvelle position
-        void update(SDL_Surface* screen);//, unsigned int x, unsigned int y);
+        void update();//, unsigned int x, unsigned int y);
         bool change_speed(int vx, int vy);
         bool is_deplacement_possible(int vx, int vy);
 
 
     private:
+        SDL_Surface* screen;
         SDL_Surface* surface;
 		AL_Stream_Capture* alsc;
         unsigned int size_box_x;

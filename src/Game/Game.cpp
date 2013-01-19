@@ -74,22 +74,26 @@ bool Game::gestionSDL_Event()
 
 bool Game::gestion_Audio()
 {
-    //events_audio test = SON_HAUT;//a changer avec la fonction adequoite
-    events_audio test = alsc->poll_event(*joueur);
-    bool deplacement = true;
+//    events_audio test = alsc->poll_event();
+    events_audio test = alsc->poll_event_continue();
+//    bool deplacement = true;
     switch(test)
     {
         case SON_HAUT:
-            deplacement = map.change_speed(0,-1);
+  //          deplacement = map.change_speed(0,-1);
+            map.change_speed(0,-1);
             break;
         case SON_BAS:
-            deplacement = map.change_speed(0,1);
+    //        deplacement = map.change_speed(0,1);
+            map.change_speed(0,1);
             break;
         case SON_GAUCHE:
-            deplacement = map.change_speed(-1,0);
+      //      deplacement = map.change_speed(-1,0);
+            map.change_speed(-1,0);
             break;
         case SON_DROITE:
-            deplacement = map.change_speed(1,0);
+        //    deplacement = map.change_speed(1,0);
+            map.change_speed(1,0);
             break;
         case RIEN:
             break;
@@ -103,7 +107,9 @@ bool Game::gestion_Audio()
 void Game::start()
 {
 	//std::cout << __FILE__ << " " << __LINE__ << "remplacer le system sleep 0.3" << std::endl;
-    map.draw(screen);
+    map.draw();
+    map.update();
+	alsc->set_joueur(joueur);
     std::chrono::milliseconds dura(20);
     while(gestionSDL_Event()&&gestion_Audio())
     {
@@ -111,7 +117,7 @@ void Game::start()
         {
             cout << "deplacement impossible" << endl;
         }*/
-        map.update(screen);
+        map.update();
 		std::this_thread::sleep_for(dura);
     }
 	alsc->stop_stream_capture();

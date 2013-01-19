@@ -3,8 +3,8 @@
 #include <SDL/SDL_image.h>
 using namespace std;
 
-Map::Map(string nom, SDL_Surface* screen, AL_Stream_Capture* _alsc)
-:surface(SDL_CreateRGBSurface(screen->flags, screen->w,
+Map::Map(string nom, SDL_Surface* _screen, AL_Stream_Capture* _alsc)
+:screen(_screen),surface(SDL_CreateRGBSurface(screen->flags, screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
 	screen->format->Amask)),alsc(_alsc),
 size_box_x(30), size_box_y(30), w_map(48), h_map(25),croa_croa(Frog("frog")),cpt_position(0)
@@ -103,7 +103,7 @@ void Map::load_map(string nom)
     SDL_FreeSurface(fond);
 }
 
-void Map::draw(SDL_Surface* screen)
+void Map::draw()
 {
     int cpt=0;
     SDL_Rect rect = {0,0,0,0};
@@ -130,7 +130,7 @@ void Map::draw(SDL_Surface* screen)
     SDL_Flip(screen);
 }
 
-void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
+void Map::update()//, unsigned int x, unsigned int y);
 {
     if(is_deplacement_possible(croa_croa.vitesse_x, croa_croa.vitesse_y))
     {
@@ -153,18 +153,21 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
             croa_croa.etat_x-=4;
         }
 
-        //SDL_Rect rect1;
-        rect.x=size_box_x*(croa_croa.etat_x);
-        rect.y=size_box_y*(croa_croa.etat_y);
-/*        rect1.w=size_box_x;
-        rect1.h=size_box_y;
+        SDL_Rect rect1{
+	        size_box_x*(croa_croa.etat_x),
+        	size_box_y*(croa_croa.etat_y),
+        	size_box_x,
+        	size_box_y};
 //*/
         SDL_Rect rect2 = {
         	size_box_x*croa_croa.position_x,
         	size_box_y*croa_croa.position_y,
 			0,0,};
-        SDL_BlitSurface(surfaces_map["frog"],&rect,screen,&rect2);
-        SDL_Flip(screen);
+        SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
+//        SDL_Flip(screen);
+		SDL_UpdateRect(screen, min(rect.x, rect2.x),min(rect.y, rect2.y),
+				size_box_x*(rect.x==rect2.x?1:2),
+				size_box_y*(rect.y==rect2.y?1:2));
         if(cpt_position==4){
             cpt_position^=cpt_position; // cpt_position=0 mais avec une étape en moins
 	//		std::cout << cpt_position << std::endl;

@@ -8,6 +8,7 @@
 
 #include<string>
 #include<vector>
+#include<queue>
 
 #include<thread>
 #include<mutex>
@@ -98,14 +99,22 @@ class AL_Stream_Capture : AL_Capture
 				ALsizei _sample_rate = 8000,
 				ALsizei _sample_size = 1024/*8000*2*1*/);
 		virtual ~AL_Stream_Capture();
-		events_audio poll_event(Joueur& joueur);
-		events_audio wait_event(Joueur& joueur);
+		void set_joueur(Joueur* joueur);
+		events_audio poll_event();
+		void poll_event_thread();
+		events_audio poll_event_continue();
+		events_audio wait_event();
 		void start_stream_capture();
 		void stop_stream_capture();
 	private:
+		Joueur* joueur;
 		bool running;
+		bool thread_continuer;
+        std::thread streamThread;
+		std::queue<events_audio> lst_events;
 		std::mutex mutex_sample;
 		std::vector<ALshort> samples;
+		std::mutex mutex_lst_events;
 
 };
 class AL_Stream_Play : public AL_Play

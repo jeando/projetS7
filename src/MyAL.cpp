@@ -124,6 +124,7 @@ AL_Capture::AL_Capture(std::string _device ,std::string _capture_device,
 }
 AL_Capture::~AL_Capture()
 {
+	stop();
     alcCaptureCloseDevice(capture_device);
 }
 
@@ -204,7 +205,13 @@ void AL_Capture::record_without_mutex()
     std::chrono::milliseconds dura(20);
     while(continuer){
         capture();
-      //  std::this_thread::sleep_for(dura);
+		//************************************************************
+		//************************************************************
+		//************************************************************
+                         std::this_thread::sleep_for(dura);
+		//************************************************************
+		//************************************************************
+		//************************************************************
     }
 }
 
@@ -213,9 +220,12 @@ void AL_Capture::record_without_mutex()
 */
 void AL_Capture::stop()
 {
-    alcCaptureStop(capture_device);
-    continuer = false;
-    captureThread.join();
+	if(continuer)
+	{
+    	alcCaptureStop(capture_device);
+    	continuer = false;
+    	captureThread.join();
+	}
 }
 
 /**
@@ -332,12 +342,16 @@ AL_Stream_Capture::AL_Stream_Capture(std::string _device,
 		std::string _capture_device,
         ALenum _format, ALsizei _sample_rate, ALsizei _sample_size)
 :AL_Capture(_device, _capture_device, _format, _sample_rate, _sample_size),
-	running(false)
+	running(false), thread_continuer(false)
 {
 
 }
 AL_Stream_Capture::~AL_Stream_Capture()
 {
+}
+void AL_Stream_Capture::set_joueur(Joueur* _joueur)
+{
+	joueur=_joueur;
 }
 void AL_Stream_Capture::start_stream_capture()
 {
@@ -352,14 +366,20 @@ void AL_Stream_Capture::stop_stream_capture()
 		running = false;
 		AL_Capture::stop();
 	}
+	if(thread_continuer)
+	{
+		thread_continuer=false;
+		streamThread.join();
+	}
 }
-events_audio AL_Stream_Capture::poll_event(Joueur& joueur)
+events_audio AL_Stream_Capture::poll_event()
 {
 	if(!running)
 		return RIEN;
 	std::vector<double> temp;
 	int indice;
 label_debut_poll_event:
+	temp.clear();
     mutex_sample.lock();
 	if(sample_rate*sizeof(ALshort)<samples.size())
 	{
@@ -380,20 +400,21 @@ label_debut_poll_event:
 	if(indice == -1)
 	{
     	mutex_sample.lock();
-		samples.erase(samples.begin(), samples.begin()+sample_rate*sizeof(ALshort)/2);
+		samples.erase(samples.begin(), samples.begin()+temp.size()/2);
     	mutex_sample.unlock();
 		goto label_debut_poll_event;
 	}
-	if(indice > sample_rate*sizeof(ALshort)*4.0/10)
+	if(indice > temp.size()*4.0/10)
 	{
     	mutex_sample.lock();
 		samples.erase(samples.begin(),
-				samples.begin()+indice-sample_rate*sizeof(ALshort)*4.0/10);
+				samples.begin()+indice-temp.size()*4.0/10);
     	mutex_sample.unlock();
 		goto label_debut_poll_event;
 	}
 	events_audio event = analyse(equalize_spectrogramme(
-				spectrogramme(sample_to_double(samples),sample_rate)), joueur);
+				//spectrogramme(sample_to_double(samples),sample_rate)), joueur);
+				spectrogramme(temp,sample_rate)), *joueur);
 	if(event != RIEN)
 	{
 		stop_stream_capture();
@@ -409,14 +430,95 @@ label_debut_poll_event:
 	std::cout << "erreur inconnu in file : " << __FILE__ << " in line " << __LINE__ << std::endl;
 	return RIEN;	
 }
-events_audio AL_Stream_Capture::wait_event(Joueur& joueur)
+events_audio AL_Stream_Capture::wait_event()
 {
 	events_audio event;
 	if(!running)
 		start_stream_capture();
 	do
 	{
-		event = poll_event(joueur);
+		event = poll_event();
 	}while(event==RIEN);
 	return event;
+}
+events_audio AL_Stream_Capture::poll_event_continue()
+{
+	if(!running){
+		start_stream_capture();
+	}
+	if(!thread_continuer){
+		thread_continuer=true;
+    	streamThread = std::thread(
+			&AL_Stream_Capture::poll_event_thread,this);
+	}
+	mutex_lst_events.lock();
+	if(lst_events.empty())
+	{
+		mutex_lst_events.unlock();
+		return RIEN;
+	}
+	events_audio event = lst_events.front();
+	lst_events.pop();
+	mutex_lst_events.unlock();
+	return event;
+}
+void AL_Stream_Capture::poll_event_thread()
+{
+	std::vector<double> temp;
+	int indice;
+    std::chrono::milliseconds dura(20);
+	while(thread_continuer)
+	{
+        std::this_thread::sleep_for(dura);
+		temp.clear();
+    	mutex_sample.lock();
+		if(sample_rate*sizeof(ALshort)<samples.size())
+		{
+			for(unsigned int i = 0; i<sample_rate*sizeof(ALshort); i++)
+			{
+				temp.push_back(samples[i]);
+			}
+		}
+		else
+		{
+    		mutex_sample.unlock();
+			continue;
+		}
+    	mutex_sample.unlock();
+		indice = indice_debut(equalize_spectrogramme(spectrogramme(temp,
+				sample_rate)));
+		if(indice == -1)
+		{
+    		mutex_sample.lock();
+			samples.erase(samples.begin(), samples.begin()+temp.size()/2);
+    		mutex_sample.unlock();
+			continue;
+		}
+		if(indice > temp.size()*4.0/10)
+		{
+    		mutex_sample.lock();
+			samples.erase(samples.begin(),
+				samples.begin()+indice-temp.size()*4.0/10);
+    		mutex_sample.unlock();
+			continue;
+		}
+		events_audio event = analyse(equalize_spectrogramme(
+				//spectrogramme(sample_to_double(samples),sample_rate)), joueur);
+				spectrogramme(temp,sample_rate)), *joueur);
+		if(event != RIEN)
+		{
+			mutex_lst_events.lock();
+			lst_events.push(event);
+			mutex_lst_events.unlock();
+    		mutex_sample.lock();
+			samples.erase(samples.begin(), samples.begin()+temp.size());
+    		mutex_sample.unlock();
+			continue;
+		}
+		std::cout << "erreur inconnu in file : " << __FILE__ << " in line " << __LINE__ << std::endl;
+    	mutex_sample.lock();
+		samples.erase(samples.begin(), samples.begin()+temp.size());
+    	mutex_sample.unlock();
+		continue;
+	}
 }
