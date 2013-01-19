@@ -348,6 +348,7 @@ AL_Stream_Capture::AL_Stream_Capture(std::string _device,
 }
 AL_Stream_Capture::~AL_Stream_Capture()
 {
+	stop_stream_capture();
 }
 void AL_Stream_Capture::set_joueur(Joueur* _joueur)
 {

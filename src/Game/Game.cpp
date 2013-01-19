@@ -110,7 +110,7 @@ void Game::start()
     map.draw();
     map.update();
 	alsc->set_joueur(joueur);
-    std::chrono::milliseconds dura(200);
+    std::chrono::milliseconds dura(80);
     while(gestionSDL_Event()&&gestion_Audio())
     {
         /*if(!gestion_Audio())

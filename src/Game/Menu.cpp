@@ -54,6 +54,7 @@ void Menu::draw()
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect3);
     ostringstream oss3;
     oss3 << "    Options";
+    SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss3.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect3);
 
@@ -62,11 +63,14 @@ void Menu::draw()
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect4);
     ostringstream oss4;
     oss4 << "     Quitter";
+    SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect4);
+    
+	SDL_FreeSurface(texte);
 
+	TTF_CloseFont(police);
     SDL_FreeSurface(commencer);
-    SDL_FreeSurface(texte);
     SDL_FreeSurface(standard);
     SDL_FreeSurface(quitter);
     TTF_Quit();
@@ -74,18 +78,18 @@ void Menu::draw()
 
 void Menu::update()
 {
-    SDL_Surface * screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE));
+    //SDL_Surface * screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE|SDL_DOUBLEBUF));
     SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
     SDL_Flip(screen);
 }
 
 void Menu::start()
 {
-    std::chrono::milliseconds dura(200);
+    std::chrono::milliseconds dura(40);
     while(!gestion_clic())
     {
         update();
-	std::this_thread::sleep_for(dura);
+		std::this_thread::sleep_for(dura);
     }
     return;
 }
@@ -124,6 +128,10 @@ bool Menu::gestion_clic()
                         cout << "Choix utilisateur" << endl;
                         Choix_Utilisateur ch(screen);
                         ch.start();
+						screen=SDL_SetVideoMode(fene_menu->w,
+								fene_menu->h,
+								fene_menu->format->BitsPerPixel ,
+								fene_menu->flags);
                 }
                 else if(x>=rect3.x && x<=(rect3.x+204)
                    && y>=rect3.y && y<=(rect3.y+43))
@@ -150,10 +158,14 @@ bool Menu::gestion_clic()
 }
 
 Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
-:screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
-    scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask, scre->format->Amask))
+//:screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
+:screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags
+		//	SDL_HWSURFACE | SDL_DOUBLEBUF
+		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
+		screen->w,
+    screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask))
 {
-    screen = SDL_SetVideoMode(750, 400, 32, SDL_HWSURFACE);
+    //screen = SDL_SetVideoMode(750, 400, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
     ifstream liste_utilisateurs("./data/joueur.lst");
     string tmp;
@@ -172,7 +184,10 @@ Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
     draw();
     update();
 }
-
+Choix_Utilisateur::~Choix_Utilisateur()
+{
+	SDL_FreeSurface(fene_menu);
+}
 void Choix_Utilisateur::draw()
 {
     SDL_WM_SetCaption("Choix utilisateur", nullptr);
@@ -232,6 +247,7 @@ void Choix_Utilisateur::draw()
 
     ostringstream oss2;
     oss2 << "  Commencer";
+    SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
 
     rect1.y=25;
@@ -259,9 +275,11 @@ void Choix_Utilisateur::draw()
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
+    SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
+	TTF_CloseFont(police);
     SDL_FreeSurface(commencer);
     SDL_FreeSurface(texte);
     SDL_FreeSurface(standard);
@@ -281,7 +299,7 @@ void Choix_Utilisateur::start()
     while(!gestion_clic())
     {
         update();
-	std::this_thread::sleep_for(dura);
+		std::this_thread::sleep_for(dura);
     }
     return;
 }

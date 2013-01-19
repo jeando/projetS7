@@ -10,6 +10,7 @@ class Choix_Utilisateur
 {
     public:
         Choix_Utilisateur(SDL_Surface* scre);
+		~Choix_Utilisateur();
         bool gestion_clic();
         void start();
         void draw();
@@ -17,7 +18,7 @@ class Choix_Utilisateur
 
 
     private:
-        SDL_Surface* screen;
+		SDL_Surface* screen;
         SDL_Surface* fene_menu;
         std::vector<std::string> list_util;
 };
