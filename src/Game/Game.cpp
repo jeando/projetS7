@@ -112,7 +112,8 @@ void Game::start()
             cout << "deplacement impossible" << endl;
         }*/
         map.update(screen);
-	std::this_thread::sleep_for(dura);
+		std::this_thread::sleep_for(dura);
     }
+	alsc->stop_stream_capture();
     return;
 }

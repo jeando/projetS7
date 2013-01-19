@@ -341,12 +341,22 @@ AL_Stream_Capture::~AL_Stream_Capture()
 }
 void AL_Stream_Capture::start_stream_capture()
 {
-	running = true;
-	AL_Capture::start(samples, &mutex_sample);
+	if(!running){
+		running = true;
+		AL_Capture::start(samples, &mutex_sample);
+	}
 }
-
+void AL_Stream_Capture::stop_stream_capture()
+{
+	if(running){
+		running = false;
+		AL_Capture::stop();
+	}
+}
 events_audio AL_Stream_Capture::poll_event(Joueur& joueur)
 {
+	if(!running)
+		return RIEN;
 	std::vector<double> temp;
 	int indice;
 label_debut_poll_event:
@@ -386,11 +396,11 @@ label_debut_poll_event:
 				spectrogramme(sample_to_double(samples),sample_rate)), joueur);
 	if(event != RIEN)
 	{
-    	mutex_sample.lock();
+		stop_stream_capture();
+    	/*mutex_sample.lock();
 		samples.erase(samples.begin(),
 				samples.begin()+sample_rate*sizeof(ALshort));
-    	mutex_sample.unlock();
-		AL_Capture::stop();
+    	mutex_sample.unlock();//*/
     	mutex_sample.lock();
 		samples.clear();
     	mutex_sample.unlock();

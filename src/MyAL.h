@@ -101,6 +101,7 @@ class AL_Stream_Capture : AL_Capture
 		events_audio poll_event(Joueur& joueur);
 		events_audio wait_event(Joueur& joueur);
 		void start_stream_capture();
+		void stop_stream_capture();
 	private:
 		bool running;
 		std::mutex mutex_sample;

@@ -30,6 +30,7 @@ Map::~Map()
     {
         SDL_FreeSurface(it->second);
     }
+	SDL_FreeSurface(surface);
 }
 
 void Map::load_map(string nom)
@@ -105,9 +106,9 @@ void Map::load_map(string nom)
 void Map::draw(SDL_Surface* screen)
 {
     int cpt=0;
+    SDL_Rect rect = {0,0,0,0};
     for(Item* ptr : list_items)
     {
-        SDL_Rect rect;
         rect.x=size_box_x*(cpt%w_map);
         rect.y=size_box_y*(cpt/w_map);
         SDL_BlitSurface(surfaces_map["background"],nullptr,surface,&rect);
@@ -115,30 +116,29 @@ void Map::draw(SDL_Surface* screen)
         if(ptr!=nullptr)
             SDL_BlitSurface(surfaces_map[ptr->nom_image],nullptr,surface,&rect);
     }
-        SDL_BlitSurface(surface,nullptr,screen,nullptr);
+    SDL_BlitSurface(surface,nullptr,screen,nullptr);
 
-
-        SDL_Rect rect1;
-        rect1.x=size_box_x*(croa_croa.etat_x);
-        rect1.y=size_box_y*(croa_croa.etat_y);
-        rect1.w=size_box_x;
-        rect1.h=size_box_y;
-        SDL_Rect rect2;
-        rect2.x=size_box_x*croa_croa.position_x;
-        rect2.y=size_box_y*croa_croa.position_y;
-        SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
-        SDL_Flip(screen);
+   // SDL_Rect rect1;
+    rect.x=size_box_x*(croa_croa.etat_x);
+    rect.y=size_box_y*(croa_croa.etat_y);
+    rect.w=size_box_x;
+    rect.h=size_box_y;
+    SDL_Rect rect2;
+    rect2.x=size_box_x*croa_croa.position_x;
+    rect2.y=size_box_y*croa_croa.position_y;
+    SDL_BlitSurface(surfaces_map["frog"],&rect,screen,&rect2);
+    SDL_Flip(screen);
 }
 
 void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
 {
     if(is_deplacement_possible(croa_croa.vitesse_x, croa_croa.vitesse_y))
     {
-        SDL_Rect rect;
-        rect.x=size_box_x*croa_croa.position_x;
-        rect.y=size_box_y*croa_croa.position_y;
-        rect.w=size_box_x;
-        rect.h=size_box_y;
+        SDL_Rect rect={
+        	size_box_x*croa_croa.position_x,
+        	size_box_y*croa_croa.position_y,
+        	size_box_x,
+        	size_box_y};
         SDL_BlitSurface(surface,&rect,screen,&rect);
 
         croa_croa.position_x+=croa_croa.vitesse_x;
@@ -153,19 +153,21 @@ void Map::update(SDL_Surface* screen)//, unsigned int x, unsigned int y);
             croa_croa.etat_x-=4;
         }
 
-        SDL_Rect rect1;
-        rect1.x=size_box_x*(croa_croa.etat_x);
-        rect1.y=size_box_y*(croa_croa.etat_y);
-        rect1.w=size_box_x;
+        //SDL_Rect rect1;
+        rect.x=size_box_x*(croa_croa.etat_x);
+        rect.y=size_box_y*(croa_croa.etat_y);
+/*        rect1.w=size_box_x;
         rect1.h=size_box_y;
-
-        SDL_Rect rect2;
-        rect2.x=size_box_x*croa_croa.position_x;
-        rect2.y=size_box_y*croa_croa.position_y;
-        SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
+//*/
+        SDL_Rect rect2 = {
+        	size_box_x*croa_croa.position_x,
+        	size_box_y*croa_croa.position_y,
+			0,0,};
+        SDL_BlitSurface(surfaces_map["frog"],&rect,screen,&rect2);
         SDL_Flip(screen);
         if(cpt_position==4){
-            cpt_position^cpt_position; // cpt_position=0 mais avec une étape en moins
+            cpt_position^=cpt_position; // cpt_position=0 mais avec une étape en moins
+	//		std::cout << cpt_position << std::endl;
             //cpt_position=0;
             croa_croa.vitesse_x=0;
             croa_croa.vitesse_y=0;
