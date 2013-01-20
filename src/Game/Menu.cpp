@@ -340,19 +340,34 @@ bool Choix_Utilisateur::gestion_clic()
             			break;
                 }
             case SDL_MOUSEBUTTONDOWN:
+                switch(event.button.button)
                 {
-                int x = event.button.x;
-                int y = event.button.y;
+                    case SDL_BUTTON_LEFT:
+                        int x = event.button.x;
+                        int y = event.button.y;
 
-               if(x>=299 && x<=(299+204)
-                   && y>=325 && y<=(325+43))
-                {
-                        cout << "Quitter" << endl;
-                        return true;
+                       if(x>=299 && x<=(299+204)
+                           && y>=325 && y<=(325+43))
+                        {
+                                cout << "Quitter" << endl;
+                                return true;
+                        }
+                        return false;
+                        break;
+                    case SDL_BUTTON_WHEELUP:
+                        if(incr>=1)
+                        {
+                            incr--;
+                        }
+                        break;
+                    case SDL_BUTTON_WHEELDOWN:
+                        if(incr<list_util.size()-1)
+                        {
+                            incr++;
+                        }
+                        break;
                 }
-                return false;
                 break;
-                }
             case SDL_QUIT:
                 return true;
                 break;
