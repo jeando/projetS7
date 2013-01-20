@@ -66,7 +66,7 @@ void Menu::draw()
     SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect4);
-    
+
 	SDL_FreeSurface(texte);
 
 	TTF_CloseFont(police);
@@ -159,7 +159,7 @@ bool Menu::gestion_clic()
 
 Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
 //:screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
-:screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags
+:incr(0), screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags
 		//	SDL_HWSURFACE | SDL_DOUBLEBUF
 		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
 		screen->w,
@@ -275,7 +275,6 @@ void Choix_Utilisateur::draw()
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
-    SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
@@ -290,7 +289,27 @@ void Choix_Utilisateur::draw()
 void Choix_Utilisateur::update()
 {
     SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
+
+    TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 25);
+    SDL_Color couleur = {0, 0, 0, 42};
+    SDL_Rect rect1;
+    rect1.x=25;
+
+    for(int i=incr; i++; (i<list_util.size() || i<incr+4))
+    {
+        SDL_Surface* texte;
+        ostringstream oss;
+        oss << list_util[0];
+
+        rect1.y=21+i*43+i*21;
+
+        texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
+            SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+    }
+
+
     SDL_Flip(screen);
+    TTF_Quit();
 }
 
 void Choix_Utilisateur::start()
