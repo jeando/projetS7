@@ -5,10 +5,23 @@
 #include <sstream>
 #include <fstream>
 using namespace std;
-
+class ini_ttf
+{
+	public:
+		ini_ttf()
+		{
+			TTF_Init();
+		}
+		~ini_ttf()
+		{
+			TTF_Quit();
+		}
+}ini_ttf;
 Menu::Menu(SDL_Surface* scre)
 :alsc(), screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
-    scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask, scre->format->Amask)),joueur(nullptr)
+    scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask,	scre->format->Amask)),
+	police(TTF_OpenFont("./data/Arial.ttf", 35)),
+	joueur(nullptr)
 {
     draw();
     update();
@@ -18,18 +31,17 @@ Menu::~Menu()
 {
 	delete joueur;
     SDL_FreeSurface(fene_menu);
+	TTF_CloseFont(police);
 }
 void Menu::draw()
 {
     SDL_WM_SetCaption("Menu", nullptr);
-    TTF_Init();
     SDL_FillRect(fene_menu, nullptr, SDL_MapRGB(fene_menu->format, 17, 206, 112));
 
     SDL_Surface* commencer = IMG_Load( "../../images/buttun_begin.png" );
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
 
-    TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 35);
     SDL_Color couleur = {0, 0, 0, 42};
 
     //positionnement et affichage des boutons
@@ -69,11 +81,9 @@ void Menu::draw()
 
 	SDL_FreeSurface(texte);
 
-	TTF_CloseFont(police);
     SDL_FreeSurface(commencer);
     SDL_FreeSurface(standard);
     SDL_FreeSurface(quitter);
-    TTF_Quit();
 }
 
 void Menu::update()
@@ -159,14 +169,18 @@ bool Menu::gestion_clic()
 
 Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
 //:screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
-:incr(0), screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags
+:screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags
 		//	SDL_HWSURFACE | SDL_DOUBLEBUF
 		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
 		screen->w,
-    screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask, screen->format->Amask))
+    screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
+	screen->format->Amask)),
+		police(TTF_OpenFont("data/Arial.ttf", 25)),
+		incr(0)
 {
     //screen = SDL_SetVideoMode(750, 400, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
+    SDL_Color couleur = {0, 0, 0, 42};
     ifstream liste_utilisateurs("./data/joueur.lst");
     string tmp;
     do
@@ -177,28 +191,32 @@ Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
           break;
       }
       list_util.push_back(tmp);
+      list_util_sdl.push_back(TTF_RenderText_Blended(police, tmp.c_str(), couleur));
       tmp="";
     }while(true);
-
     liste_utilisateurs.close();
     draw();
     update();
 }
 Choix_Utilisateur::~Choix_Utilisateur()
 {
+	for(SDL_Surface* surf : list_util_sdl)
+	{
+		SDL_FreeSurface(surf);
+	}
 	SDL_FreeSurface(fene_menu);
+	TTF_CloseFont(police);
 }
 void Choix_Utilisateur::draw()
 {
     SDL_WM_SetCaption("Choix utilisateur", nullptr);
-    TTF_Init();
     SDL_FillRect(fene_menu, nullptr, SDL_MapRGB(fene_menu->format, 17, 206, 112));
 
     SDL_Surface* commencer = IMG_Load( "../../images/buttun_begin.png" );
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
 
-    TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 25);
+    //TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 25);
     SDL_Color couleur = {0, 0, 0, 42};
     SDL_Surface* texte;
 
@@ -279,40 +297,26 @@ void Choix_Utilisateur::draw()
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-	TTF_CloseFont(police);
+	//TTF_CloseFont(police);
     SDL_FreeSurface(commencer);
     SDL_FreeSurface(texte);
     SDL_FreeSurface(standard);
     SDL_FreeSurface(quitter);
-    TTF_Quit();
 }
 
 void Choix_Utilisateur::update()
 {
     SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
 
-    TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 25);
-    SDL_Color couleur = {0, 0, 0, 42};
-    SDL_Rect rect1;
-    rect1.x=25;
+    SDL_Rect rect1={25,0,0,0};
 
-    for(int i=incr; (i<list_util.size() && i<incr+4); i++)
+    for(unsigned int i=incr; (i<list_util.size() && i<incr+4); i++)
     {
-        SDL_Surface* texte;
-        ostringstream oss;
-        oss << list_util[0];
-
         rect1.y=21+i*43+i*21;
-
-        texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
-        SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
-		SDL_FreeSurface(texte);
+		SDL_BlitSurface(list_util_sdl[i],nullptr,screen,&rect1);
     }
 
-
-	TTF_CloseFont(police);
     SDL_Flip(screen);
-    TTF_Quit();
 }
 
 void Choix_Utilisateur::start()
