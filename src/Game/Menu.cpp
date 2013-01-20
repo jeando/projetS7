@@ -312,7 +312,7 @@ void Choix_Utilisateur::update()
 
     for(unsigned int i=incr; (i<list_util.size() && i<incr+4); i++)
     {
-        rect1.y=21+i*43+i*21;
+        rect1.y=21+(i-incr)*43+(i-incr)*21;
 		SDL_BlitSurface(list_util_sdl[i],nullptr,screen,&rect1);
     }
 
