@@ -21,7 +21,7 @@ class Choix_Utilisateur
 		SDL_Surface* screen;
         SDL_Surface* fene_menu;
         std::vector<std::string> list_util;
-        int increment;
+        int incr;
 };
 
 class Menu

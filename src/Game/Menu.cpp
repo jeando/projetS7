@@ -275,6 +275,7 @@ void Choix_Utilisateur::draw()
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
+    SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
@@ -295,7 +296,7 @@ void Choix_Utilisateur::update()
     SDL_Rect rect1;
     rect1.x=25;
 
-    for(int i=incr; i++; (i<list_util.size() || i<incr+4))
+    for(int i=incr; (i<list_util.size() && i<incr+4); i++)
     {
         SDL_Surface* texte;
         ostringstream oss;
@@ -304,10 +305,12 @@ void Choix_Utilisateur::update()
         rect1.y=21+i*43+i*21;
 
         texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
-            SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+        SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+		SDL_FreeSurface(texte);
     }
 
 
+	TTF_CloseFont(police);
     SDL_Flip(screen);
     TTF_Quit();
 }
@@ -343,6 +346,7 @@ bool Choix_Utilisateur::gestion_clic()
                 switch(event.button.button)
                 {
                     case SDL_BUTTON_LEFT:
+						{
                         int x = event.button.x;
                         int y = event.button.y;
 
@@ -352,6 +356,7 @@ bool Choix_Utilisateur::gestion_clic()
                                 cout << "Quitter" << endl;
                                 return true;
                         }
+						}
                         return false;
                         break;
                     case SDL_BUTTON_WHEELUP:

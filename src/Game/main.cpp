@@ -9,8 +9,8 @@ int main()
 
 		AL_Stream_Capture alsc;
 		Joueur joueur("moi");
-//        Game g(screen, &alsc, joueur);
-  //      g.start();
+    //    Game g(screen, &alsc, joueur);
+      //  g.start();
 
         Menu m(screen);
         m.start();
