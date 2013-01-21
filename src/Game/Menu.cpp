@@ -410,17 +410,15 @@ Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, string nom)
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
 	screen->format->Amask)),
 police(TTF_OpenFont("data/Arial.ttf", 25)),
-nom_utilisateur(nom)
+nom_utilisateur(nom), nom_temp("")
 {
-    cout << "toto" << endl;
-    stream_nom << "  " << nom;
     draw();
     update();
 }
 
 void Menu_enregistrement::start()
 {
-    std::chrono::milliseconds dura(200);
+    std::chrono::milliseconds dura(40);
     while(!gestion_clic())
     {
         update();
@@ -453,7 +451,9 @@ void Menu_enregistrement::draw()
     rect1.x=146;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
     rect1.x=160;
-    texte=TTF_RenderText_Blended(police, stream_nom.str().c_str(), couleur);
+    ostringstream oss_nom;
+    oss_nom << nom_utilisateur;
+    texte=TTF_RenderText_Blended(police, oss_nom.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
     SDL_Rect rect2 = {350,25,204,43};
     SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 255, 255, 255));
@@ -516,6 +516,18 @@ void Menu_enregistrement::draw()
 void Menu_enregistrement::update()
 {
     SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
+
+    SDL_Rect rect2 = {350,25,204,43};
+    SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 255, 255, 255));
+    SDL_Surface* texte;
+    SDL_Color couleur = {0, 0, 0, 42};
+
+    ostringstream oss_nom;
+    oss_nom << nom_temp;
+    texte=TTF_RenderText_Blended(police, oss_nom.str().c_str(), couleur);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+
+    SDL_FreeSurface(texte);
     SDL_Flip(screen);
 }
 
@@ -532,7 +544,19 @@ bool Menu_enregistrement::gestion_clic()
                     case SDLK_ESCAPE:
                         return true;
                         break;
+                    case SDLK_BACKSPACE:
+                        if(nom_temp.size()>0)
+                        {
+                            nom_temp=nom_temp.substr(0,nom_temp.size()-1);
+                        }
+                        break;
         			default:
+                        if(event.key.keysym.sym>=SDLK_a &&
+                           event.key.keysym.sym<=SDLK_z
+                           && nom_temp.size()<9)
+                        {
+                            nom_temp+=event.key.keysym.sym;
+                        }
             			break;
                 }
             case SDL_MOUSEBUTTONDOWN:
