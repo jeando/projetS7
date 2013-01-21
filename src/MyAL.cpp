@@ -35,7 +35,7 @@ std::vector<double> MyAL::sample_to_double(const std::vector<ALshort>& samples)
 std::string MyAL::choisir_capture_device()
 {
 	std::cout << "capture devices :" << std::endl;
-	return choisir_device(MyAL::get_capture_devices());	
+	return choisir_device(MyAL::get_capture_devices());
 }
 std::string MyAL::choisir_device()
 {
@@ -54,7 +54,7 @@ std::string MyAL::choisir_device(std::vector<std::string> vs)
 		return "";
 	}
 	if(vs.size()==1){
-		std::cout << "0" << std::endl; 
+		std::cout << "0" << std::endl;
 		return vs[0];
 	}
 	int choix(-1);
@@ -264,6 +264,7 @@ void MyAL::save_sound(const std::string& file_name, const std::vector<ALshort>& 
     sf_writef_short(file, &samples[0], samples.size());
     sf_close(file);
 }
+
 std::pair<std::vector<ALshort>, SF_INFO> MyAL::load_sound(std::string file_name)
 {
 	SF_INFO file_info;
@@ -432,7 +433,7 @@ label_debut_poll_event:
 		return event;
 	}
 	std::cout << "erreur inconnu in file : " << __FILE__ << " in line " << __LINE__ << std::endl;
-	return RIEN;	
+	return RIEN;
 }
 events_audio AL_Stream_Capture::wait_event()
 {
