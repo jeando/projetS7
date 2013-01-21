@@ -202,6 +202,7 @@ Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
     draw();
     update();
 }
+
 Choix_Utilisateur::~Choix_Utilisateur()
 {
 	for(SDL_Surface* surf : list_util_sdl)
@@ -211,6 +212,7 @@ Choix_Utilisateur::~Choix_Utilisateur()
 	SDL_FreeSurface(fene_menu);
 	TTF_CloseFont(police);
 }
+
 void Choix_Utilisateur::draw()
 {
     SDL_WM_SetCaption("Choix utilisateur", nullptr);
@@ -329,9 +331,11 @@ bool Choix_Utilisateur::gestion_clic()
                             int ligne = 21+i*43+i*21;
                             //re-enreg
                             if(x>=275 && x<274+204
-                               && y>=ligne && y<ligne+43)
+                               && y>=ligne && y<ligne+43
+                               && (i+incr)<list_util.size())
                             {
                                 cout << "re-enreg" << endl;
+                                Menu_enregistrement me(screen,list_util[i+incr]);
                             }
 
                             //commencer
@@ -339,7 +343,6 @@ bool Choix_Utilisateur::gestion_clic()
                                && y>=ligne && y<ligne+43
                                && (i+incr)<list_util.size())
                             {
-                                cout << "commencer" << endl;
                                 Joueur j(list_util[i+incr]);
                                 Game g(screen,&alsc,j);
                                 g.start();
@@ -351,6 +354,8 @@ bool Choix_Utilisateur::gestion_clic()
                                && (i+incr)==list_util.size())
                             {
                                 cout << "nouvel uti" << endl;
+                                Menu_enregistrement me(screen,"");
+                                me.start();
                             }
 
                         }
@@ -378,6 +383,115 @@ bool Choix_Utilisateur::gestion_clic()
                         break;
                 }
                 break;
+            case SDL_QUIT:
+                return true;
+                break;
+            default:
+                break;
+        }
+    }
+    return false;
+}
+
+Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, string nom)
+:screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags
+		//	SDL_HWSURFACE | SDL_DOUBLEBUF
+		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
+		screen->w,
+    screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
+	screen->format->Amask)),
+police(TTF_OpenFont("data/Arial.ttf", 25)),
+nom_utilisateur(nom)
+{
+    cout << "toto" << endl;
+    stream_nom << nom;
+    draw();
+    update();
+}
+
+void Menu_enregistrement::start()
+{
+    std::chrono::milliseconds dura(200);
+    while(!gestion_clic())
+    {
+        update();
+		std::this_thread::sleep_for(dura);
+    }
+    return;
+}
+
+Menu_enregistrement::~Menu_enregistrement()
+{
+
+}
+
+void Menu_enregistrement::draw()
+{
+    SDL_WM_SetCaption("Enregistrement des sons", nullptr);
+    SDL_FillRect(fene_menu, nullptr, SDL_MapRGB(fene_menu->format, 17, 206, 112));
+
+    SDL_Surface* commencer = IMG_Load( "../../images/buttun_begin.png" );
+    SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
+    SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
+
+    SDL_Rect rect1={0,0,0,0};
+    SDL_Color couleur = {0, 0, 0, 42};
+    SDL_Surface* texte;
+
+
+    //bouton quitter
+    rect1.x=299;
+    rect1.y=325;
+    SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
+    ostringstream oss4;
+    oss4 << "     Quitter";
+    texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    SDL_FreeSurface(commencer);
+    SDL_FreeSurface(standard);
+    SDL_FreeSurface(quitter);
+    SDL_FreeSurface(texte);
+}
+
+void Menu_enregistrement::update()
+{
+    SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
+    SDL_Flip(screen);
+}
+
+bool Menu_enregistrement::gestion_clic()
+{
+    SDL_Event event;
+    while(SDL_PollEvent(&event))
+    {
+        switch(event.type)
+        {
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym)
+                {
+                    case SDLK_ESCAPE:
+                        return true;
+                        break;
+        			default:
+            			break;
+                }
+            case SDL_MOUSEBUTTONDOWN:
+                {
+                int x = event.button.x;
+                int y = event.button.y;
+
+                cout << "clik" << endl;
+
+                if(x>=299 && x<=(299+204)
+                           && y>=325 && y<=(325+43))
+                        {
+                                cout << "Quitter" << endl;
+                                return true;
+                        }
+
+                break;
+                }
             case SDL_QUIT:
                 return true;
                 break;
