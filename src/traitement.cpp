@@ -229,7 +229,7 @@ std::vector<double> dynamic_time_warping(
 		double min(std::numeric_limits<double>::max());
 		double tmp_dst;
 		unsigned int indice_min;
-		m+=(int)floor(v_moy);
+		m+=static_cast<int>(floor(v_moy));
 		for(unsigned int k = (m<delta+m_ini?m_ini:(m-delta)); k< m+delta && k<m_end; k++)
 		{
 			tmp_dst = distance(mesure[n],ref[k],_indice_debut, _indice_fin);
@@ -608,3 +608,22 @@ return -1;
 	//*/
 }
 //*/
+struct surface_energie
+{
+	unsigned int indice_f;
+	unsigned int indice_t;
+	unsigned int delta_t;
+	unsigned int delta_f_sur_2;
+	double moyenne_surface;
+};
+std::vector<struct surface_energie> detection_haut_potentiel_energie(std::vector<std::vector<double> > spectro)
+{
+	std::vector<struct surface_energie> se;
+	std::vector<double> max;
+	spectro = filtre_gaussien(spectro);
+	for(std::vector<double> spectre : spectro)
+	{
+		max.push_back(*std::max_element(spectre.begin(), spectre.end()));
+	}
+	return se;
+}
