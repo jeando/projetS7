@@ -18,8 +18,10 @@ class ini_ttf
 		}
 }ini_ttf;
 Menu::Menu(SDL_Surface* scre)
-:alsc(), screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
-    scre->h, scre->format->BitsPerPixel, scre->format->Rmask, scre->format->Gmask, scre->format->Bmask,	scre->format->Amask)),
+:alsc(),
+	screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags)),
+	fene_menu(SDL_CreateRGBSurface(screen->flags, screen->w,
+    screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,	screen->format->Amask)),
 	police(TTF_OpenFont("./data/Arial.ttf", 35)),
 	joueur(nullptr)
 {
@@ -53,16 +55,16 @@ void Menu::draw()
     SDL_Surface* texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);*/
 
-    rect2.x=400;
-    rect2.y=350;
+    rect2.x=fene_menu->w*1.0/7;
+    rect2.y=fene_menu->h*1.0/5;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect2);
     ostringstream oss2;
     oss2 << "   Utilisateur";
     SDL_Surface* texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
 
-    rect3.x=900;
-    rect3.y=350;
+    rect3.x=fene_menu->w*4.0/7;
+    rect3.y=fene_menu->h*1.0/5;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect3);
     ostringstream oss3;
     oss3 << "    Options";
@@ -70,8 +72,8 @@ void Menu::draw()
     texte = TTF_RenderText_Blended(police, oss3.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect3);
 
-    rect4.x=620;
-    rect4.y=700;
+    rect4.x=fene_menu->w/2-quitter->w/2;
+    rect4.y=fene_menu->h*3.0/5;
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect4);
     ostringstream oss4;
     oss4 << "     Quitter";
