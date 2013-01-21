@@ -491,7 +491,7 @@ void Menu_enregistrement::draw()
             SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
             ostringstream oss1;
             rect1.x=160+j*400;
-            oss1 << "record";
+            oss1 << "enreg";
             SDL_FreeSurface(texte);
             texte = TTF_RenderText_Blended(police, oss1.str().c_str(), couleur);
             SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
@@ -500,7 +500,7 @@ void Menu_enregistrement::draw()
             rect1.x=275+j*400;
             SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
             ostringstream oss2;
-            oss2 << "listen";
+            oss2 << "lire";
             rect1.x=285+j*400;
             SDL_FreeSurface(texte);
             texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
@@ -604,9 +604,35 @@ bool Menu_enregistrement::gestion_clic()
                                     chrono::milliseconds dura(1000);
                                     this_thread::sleep_for(dura);
                                     alc.stop();
-                                    ostringstream oss;
-                                    oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
-                                    alc.save_sound(oss.str().c_str());
+
+                                    SDL_Rect rect2 = {50,425,800,43};
+                                    SDL_Surface* texte;
+                                    SDL_Color couleur = {0, 0, 0, 42};
+                                    SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                                    ostringstream oss_message;
+
+
+                                    //verifier si le son a un debut
+                                    if(indice_debut(equalize_spectrogramme(spectrogramme(MyAL::sample_to_double(samples),
+                                                alc.getSampleRate())))!=-1)
+                                    {
+                                         //sauvegarde
+                                        ostringstream oss;
+                                        oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+                                        alc.save_sound(oss.str().c_str());
+
+                                        oss_message << "son sauvegarde";
+                                        texte=TTF_RenderText_Blended(police, oss_message.str().c_str(), couleur);
+                                        SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                                        SDL_FreeSurface(texte);
+                                    }
+                                    else
+                                    {
+                                        oss_message << "pas de debut detecte dans le son, veillez recommencer";
+                                        texte=TTF_RenderText_Blended(police, oss_message.str().c_str(), couleur);
+                                        SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                                        SDL_FreeSurface(texte);
+                                    }
                                 }
 
                                 if(x>=275+j*400 && x<375+j*400)
@@ -614,6 +640,16 @@ bool Menu_enregistrement::gestion_clic()
 
                                     ostringstream oss;
                                     oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+
+
+                                    SDL_Rect rect2 = {50,425,800,43};
+                                    SDL_Surface* texte;
+                                    SDL_Color couleur = {0, 0, 0, 42};
+                                    SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                                    ostringstream oss_message;
+
+
+
                                     AL_Play alp;
                                     try
                                     {
@@ -621,10 +657,19 @@ bool Menu_enregistrement::gestion_clic()
                                         alp.play();
                                         while(alp.is_playing());
                                         alp.stop();
+
+                                        oss_message << "lecture du son";
+                                        texte=TTF_RenderText_Blended(police, oss_message.str().c_str(), couleur);
+                                        SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                                        SDL_FreeSurface(texte);
                                     }
                                     catch(exception e)
                                     {
-                                        cout << "sond introuvable" << endl;
+
+                                        oss_message << "son introuvable";
+                                        texte=TTF_RenderText_Blended(police, oss_message.str().c_str(), couleur);
+                                        SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                                        SDL_FreeSurface(texte);
                                     }
                                 }
                             }
