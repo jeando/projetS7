@@ -135,10 +135,10 @@ void Map::update()//, unsigned int x, unsigned int y);
     if(is_deplacement_possible(croa_croa.vitesse_x, croa_croa.vitesse_y))
     {
         SDL_Rect rect={
-        	size_box_x*croa_croa.position_x,
-        	size_box_y*croa_croa.position_y,
-        	size_box_x,
-        	size_box_y};
+        	(Sint16)size_box_x*croa_croa.position_x,
+        	(Sint16)size_box_y*croa_croa.position_y,
+        	(Uint16)size_box_x,
+        	(Uint16)size_box_y};
         SDL_BlitSurface(surface,&rect,screen,&rect);
 
         croa_croa.position_x+=croa_croa.vitesse_x;
