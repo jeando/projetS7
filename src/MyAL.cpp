@@ -446,14 +446,14 @@ events_audio AL_Stream_Capture::wait_event()
 	}while(event==RIEN);
 	return event;
 }
-std::vector<ALshort> wait_sound()
+std::vector<ALshort> AL_Stream_Capture::wait_sound()
 {
 	bool is_running = running;
 	if(!running){
 		start_stream_capture();
 	}
 	
-	std::vector<ALshort> temp;
+	std::vector<double> temp;
 	int indice;
 label_debut_wait_sound:
 	temp.clear();
@@ -479,7 +479,7 @@ label_debut_wait_sound:
     	mutex_sample.lock();
 		samples.erase(samples.begin(), samples.begin()+temp.size()/2);
     	mutex_sample.unlock();
-		goto label_debut_poll_event;
+		goto label_debut_wait_sound;
 	}
 	if(indice > temp.size()*4.0/10)
 	{
@@ -487,14 +487,15 @@ label_debut_wait_sound:
 		samples.erase(samples.begin(),
 				samples.begin()+indice-temp.size()*4.0/10);
     	mutex_sample.unlock();
-		goto label_debut_poll_event;
+		goto label_debut_wait_sound;
 	}
 
 	if(!is_running)
 	{
 		stop_stream_capture();
 	}
-	return temp;
+	samples.erase(samples.begin()+temp.size(), samples.end());
+	return samples;
 }
 events_audio AL_Stream_Capture::poll_event_continue()
 {
