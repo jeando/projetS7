@@ -336,6 +336,11 @@ bool Choix_Utilisateur::gestion_clic()
                             {
                                 cout << "re-enreg" << endl;
                                 Menu_enregistrement me(screen,list_util[i+incr]);
+                                me.start();
+                                screen=SDL_SetVideoMode(fene_menu->w,
+								fene_menu->h,
+								fene_menu->format->BitsPerPixel ,
+								fene_menu->flags);
                             }
 
                             //commencer
@@ -356,6 +361,10 @@ bool Choix_Utilisateur::gestion_clic()
                                 cout << "nouvel uti" << endl;
                                 Menu_enregistrement me(screen,"");
                                 me.start();
+                                screen=SDL_SetVideoMode(fene_menu->w,
+								fene_menu->h,
+								fene_menu->format->BitsPerPixel ,
+								fene_menu->flags);
                             }
 
                         }
@@ -394,7 +403,7 @@ bool Choix_Utilisateur::gestion_clic()
 }
 
 Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, string nom)
-:screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags
+:screen(SDL_SetVideoMode(800, 600, scre->format->BitsPerPixel, scre->flags
 		//	SDL_HWSURFACE | SDL_DOUBLEBUF
 		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
 		screen->w,
@@ -404,7 +413,7 @@ police(TTF_OpenFont("data/Arial.ttf", 25)),
 nom_utilisateur(nom)
 {
     cout << "toto" << endl;
-    stream_nom << nom;
+    stream_nom << "  " << nom;
     draw();
     update();
 }
@@ -433,18 +442,56 @@ void Menu_enregistrement::draw()
     SDL_Surface* commencer = IMG_Load( "../../images/buttun_begin.png" );
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
+    SDL_Surface* sond = IMG_Load("../../images/buttun_sound.png");
 
     SDL_Rect rect1={0,0,0,0};
     SDL_Color couleur = {0, 0, 0, 42};
     SDL_Surface* texte;
 
+    //nom et champ a saisir
+    rect1.y=25;
+    rect1.x=146;
+    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    rect1.x=160;
+    texte=TTF_RenderText_Blended(police, stream_nom.str().c_str(), couleur);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+    SDL_Rect rect2 = {350,25,204,43};
+    SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 255, 255, 255));
+
+    //boutons des sonds
+    for(int i=0; i<4; i++)
+    {
+        rect1.y=100+i*75;
+
+        for(int j=0; j<2; j++)
+        {
+            rect1.x=25+j*400;
+            SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
+            ostringstream oss;
+            oss << "sound" << (i+1) << (j+1);
+            cout << oss.str() << endl;
+            SDL_FreeSurface(texte);
+            texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
+            SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+
+            rect1.x=150+j*400;
+            SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
+
+
+            rect1.x=275+j*400;
+            SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
+
+        }
+    }
 
     //bouton quitter
     rect1.x=299;
-    rect1.y=325;
+    rect1.y=525;
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
+    SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
@@ -452,6 +499,7 @@ void Menu_enregistrement::draw()
     SDL_FreeSurface(standard);
     SDL_FreeSurface(quitter);
     SDL_FreeSurface(texte);
+    SDL_FreeSurface(sond);
 }
 
 void Menu_enregistrement::update()
@@ -484,7 +532,7 @@ bool Menu_enregistrement::gestion_clic()
                 cout << "clik" << endl;
 
                 if(x>=299 && x<=(299+204)
-                           && y>=325 && y<=(325+43))
+                           && y>=525 && y<=(525+43))
                         {
                                 cout << "Quitter" << endl;
                                 return true;
