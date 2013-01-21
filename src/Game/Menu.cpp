@@ -335,7 +335,7 @@ bool Choix_Utilisateur::gestion_clic()
                                && (i+incr)<list_util.size())
                             {
                                 cout << "re-enreg" << endl;
-                                Menu_enregistrement me(screen,list_util[i+incr]);
+                                Menu_enregistrement me(screen,list_util,i+incr);
                                 me.start();
                                 screen=SDL_SetVideoMode(fene_menu->w,
 								fene_menu->h,
@@ -363,7 +363,7 @@ bool Choix_Utilisateur::gestion_clic()
                                && (i+incr)==list_util.size())
                             {
                                 cout << "nouvel uti" << endl;
-                                Menu_enregistrement me(screen,"");
+                                Menu_enregistrement me(screen,list_util,-1);
                                 me.start();
                                 screen=SDL_SetVideoMode(fene_menu->w,
 									fene_menu->h,
@@ -406,7 +406,7 @@ bool Choix_Utilisateur::gestion_clic()
     return false;
 }
 
-Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, string nom)
+Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, std::vector<std::string> list, int ind)
 :screen(SDL_SetVideoMode(800, 600, scre->format->BitsPerPixel, scre->flags
 		//	SDL_HWSURFACE | SDL_DOUBLEBUF
 		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
@@ -414,7 +414,7 @@ Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, string nom)
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
 	screen->format->Amask)),
 police(TTF_OpenFont("data/Arial.ttf", 25)),
-nom_utilisateur(nom), nom_temp(nom)
+list_util(list), index(ind)
 {
     draw();
     update();
@@ -457,7 +457,7 @@ void Menu_enregistrement::draw()
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
     rect1.x=160;
     ostringstream oss_nom;
-    oss_nom << nom_utilisateur;
+    oss_nom << list_util[index];
     texte=TTF_RenderText_Blended(police, oss_nom.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
     SDL_Rect rect2 = {350,25,204,43};
