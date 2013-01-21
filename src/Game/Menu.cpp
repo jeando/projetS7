@@ -605,17 +605,17 @@ bool Menu_enregistrement::gestion_clic()
                                     this_thread::sleep_for(dura);
                                     alc.stop();
                                     ostringstream oss;
-                                    oss << "data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+                                    oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
                                     alc.save_sound(oss.str().c_str());
                                 }
 
                                 if(x>=275+j*400 && x<375+j*400)
                                 {
                                     cout << "ecouter " << nom_sond[i] << j << endl;
-                                    AL_Play alp;
                                     ostringstream oss;
-                                    oss << "./data" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+                                    oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
                                     cout << oss.str();
+                                    AL_Play alp;
                                     alp.put_sound_in_buffer(oss.str().c_str());
                                     cout << "tetsskdf" << endl;
                                     alp.play();
