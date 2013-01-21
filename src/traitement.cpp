@@ -23,15 +23,22 @@ events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
 				dynamic_time_warping(spectro,joueur.spectro_bas1)));
 	vdist.push_back(distance(
 				dynamic_time_warping(spectro,joueur.spectro_bas2)));
-	int min(vdist[0]);
+	double min_val(vdist[0]);
 	int min_indice(0);
+	std::cout << "azertyuiop" << std::endl;
 	for(unsigned int i=0; i<vdist.size(); i++)
 	{
-		if(vdist[i]<min){
-			min=vdist[i];
+		if(vdist[i]<min_val){
+			min_val=vdist[i];
 			min_indice=i;
+			std::cout << "aaazzz" <<min_indice << std::endl;
 		}
+		std::cout << vdist[i] << std::endl;
 	}
+	std::cout << "aaa" <<min_indice << std::endl;
+//	std::cout << "aaa" <<vdist.size() << std::endl;
+//	std::cout << min_indice << std::endl;
+//	std::cout << min_indice << std::endl;
 	switch(min_indice)
 	{
 		case 0:
