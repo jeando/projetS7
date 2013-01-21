@@ -5,6 +5,27 @@
 #include "Game.h"
 #include<SDL/SDL_ttf.h>
 #include <vector>
+
+class Menu_enregistrement
+{
+    public:
+        Menu_enregistrement(SDL_Surface* scre, std::string nom);
+		virtual ~Menu_enregistrement();
+        bool gestion_clic();
+        void start();
+        void draw();
+        void update();
+
+
+    private:
+		SDL_Surface* screen;
+		std::string nom_utilisateur;
+        SDL_Surface* fene_menu;
+    	TTF_Font* police;
+        std::ostringstream stream_nom;
+
+};
+
 class Choix_Utilisateur
 {
     public:
