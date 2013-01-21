@@ -291,7 +291,7 @@ AL_Play::AL_Play(std::string _device)
 }
 AL_Play::~AL_Play()
 {
-	alSourceStop(source);
+	stop_playing();
 	ALint nb_queued;
 	ALuint buffer;
 	alGetSourcei(source, AL_BUFFERS_QUEUED, &nb_queued);
@@ -305,7 +305,7 @@ void AL_Play::play()
 {
 	alSourcePlay(source);
 }
-void AL_Play::stop()
+void AL_Play::stop_playing()
 {
 	alSourceStop(source);
 }
@@ -446,6 +446,61 @@ events_audio AL_Stream_Capture::wait_event()
 	}while(event==RIEN);
 	return event;
 }
+std::vector<ALshort> AL_Stream_Capture::wait_sound()
+{
+	bool is_running = running;
+	if(!running){
+		start_stream_capture();
+	}
+	
+	std::vector<double> temp;
+	int indice;
+label_debut_wait_sound:
+	temp.clear();
+    mutex_sample.lock();
+	if(sample_rate*sizeof(ALshort)<samples.size())
+	{
+		for(unsigned int i = 0; i<sample_rate*sizeof(ALshort); i++)
+		{
+			temp.push_back(samples[i]);
+		}
+	}
+	else
+	{
+    	mutex_sample.unlock();
+		goto label_debut_wait_sound;
+	}
+
+    mutex_sample.unlock();
+	indice = indice_debut(equalize_spectrogramme(spectrogramme(temp,
+				sample_rate)));
+	if(indice == -1)
+	{
+    	mutex_sample.lock();
+		samples.erase(samples.begin(), samples.begin()+temp.size()/2);
+    	mutex_sample.unlock();
+		goto label_debut_wait_sound;
+	}
+	if(indice > temp.size()*4.0/10)
+	{
+    	mutex_sample.lock();
+		samples.erase(samples.begin(),
+				samples.begin()+indice-temp.size()*4.0/10);
+    	mutex_sample.unlock();
+		goto label_debut_wait_sound;
+	}
+
+	if(!is_running)
+	{
+		stop_stream_capture();
+	}
+	std::vector<ALshort> temp2(temp.size());
+	std::copy(temp.begin(), temp.end(), temp2.begin());
+    mutex_sample.lock();
+	samples.clear();
+    mutex_sample.unlock();
+	return temp2;
+}
 events_audio AL_Stream_Capture::poll_event_continue()
 {
 	if(!running){
@@ -526,4 +581,23 @@ void AL_Stream_Capture::poll_event_thread()
     	mutex_sample.unlock();
 		continue;
 	}
+}
+AL_Stream_Capture_And_Play::AL_Stream_Capture_And_Play(std::string _device,
+		std::string _capture_device,
+        ALenum _format, ALsizei _sample_rate, ALsizei _sample_size)
+:AL_Stream_Capture(_device, _capture_device, _format,
+		_sample_rate, _sample_size),
+	AL_Play(_device)
+{
+}
+AL_Stream_Capture_And_Play::~AL_Stream_Capture_And_Play()
+{
+}
+ALsizei AL_Stream_Capture_And_Play::getSampleRate()
+{
+	return AL_Stream_Capture::getSampleRate();
+}
+ALsizei AL_Stream_Capture_And_Play::getSampleRateSoundPlaying()
+{
+	return AL_Play::getSampleRate();
 }

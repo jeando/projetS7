@@ -55,7 +55,7 @@ class AL_Capture : public MyAL
         void start(std::vector<ALshort>& samples, std::mutex* mutex_of_sample = nullptr);
         void stop();
         void save_sound(const std::string& file_name);
-		ALsizei getSampleRate();
+		virtual ALsizei getSampleRate();
     protected:
         ALCdevice* capture_device;
         ALenum format;//     = AL_FORMAT_MONO16;
@@ -77,10 +77,10 @@ class AL_Play : public MyAL
         AL_Play(std::string _device="");
 		virtual ~AL_Play();
 		void play();
-        void stop();
+        void stop_playing();
 		void put_sound_in_buffer(std::string name);
 		bool is_playing();
-		ALsizei getSampleRate();
+		virtual ALsizei getSampleRate();
 		
     protected:
     private:
@@ -90,7 +90,7 @@ class AL_Play : public MyAL
 		ALuint source;
 		std::vector<ALuint> buffers;
 };
-class AL_Stream_Capture : AL_Capture
+class AL_Stream_Capture : public AL_Capture
 {
 	public:
         AL_Stream_Capture(std::string _device = "",
@@ -104,6 +104,7 @@ class AL_Stream_Capture : AL_Capture
 		void poll_event_thread();
 		events_audio poll_event_continue();
 		events_audio wait_event();
+		std::vector<ALshort> wait_sound();
 		void start_stream_capture();
 		void stop_stream_capture();
 	private:
@@ -121,8 +122,17 @@ class AL_Stream_Play : public AL_Play
 {
 
 };
-class AL_Stream_Capture_and_Play : public AL_Stream_Play,virtual public AL_Capture
+class AL_Stream_Capture_And_Play : public AL_Stream_Capture, public AL_Play
 {
+	public:
+        AL_Stream_Capture_And_Play(std::string _device = "",
+				std::string _capture_device = "",
+				ALenum _format = AL_FORMAT_MONO16,
+				ALsizei _sample_rate = 8000,
+				ALsizei _sample_size = 1024/*8000*2*1*/);
+			virtual ~AL_Stream_Capture_And_Play();
+			virtual ALsizei getSampleRate();
+			virtual ALsizei getSampleRateSoundPlaying();
 
 };
 #endif // MYAL_H

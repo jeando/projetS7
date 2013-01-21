@@ -1,5 +1,6 @@
 #include "Menu.h"
 AL_Stream_Capture alsc;
+//AL_Stream_Capture_And_Play alsc;
 
 int main()
 {
