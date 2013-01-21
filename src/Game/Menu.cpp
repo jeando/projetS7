@@ -351,6 +351,10 @@ bool Choix_Utilisateur::gestion_clic()
                                 Joueur j(list_util[i+incr]);
                                 Game g(screen,&alsc,j);
                                 g.start();
+								screen=SDL_SetVideoMode(fene_menu->w,
+									fene_menu->h,
+									fene_menu->format->BitsPerPixel ,
+									fene_menu->flags);
                             }
 
                             //nouvel uti
@@ -362,9 +366,9 @@ bool Choix_Utilisateur::gestion_clic()
                                 Menu_enregistrement me(screen,"");
                                 me.start();
                                 screen=SDL_SetVideoMode(fene_menu->w,
-								fene_menu->h,
-								fene_menu->format->BitsPerPixel ,
-								fene_menu->flags);
+									fene_menu->h,
+									fene_menu->format->BitsPerPixel ,
+									fene_menu->flags);
                             }
 
                         }
