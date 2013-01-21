@@ -104,6 +104,7 @@ class AL_Stream_Capture : AL_Capture
 		void poll_event_thread();
 		events_audio poll_event_continue();
 		events_audio wait_event();
+		std::vector<ALshort> wait_sound();
 		void start_stream_capture();
 		void stop_stream_capture();
 	private:
