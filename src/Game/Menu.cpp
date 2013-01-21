@@ -322,9 +322,35 @@ bool Choix_Utilisateur::gestion_clic()
                         int x = event.button.x;
                         int y = event.button.y;
 
+                        for(unsigned int i=0; (i<=list_util.size() && i<4); i++)
+                        {
+                            int ligne = 21+i*43+i*21;
+                            //re-enreg
+                            if(x>=275 && x<274+204
+                               && y>=ligne && y<ligne+43)
+                            {
+                                cout << "re-enreg" << endl;
+                            }
 
+                            //commencer
+                            if(x>=525 && x<525+204
+                               && y>=ligne && y<ligne+43
+                               && (i+incr)<list_util.size())
+                            {
+                                cout << "commencer" << endl;
+                            }
 
-                       if(x>=299 && x<=(299+204)
+                            //nouvel uti
+                            if(x>=25 && x<25+204
+                               && y>=ligne && y<ligne+43
+                               && (i+incr)==list_util.size())
+                            {
+                                cout << "nouvel uti" << endl;
+                            }
+
+                        }
+
+                        if(x>=299 && x<=(299+204)
                            && y>=325 && y<=(325+43))
                         {
                                 cout << "Quitter" << endl;
