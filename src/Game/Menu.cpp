@@ -469,7 +469,6 @@ void Menu_enregistrement::draw()
             SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
             ostringstream oss;
             oss << "sound" << (i+1) << (j+1);
-            cout << oss.str() << endl;
             SDL_FreeSurface(texte);
             texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
             SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
@@ -477,10 +476,22 @@ void Menu_enregistrement::draw()
 
             rect1.x=150+j*400;
             SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
+            ostringstream oss1;
+            rect1.x=160+j*400;
+            oss1 << "record";
+            SDL_FreeSurface(texte);
+            texte = TTF_RenderText_Blended(police, oss1.str().c_str(), couleur);
+            SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
 
             rect1.x=275+j*400;
             SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
+            ostringstream oss2;
+            oss2 << "listen";
+            rect1.x=285+j*400;
+            SDL_FreeSurface(texte);
+            texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
+            SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
         }
     }
