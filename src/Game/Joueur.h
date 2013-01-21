@@ -7,9 +7,9 @@
 class Joueur
 {
     public:
-        Joueur(std::string nom);
+        Joueur(int i, std::string nom);
         void charger();
-
+		std::string id;
         std::string nom_joueur;
         std::vector<std::vector<double> > spectro_gauche1;
         std::vector<std::vector<double> > spectro_gauche2;

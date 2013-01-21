@@ -5,7 +5,7 @@
 #include "Game.h"
 #include<SDL/SDL_ttf.h>
 #include <vector>
-
+//#include<map>
 class Menu_enregistrement
 {
     public:
@@ -42,6 +42,7 @@ class Choix_Utilisateur
         SDL_Surface* fene_menu;
     	TTF_Font* police;
         std::vector<std::string> list_util;
+        //std::map<int,std::string> list_util;
         std::vector<SDL_Surface*> list_util_sdl;
         int incr;
 };

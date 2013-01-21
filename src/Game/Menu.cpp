@@ -189,14 +189,14 @@ Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
     string tmp;
     do
     {
-      liste_utilisateurs>>tmp;
-      if(tmp=="")
-      {
-          break;
-      }
-      list_util.push_back(tmp);
-      list_util_sdl.push_back(TTF_RenderText_Blended(police, tmp.c_str(), couleur));
-      tmp="";
+		liste_utilisateurs>>tmp;
+      	if(tmp=="")
+      	{
+        	break;
+      	}
+      	list_util.push_back(tmp);
+      	list_util_sdl.push_back(TTF_RenderText_Blended(police, tmp.c_str(), couleur));
+      	tmp="";
     }while(true);
     liste_utilisateurs.close();
     draw();
@@ -348,7 +348,7 @@ bool Choix_Utilisateur::gestion_clic()
                                && y>=ligne && y<ligne+43
                                && (i+incr)<list_util.size())
                             {
-                                Joueur j(list_util[i+incr]);
+                                Joueur j(i+incr, list_util[i+incr]);
                                 Game g(screen,&alsc,j);
                                 g.start();
 								screen=SDL_SetVideoMode(fene_menu->w,
