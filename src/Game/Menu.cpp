@@ -416,6 +416,10 @@ Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, std::vector<std::str
 police(TTF_OpenFont("data/Arial.ttf", 25)),
 list_util(list), index(ind)
 {
+    if(ind!=-1)
+    {
+        nom_temp=list_util[index];
+    }
     draw();
     update();
 }
@@ -456,10 +460,14 @@ void Menu_enregistrement::draw()
     rect1.x=146;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
     rect1.x=160;
-    ostringstream oss_nom;
-    oss_nom << list_util[index];
-    texte=TTF_RenderText_Blended(police, oss_nom.str().c_str(), couleur);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+    if(index!=-1)
+    {
+        ostringstream oss_nom;
+        oss_nom << list_util[index];
+        texte=TTF_RenderText_Blended(police, oss_nom.str().c_str(), couleur);
+        SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+    }
+
     SDL_Rect rect2 = {350,25,204,43};
     SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 255, 255, 255));
 
@@ -613,6 +621,27 @@ bool Menu_enregistrement::gestion_clic()
                     && y>=525 && y<=(525+43))
                 {
                     cout << "Commencer" << endl;
+
+                    ofstream ofs("./data/joueur.lst");
+                    for(int i=0; i<index; i++)
+                    {
+                        ofs << list_util[i] << endl;
+                    }
+                    ofs << nom_temp << endl;
+                    for(int i=index+1; i<list_util.size(); i++)
+                    {
+                        ofs << list_util[i] << endl;
+                    }
+
+
+                    Joueur j(index, nom_temp);
+                    Game g(screen,&alsc,j);
+                    g.start();
+                    screen=SDL_SetVideoMode(fene_menu->w,
+                        fene_menu->h,
+                        fene_menu->format->BitsPerPixel ,
+                        fene_menu->flags);
+
                     return true;
                 }
 
