@@ -155,10 +155,10 @@ void Map::update()//, unsigned int x, unsigned int y);
         }
 
         SDL_Rect rect1{
-	        size_box_x*(croa_croa.etat_x),
-        	size_box_y*(croa_croa.etat_y),
-        	size_box_x,
-        	size_box_y};
+        	static_cast<Sint16>(size_box_x*croa_croa.etat_x),
+        	static_cast<Sint16>(size_box_y*croa_croa.etat_y),
+        	static_cast<Uint16>(size_box_x),
+        	static_cast<Uint16>(size_box_y)};
 //*/
         SDL_Rect rect2 = {
         	size_box_x*croa_croa.position_x,
