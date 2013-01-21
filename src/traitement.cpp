@@ -625,5 +625,6 @@ std::vector<struct surface_energie> detection_haut_potentiel_energie(std::vector
 	{
 		max.push_back(*std::max_element(spectre.begin(), spectre.end()));
 	}
+
 	return se;
 }
