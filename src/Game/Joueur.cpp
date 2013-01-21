@@ -14,6 +14,7 @@ Joueur::Joueur(int i, string nom)
 
 void Joueur::charger()
 {
+	std::cout << id << std::endl;
     std::pair<std::vector<ALshort>,SF_INFO> samples;
 	samples =  MyAL::load_sound("data/"+id+"_gauche_1.wav");
 	spectro_gauche1 = equalize_spectrogramme(spectrogramme(

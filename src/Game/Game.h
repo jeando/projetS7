@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include "../MyAL.h"
+#include "../traitement.h"
 #include "Score.h"
 #include "Map.h"
 #include"Joueur.h"

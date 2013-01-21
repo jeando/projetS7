@@ -598,11 +598,30 @@ bool Menu_enregistrement::gestion_clic()
                                 if(x>=150+j*400 && x<250+j*400)
                                 {
                                     cout << "enre " << nom_sond[i] << j << endl;
+                                    vector<ALshort> samples;
+                                    AL_Capture alc(MyAL::choisir_device(),MyAL::choisir_capture_device());
+                                    alc.start(samples);
+                                    chrono::milliseconds dura(1000);
+                                    this_thread::sleep_for(dura);
+                                    alc.stop();
+                                    ostringstream oss;
+                                    oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+                                    alc.save_sound(oss.str().c_str());
                                 }
 
                                 if(x>=275+j*400 && x<375+j*400)
                                 {
                                     cout << "ecouter " << nom_sond[i] << j << endl;
+                                    ostringstream oss;
+                                    oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+                                    cout << oss.str();
+                                    AL_Play alp;
+                                    alp.put_sound_in_buffer(oss.str().c_str());
+                                    cout << "tetsskdf" << endl;
+                                    alp.play();
+                                    while(alp.is_playing());
+                                    alp.stop();
+                                    alp.stop();
                                 }
                             }
                         }
