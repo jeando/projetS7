@@ -291,7 +291,7 @@ AL_Play::AL_Play(std::string _device)
 }
 AL_Play::~AL_Play()
 {
-	alSourceStop(source);
+	stop_playing();
 	ALint nb_queued;
 	ALuint buffer;
 	alGetSourcei(source, AL_BUFFERS_QUEUED, &nb_queued);
@@ -305,7 +305,7 @@ void AL_Play::play()
 {
 	alSourcePlay(source);
 }
-void AL_Play::stop()
+void AL_Play::stop_playing()
 {
 	alSourceStop(source);
 }
@@ -467,8 +467,8 @@ label_debut_wait_sound:
 	}
 	else
 	{
-		goto label_debut_wait_sound;
     	mutex_sample.unlock();
+		goto label_debut_wait_sound;
 	}
 
     mutex_sample.unlock();
@@ -494,8 +494,12 @@ label_debut_wait_sound:
 	{
 		stop_stream_capture();
 	}
-	samples.erase(samples.begin()+temp.size(), samples.end());
-	return samples;
+	std::vector<ALshort> temp2(temp.size());
+	std::copy(temp.begin(), temp.end(), temp2.begin());
+    mutex_sample.lock();
+	samples.clear();
+    mutex_sample.unlock();
+	return temp2;
 }
 events_audio AL_Stream_Capture::poll_event_continue()
 {
@@ -578,4 +582,22 @@ void AL_Stream_Capture::poll_event_thread()
 		continue;
 	}
 }
-
+AL_Stream_Capture_And_Play::AL_Stream_Capture_And_Play(std::string _device,
+		std::string _capture_device,
+        ALenum _format, ALsizei _sample_rate, ALsizei _sample_size)
+:AL_Stream_Capture(_device, _capture_device, _format,
+		_sample_rate, _sample_size),
+	AL_Play(_device)
+{
+}
+AL_Stream_Capture_And_Play::~AL_Stream_Capture_And_Play()
+{
+}
+ALsizei AL_Stream_Capture_And_Play::getSampleRate()
+{
+	return AL_Stream_Capture::getSampleRate();
+}
+ALsizei AL_Stream_Capture_And_Play::getSampleRateSoundPlaying()
+{
+	return AL_Play::getSampleRate();
+}

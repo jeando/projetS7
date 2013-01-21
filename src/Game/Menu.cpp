@@ -6,6 +6,7 @@
 #include <fstream>
 using namespace std;
 extern AL_Stream_Capture alsc;
+//extern AL_Stream_Capture_And_Play alsc;
 
 class ini_ttf
 {
@@ -20,7 +21,7 @@ class ini_ttf
 		}
 }ini_ttf;
 Menu::Menu(SDL_Surface* scre)
-:alsc(),
+:
 	screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags)),
 	fene_menu(SDL_CreateRGBSurface(screen->flags, screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,	screen->format->Amask)),
@@ -599,12 +600,12 @@ bool Menu_enregistrement::gestion_clic()
                                 {
                                     cout << "enre " << nom_sond[i] << j << endl;
                                     vector<ALshort> samples;
-                                    AL_Capture alc(MyAL::choisir_device(),MyAL::choisir_capture_device());
-                                    alc.start(samples);
-                                    chrono::milliseconds dura(1000);
-                                    this_thread::sleep_for(dura);
-                                    alc.stop();
-
+//                                    AL_Capture alc(MyAL::choisir_device(),MyAL::choisir_capture_device());
+  //                                  alc.start(samples);
+    //                                chrono::milliseconds dura(1000);
+      //                              this_thread::sleep_for(dura);
+        //                            alc.stop();
+									samples = alsc.wait_sound();
                                     SDL_Rect rect2 = {50,425,800,43};
                                     SDL_Surface* texte;
                                     SDL_Color couleur = {0, 0, 0, 42};
@@ -614,12 +615,12 @@ bool Menu_enregistrement::gestion_clic()
 
                                     //verifier si le son a un debut
                                     if(indice_debut(equalize_spectrogramme(spectrogramme(MyAL::sample_to_double(samples),
-                                                alc.getSampleRate())))!=-1)
+                                                alsc.getSampleRate())))!=-1)
                                     {
                                          //sauvegarde
                                         ostringstream oss;
                                         oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
-                                        alc.save_sound(oss.str().c_str());
+										MyAL::save_sound(oss.str().c_str(), samples);
 
                                         oss_message << "son sauvegarde";
                                         texte=TTF_RenderText_Blended(police, oss_message.str().c_str(), couleur);
@@ -656,7 +657,7 @@ bool Menu_enregistrement::gestion_clic()
                                         alp.put_sound_in_buffer(oss.str().c_str());
                                         alp.play();
                                         while(alp.is_playing());
-                                        alp.stop();
+                                        alp.stop_playing();
 
                                         oss_message << "lecture du son";
                                         texte=TTF_RenderText_Blended(police, oss_message.str().c_str(), couleur);
