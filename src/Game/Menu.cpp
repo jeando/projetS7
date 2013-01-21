@@ -611,17 +611,21 @@ bool Menu_enregistrement::gestion_clic()
 
                                 if(x>=275+j*400 && x<375+j*400)
                                 {
-                                    cout << "ecouter " << nom_sond[i] << j << endl;
+
                                     ostringstream oss;
                                     oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
-                                    cout << oss.str();
                                     AL_Play alp;
-                                    alp.put_sound_in_buffer(oss.str().c_str());
-                                    cout << "tetsskdf" << endl;
-                                    alp.play();
-                                    while(alp.is_playing());
-                                    alp.stop();
-                                    alp.stop();
+                                    try
+                                    {
+                                        alp.put_sound_in_buffer(oss.str().c_str());
+                                        alp.play();
+                                        while(alp.is_playing());
+                                        alp.stop();
+                                    }
+                                    catch(exception e)
+                                    {
+                                        cout << "sond introuvable" << endl;
+                                    }
                                 }
                             }
                         }
