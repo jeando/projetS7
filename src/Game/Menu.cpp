@@ -221,77 +221,42 @@ void Choix_Utilisateur::draw()
     //TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 25);
     SDL_Color couleur = {0, 0, 0, 42};
     SDL_Surface* texte;
+    SDL_Surface* texte2;
 
-    //colonne utilisateurs
-    SDL_Rect rect1;
-    rect1.x=25;
-    rect1.y=21;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+    SDL_Rect rect1={0,0,0,0};
 
-    rect1.x=25;
-    rect1.y=85;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
-
-    rect1.x=25;
-    rect1.y=149;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
-
-    rect1.x=25;
-    rect1.y=213;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
-
-    //colonne changer
+    //texte pour changer
     ostringstream oss;
     oss << "  Re-enregistrer";
     texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
 
-    rect1.y=25;
-    rect1.x=275;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
-
-    rect1.y=85;
-    rect1.x=275;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
-
-    rect1.y=149;
-    rect1.x=275;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
-
-    rect1.y=213;
-    rect1.x=275;
-    SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
-
+    //texte pour commencer
     ostringstream oss2;
     oss2 << "  Commencer";
-    SDL_FreeSurface(texte);
-    texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
+    texte2 = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
 
-    rect1.y=25;
-    rect1.x=525;
-    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+    for(unsigned int i=0; (i<=list_util.size() && i<4); i++)
+    {
+        cout << i << endl;
+        //les utilisateurs
+        rect1.x=25;
+        rect1.y=21+i*43+i*21;
+        SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
 
-    rect1.y=85;
-    rect1.x=525;
-    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+        //changer
+        rect1.x=275;
+        SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
+        SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.y=149;
-    rect1.x=525;
-    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+        //commencer
+        rect1.x=525;
+        SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
+        SDL_BlitSurface(texte2,nullptr,fene_menu,&rect1);
+    }
 
-    rect1.y=213;
-    rect1.x=525;
-    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
-
-    rect1.y=325;
+    //bouton quitter
     rect1.x=299;
+    rect1.y=325;
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
@@ -302,6 +267,7 @@ void Choix_Utilisateur::draw()
 	//TTF_CloseFont(police);
     SDL_FreeSurface(commencer);
     SDL_FreeSurface(texte);
+    SDL_FreeSurface(texte2);
     SDL_FreeSurface(standard);
     SDL_FreeSurface(quitter);
 }
@@ -310,7 +276,7 @@ void Choix_Utilisateur::update()
 {
     SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
 
-    SDL_Rect rect1={25,0,0,0};
+    SDL_Rect rect1={40,0,0,0};
 
     for(unsigned int i=incr; (i<list_util.size() && i<incr+4); i++)
     {
@@ -355,6 +321,8 @@ bool Choix_Utilisateur::gestion_clic()
 						{
                         int x = event.button.x;
                         int y = event.button.y;
+
+
 
                        if(x>=299 && x<=(299+204)
                            && y>=325 && y<=(325+43))
