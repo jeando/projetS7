@@ -5,6 +5,8 @@
 #include <sstream>
 #include <fstream>
 using namespace std;
+extern AL_Stream_Capture alsc;
+
 class ini_ttf
 {
 	public:
@@ -338,6 +340,9 @@ bool Choix_Utilisateur::gestion_clic()
                                && (i+incr)<list_util.size())
                             {
                                 cout << "commencer" << endl;
+                                Joueur j(list_util[i+incr]);
+                                Game g(screen,&alsc,j);
+                                g.start();
                             }
 
                             //nouvel uti
