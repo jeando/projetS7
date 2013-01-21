@@ -335,7 +335,7 @@ bool Choix_Utilisateur::gestion_clic()
                                && (i+incr)<list_util.size())
                             {
                                 cout << "re-enreg" << endl;
-                                Menu_enregistrement me(screen,list_util[i+incr]);
+                                Menu_enregistrement me(screen,list_util,i+incr);
                                 me.start();
                                 screen=SDL_SetVideoMode(fene_menu->w,
 								fene_menu->h,
@@ -363,7 +363,7 @@ bool Choix_Utilisateur::gestion_clic()
                                && (i+incr)==list_util.size())
                             {
                                 cout << "nouvel uti" << endl;
-                                Menu_enregistrement me(screen,"");
+                                Menu_enregistrement me(screen,list_util,-1);
                                 me.start();
                                 screen=SDL_SetVideoMode(fene_menu->w,
 									fene_menu->h,
@@ -406,7 +406,7 @@ bool Choix_Utilisateur::gestion_clic()
     return false;
 }
 
-Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, string nom)
+Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, std::vector<std::string> list, int ind)
 :screen(SDL_SetVideoMode(800, 600, scre->format->BitsPerPixel, scre->flags
 		//	SDL_HWSURFACE | SDL_DOUBLEBUF
 		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
@@ -414,8 +414,12 @@ Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, string nom)
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
 	screen->format->Amask)),
 police(TTF_OpenFont("data/Arial.ttf", 25)),
-nom_utilisateur(nom), nom_temp(nom)
+list_util(list), index(ind)
 {
+    if(ind!=-1)
+    {
+        nom_temp=list_util[index];
+    }
     draw();
     update();
 }
@@ -456,10 +460,14 @@ void Menu_enregistrement::draw()
     rect1.x=146;
     SDL_BlitSurface(standard,nullptr,fene_menu,&rect1);
     rect1.x=160;
-    ostringstream oss_nom;
-    oss_nom << nom_utilisateur;
-    texte=TTF_RenderText_Blended(police, oss_nom.str().c_str(), couleur);
-    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+    if(index!=-1)
+    {
+        ostringstream oss_nom;
+        oss_nom << list_util[index];
+        texte=TTF_RenderText_Blended(police, oss_nom.str().c_str(), couleur);
+        SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+    }
+
     SDL_Rect rect2 = {350,25,204,43};
     SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 255, 255, 255));
 
@@ -602,12 +610,40 @@ bool Menu_enregistrement::gestion_clic()
 
                     }
 
-                if(x>=299 && x<=(299+204)
-                           && y>=525 && y<=(525+43))
-                        {
-                                cout << "Quitter" << endl;
-                                return true;
-                        }
+                if(x>=99 && x<=(99+204)
+                    && y>=525 && y<=(525+43))
+                {
+                    cout << "Quitter" << endl;
+                    return true;
+                }
+
+                if(x>=499 && x<=(499+204)
+                    && y>=525 && y<=(525+43))
+                {
+                    cout << "Commencer" << endl;
+
+                    ofstream ofs("./data/joueur.lst");
+                    for(int i=0; i<index; i++)
+                    {
+                        ofs << list_util[i] << endl;
+                    }
+                    ofs << nom_temp << endl;
+                    for(int i=index+1; i<list_util.size(); i++)
+                    {
+                        ofs << list_util[i] << endl;
+                    }
+
+
+                    Joueur j(index, nom_temp);
+                    Game g(screen,&alsc,j);
+                    g.start();
+                    screen=SDL_SetVideoMode(fene_menu->w,
+                        fene_menu->h,
+                        fene_menu->format->BitsPerPixel ,
+                        fene_menu->flags);
+
+                    return true;
+                }
 
                 break;
                 }

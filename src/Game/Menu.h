@@ -9,7 +9,7 @@
 class Menu_enregistrement
 {
     public:
-        Menu_enregistrement(SDL_Surface* scre, std::string nom);
+        Menu_enregistrement(SDL_Surface* scre, std::vector<std::string> list, int ind);
 		virtual ~Menu_enregistrement();
         bool gestion_clic();
         void start();
@@ -19,9 +19,10 @@ class Menu_enregistrement
 
     private:
 		SDL_Surface* screen;
-		std::string nom_utilisateur;
         SDL_Surface* fene_menu;
     	TTF_Font* police;
+        std::vector<std::string> list_util;
+		int index;
         std::string nom_temp;
         std::vector<std::string> nom_sond;
 
