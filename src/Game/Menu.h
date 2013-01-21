@@ -22,7 +22,7 @@ class Menu_enregistrement
 		std::string nom_utilisateur;
         SDL_Surface* fene_menu;
     	TTF_Font* police;
-        std::ostringstream stream_nom;
+        std::string nom_temp;
 
 };
 
