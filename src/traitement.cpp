@@ -25,15 +25,15 @@ events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
 				dynamic_time_warping(spectro,joueur.spectro_bas2)));
 	double min_val(vdist[0]);
 	int min_indice(0);
-	std::cout << "azertyuiop" << std::endl;
+//	std::cout << "azertyuiop" << std::endl;
 	for(unsigned int i=0; i<vdist.size(); i++)
 	{
 		if(vdist[i]<min_val){
 			min_val=vdist[i];
 			min_indice=i;
-			std::cout << "aaazzz" <<min_indice << std::endl;
+	//		std::cout << "aaazzz" <<min_indice << std::endl;
 		}
-		std::cout << vdist[i] << std::endl;
+	//	std::cout << vdist[i] << std::endl;
 	}
 	std::cout << "aaa" <<min_indice << std::endl;
 //	std::cout << "aaa" <<vdist.size() << std::endl;
@@ -229,7 +229,7 @@ std::vector<double> dynamic_time_warping(
 	unsigned int m_end=ref.size();//ref iterateur
 	unsigned int n=n_ini;
 	unsigned int m=m_ini;
-	std::cout << m_ini << " " << n_ini << " azertyuiop" <<std::endl;
+	//std::cout << m_ini << " " << n_ini << " azertyuiop" <<std::endl;
 	double v_moy = (n_end-n_ini)/(m_end-m_ini);
 	for(;n<n_end; n++)
 	{
