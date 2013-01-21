@@ -602,12 +602,19 @@ bool Menu_enregistrement::gestion_clic()
 
                     }
 
-                if(x>=299 && x<=(299+204)
-                           && y>=525 && y<=(525+43))
-                        {
-                                cout << "Quitter" << endl;
-                                return true;
-                        }
+                if(x>=99 && x<=(99+204)
+                    && y>=525 && y<=(525+43))
+                {
+                    cout << "Quitter" << endl;
+                    return true;
+                }
+
+                if(x>=499 && x<=(499+204)
+                    && y>=525 && y<=(525+43))
+                {
+                    cout << "Commencer" << endl;
+                    return true;
+                }
 
                 break;
                 }
