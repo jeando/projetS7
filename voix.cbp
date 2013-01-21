@@ -3,7 +3,7 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="voix" />
-		<Option makefile_is_custom="1" />
+		<Option execution_dir="/home/guenon/Bureau/Cours/MAM4/projetS7/src/Game" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -16,18 +16,23 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="src/Game/Drawable.cpp" />
+		<Unit filename="src/Game/Drawable.h" />
 		<Unit filename="src/Game/Frog.cpp" />
 		<Unit filename="src/Game/Frog.h" />
 		<Unit filename="src/Game/Game.cpp" />
 		<Unit filename="src/Game/Game.h" />
 		<Unit filename="src/Game/Item.cpp" />
 		<Unit filename="src/Game/Item.h" />
+		<Unit filename="src/Game/Joueur.cpp" />
+		<Unit filename="src/Game/Joueur.h" />
+		<Unit filename="src/Game/Map.cpp" />
+		<Unit filename="src/Game/Map.h" />
 		<Unit filename="src/Game/Menu.cpp" />
 		<Unit filename="src/Game/Menu.h" />
 		<Unit filename="src/Game/Score.cpp" />
 		<Unit filename="src/Game/Score.h" />
-		<Unit filename="src/Map.cpp" />
-		<Unit filename="src/Map.h" />
+		<Unit filename="src/Game/main.cpp" />
 		<Unit filename="src/MyAL.cpp" />
 		<Unit filename="src/MyAL.h" />
 		<Unit filename="src/main.cpp" />

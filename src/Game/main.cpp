@@ -1,4 +1,5 @@
 #include "Menu.h"
+AL_Stream_Capture alsc;
 
 int main()
 {
@@ -7,7 +8,7 @@ int main()
         SDL_Surface * screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE|SDL_DOUBLEBUF));
         SDL_WM_SetIcon(SDL_LoadBMP("../../images/icone.bmp"), NULL);
 
-		AL_Stream_Capture alsc;
+		//AL_Stream_Capture alsc;
 		Joueur joueur("moi");
         Game g(screen, &alsc, joueur);
         g.start();
