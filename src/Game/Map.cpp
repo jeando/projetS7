@@ -158,12 +158,15 @@ void Map::update()//, unsigned int x, unsigned int y);
         	static_cast<Sint16>(size_box_x*croa_croa.etat_x),
         	static_cast<Sint16>(size_box_y*croa_croa.etat_y),
         	static_cast<Uint16>(size_box_x),
-        	static_cast<Uint16>(size_box_y)};
+        	static_cast<Uint16>(size_box_y)
+		};
 //*/
         SDL_Rect rect2 = {
-        	size_box_x*croa_croa.position_x,
-        	size_box_y*croa_croa.position_y,
-			0,0,};
+        	static_cast<Sint16>(size_box_x*croa_croa.position_x),
+        	static_cast<Sint16>(size_box_y*croa_croa.position_y),
+			0,
+			0
+		};
         SDL_BlitSurface(surfaces_map["frog"],&rect1,screen,&rect2);
 //        SDL_Flip(screen);
 		SDL_UpdateRect(screen, min(rect.x, rect2.x),min(rect.y, rect2.y),
