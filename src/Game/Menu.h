@@ -23,6 +23,7 @@ class Menu_enregistrement
         SDL_Surface* fene_menu;
     	TTF_Font* police;
         std::string nom_temp;
+        std::vector<std::string> nom_sond;
 
 };
 

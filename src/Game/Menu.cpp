@@ -445,7 +445,7 @@ void Menu_enregistrement::draw()
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
     SDL_Surface* sond = IMG_Load("../../images/buttun_sound.png");
-    vector<string> nom_sond = {"gauche","droite","haut","bas"};
+    nom_sond = {"gauche","droite","haut","bas"};
 
     SDL_Rect rect1={0,0,0,0};
     SDL_Color couleur = {0, 0, 0, 42};
@@ -580,6 +580,27 @@ bool Menu_enregistrement::gestion_clic()
                 int y = event.button.y;
 
                 cout << "clik" << endl;
+
+                    for(int i=0; i<4; i++)
+                    {
+                        if(y>=100+i*75 && y<143+i*75)
+                        {
+                            for(int j=0; j<2; j++)
+                            {
+                                if(x>=150+j*400 && x<250+j*400)
+                                {
+                                    cout << "enre " << nom_sond[i] << j << endl;
+                                }
+
+                                if(x>=275+j*400 && x<375+j*400)
+                                {
+                                    cout << "ecouter " << nom_sond[i] << j << endl;
+                                }
+                            }
+                        }
+
+
+                    }
 
                 if(x>=299 && x<=(299+204)
                            && y>=525 && y<=(525+43))
