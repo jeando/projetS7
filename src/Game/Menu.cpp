@@ -414,7 +414,7 @@ Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, string nom)
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
 	screen->format->Amask)),
 police(TTF_OpenFont("data/Arial.ttf", 25)),
-nom_utilisateur(nom), nom_temp("")
+nom_utilisateur(nom), nom_temp(nom)
 {
     draw();
     update();
@@ -445,6 +445,7 @@ void Menu_enregistrement::draw()
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
     SDL_Surface* sond = IMG_Load("../../images/buttun_sound.png");
+    vector<string> nom_sond = {"gauche","droite","haut","bas"};
 
     SDL_Rect rect1={0,0,0,0};
     SDL_Color couleur = {0, 0, 0, 42};
@@ -472,7 +473,7 @@ void Menu_enregistrement::draw()
             rect1.x=25+j*400;
             SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
             ostringstream oss;
-            oss << "sound" << (i+1) << (j+1);
+            oss << nom_sond[i] << (j+1);
             SDL_FreeSurface(texte);
             texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
             SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
@@ -501,13 +502,23 @@ void Menu_enregistrement::draw()
     }
 
     //bouton quitter
-    rect1.x=299;
+    rect1.x=99;
     rect1.y=525;
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
     SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
+    SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+
+    //bouton commencer
+    rect1.x=499;
+    rect1.y=525;
+    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
+    ostringstream oss5;
+    oss5 << "     Commencer";
+    SDL_FreeSurface(texte);
+    texte = TTF_RenderText_Blended(police, oss5.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
     SDL_FreeSurface(commencer);
