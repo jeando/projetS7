@@ -625,7 +625,7 @@ bool Choix_Utilisateur::gestion_clic()
 
                       		ostringstream oss_message;
 
-                       		oss_message << "Veillez enregister tous les sons";
+                       		oss_message << "Veuillez enregister tous les sons";
                         	texte=TTF_RenderText_Blended(police,
                                 oss_message.str().c_str(), couleur);
                         	SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
