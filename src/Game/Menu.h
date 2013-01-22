@@ -59,6 +59,8 @@ class Choix_Utilisateur
         void start();
         void draw();
         void update();
+        bool all_enreg(unsigned int index);
+        bool is_readable( const std::string & file);
 
 
     private:
