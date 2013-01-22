@@ -180,22 +180,22 @@ void Map::update()//, unsigned int x, unsigned int y);
             cpt_position^=cpt_position; // cpt_position=0 mais avec une étape en moins
 	//		std::cout << cpt_position << std::endl;
             //cpt_position=0;
-		if(croa_croa.vitesse_x>0){//remet une position standard apres chaque deplacement
-			croa_croa.etat_y=2;
-        	croa_croa.vitesse_x=0;
-        	croa_croa.vitesse_y=0;
-		}
-		else if(croa_croa.vitesse_x<0){
-			croa_croa.etat_y=0;
-        	croa_croa.vitesse_x=0;
-        	croa_croa.vitesse_y=0;
-		}
-		else if(croa_croa.vitesse_y!=0)
-		{
-			croa_croa.etat_y=0;
-        	croa_croa.vitesse_y=0;
-		}
-		croa_croa.etat_x=0;
+			if(croa_croa.vitesse_x>0){//remet une position standard apres chaque deplacement
+				croa_croa.etat_y=2;
+        		croa_croa.vitesse_x=0;
+        		croa_croa.vitesse_y=0;
+			}
+			else if(croa_croa.vitesse_x<0){
+				croa_croa.etat_y=0;
+        		croa_croa.vitesse_x=0;
+        		croa_croa.vitesse_y=0;
+			}
+			else if(croa_croa.vitesse_y!=0)
+			{
+				croa_croa.etat_y=0;
+        		croa_croa.vitesse_y=0;
+			}
+			croa_croa.etat_x=0;
 	/*if(croa_croa.vitesse_x>0){//remet une position standard apres chaque deplacement
 		croa_croa.etat_y=0;
 	}
@@ -203,20 +203,15 @@ void Map::update()//, unsigned int x, unsigned int y);
 		croa_croa.etat_y=2;
 	}//*/
 			//alsc->start_stream_capture();	
-
-		int coord = (croa_croa.position_x)+w_map*(croa_croa.position_y);
-		if(croa_croa.etat_x==0 && ((list_items[coord]!=nullptr && list_items[coord]->nom_image=="end")
-            /*|| list_items[coord]==nullptr*/)){//message de victoire
-		std::cout<<"victoire"<<std::endl;
 		}
-
-	
-            return;
-        }
     }
+}
+bool Map::victoire()
+{
+	coord = (croa_croa.position_x)+w_map*(croa_croa.position_y);
+	return croa_croa.etat_x==0 && list_items[coord]!=nullptr && list_items[coord]->nom_image=="end";
 
 }
-
 bool Map::is_deplacement_possible(int vx, int vy)
 {
     int coord = (croa_croa.position_x+vx)+w_map*(croa_croa.position_y+vy);

@@ -24,6 +24,7 @@ class Map
         void update();//, unsigned int x, unsigned int y);
         bool change_speed(int vx, int vy);
         bool is_deplacement_possible(int vx, int vy);
+	bool victoire();
 
 
     private:
@@ -38,5 +39,6 @@ class Map
         Frog croa_croa;
         std::map<std::string,SDL_Surface*> surfaces_map;
 	unsigned int cpt_position;
+	int coord;
 };
 #endif // MAP_H_INCLUDED
