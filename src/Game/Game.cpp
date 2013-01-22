@@ -36,26 +36,18 @@ bool Game::gestionSDL_Event()
                         return false;
                         break;
                     case SDLK_z:
-                        map.change_speed(0,-1);
-                        break;
                     case SDLK_UP:
                         map.change_speed(0,-1);
                         break;
                     case SDLK_q:
-                        map.change_speed(-1,0);
-                        break;
                     case SDLK_LEFT:
                         map.change_speed(-1,0);
                         break;
                     case SDLK_s:
-                        map.change_speed(0,1);
-                        break;
                     case SDLK_DOWN:
                         map.change_speed(0,1);
                         break;
                     case SDLK_d:
-                        map.change_speed(1,0);
-                        break;
                     case SDLK_RIGHT:
                         map.change_speed(1,0);
                         break;
