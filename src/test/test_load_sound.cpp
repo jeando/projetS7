@@ -8,6 +8,6 @@ int main(int argc, char** argv)
 		alp.put_sound_in_buffer(argv[1]);
 	alp.play();
 	while(alp.is_playing());
-	alp.stop();
-	alp.stop();
+	alp.stop_playing();
+	alp.stop_playing();
 }
