@@ -242,7 +242,19 @@ bool Map::is_deplacement_possible(int vx, int vy)
 
 void Map::tir()
 {
-    int coord = (croa_croa.position_x+1)+croa_croa.position_y*w_map;
+    tir_ind(1,0);
+    tir_ind(1,-1);
+    tir_ind(0,-1);
+    tir_ind(-1,-1);
+    tir_ind(-1,0);
+    tir_ind(-1,1);
+    tir_ind(0,1);
+    tir_ind(1,1);
+}
+
+void Map::tir_ind(int pos_x, int pos_y)
+{
+    int coord = (croa_croa.position_x+pos_x)+(croa_croa.position_y+pos_y)*w_map;
     SDL_Rect rect;
     rect.w=static_cast<Sint16>(size_box_x);
     rect.h=static_cast<Sint16>(size_box_y);
@@ -250,54 +262,35 @@ void Map::tir()
     if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
         list_items[coord]=nullptr;
-        rect.x = static_cast<Sint16>((croa_croa.position_x+1)*size_box_x);
-        rect.y = static_cast<Sint16>((croa_croa.position_y)*size_box_y);
-    }
-    coord=croa_croa.position_x+(croa_croa.position_y-1)*w_map;
-    if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
-    {
-        list_items[coord]=nullptr;
-        rect.x = static_cast<Sint16>((croa_croa.position_x)*size_box_x);
-        rect.y = static_cast<Sint16>((croa_croa.position_y-1)*size_box_y);
-    }
-    coord=(croa_croa.position_x-1)+croa_croa.position_y*w_map;
-    if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
-    {
-        list_items[coord]=nullptr;
-        rect.x = static_cast<Sint16>((croa_croa.position_x-1)*size_box_x);
-        rect.y = static_cast<Sint16>((croa_croa.position_y)*size_box_y);
-    }
-    coord=croa_croa.position_x+(croa_croa.position_y+1)*w_map;
-    if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
-    {
-        list_items[coord]=nullptr;
-        rect.x = static_cast<Sint16>((croa_croa.position_x)*size_box_x);
-        rect.y = static_cast<Sint16>((croa_croa.position_y+1)*size_box_y);
+        rect.x = static_cast<Sint16>((croa_croa.position_x+pos_x)*size_box_x);
+        rect.y = static_cast<Sint16>((croa_croa.position_y+pos_y)*size_box_y);
+
+        SDL_Rect rect2 = {30,0,30,30};
+        chrono::milliseconds dura(200);
+        SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
+        SDL_BlitSurface(surface,&rect,screen,&rect);
+        SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
+        cout << "test" << endl;
+        this_thread::sleep_for(dura);
+
+        rect2.x=60;
+        SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
+        SDL_BlitSurface(surface,&rect,screen,&rect);
+        SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
+        this_thread::sleep_for(dura);
+
+        rect2.x=90;
+        SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
+        SDL_BlitSurface(surface,&rect,screen,&rect);
+        SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
+        this_thread::sleep_for(dura);
+
+        SDL_BlitSurface(surfaces_map["background"],nullptr,surface,&rect);
+        SDL_BlitSurface(surface,&rect,screen,&rect);
+        SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
     }
 
-    SDL_Rect rect2 = {30,0,30,30};
-    chrono::milliseconds dura(200);
-    SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
-    SDL_BlitSurface(surface,&rect,screen,&rect);
-    SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
-    cout << "test" << endl;
-    this_thread::sleep_for(dura);
 
-    rect2.x=60;
-    SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
-    SDL_BlitSurface(surface,&rect,screen,&rect);
-    SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
-    this_thread::sleep_for(dura);
-
-    rect2.x=90;
-    SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
-    SDL_BlitSurface(surface,&rect,screen,&rect);
-    SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
-    this_thread::sleep_for(dura);
-
-    SDL_BlitSurface(surfaces_map["background"],nullptr,surface,&rect);
-    SDL_BlitSurface(surface,&rect,screen,&rect);
-    SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
 }
 
 bool Map::change_speed(int vx, int vy)

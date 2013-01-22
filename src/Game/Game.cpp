@@ -4,7 +4,7 @@ using namespace std;
 
 Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)
 :screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE|SDL_DOUBLEBUF)), alsc(_alsc), joueur(&_joueur),
-	map("../../images/lab_test2.png",screen, _alsc)
+	map("../../images/lab_testjp4.png",screen, _alsc)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
 }
@@ -127,7 +127,7 @@ void Game::start()
 		cout<<"victoire !"<<endl;
 		SDL_Surface* texte;
     		SDL_Color couleur = {255, 0, 0, 70};
-		
+
 		//SDL_BlitSurface(texte,nullptr,screen,&rect2);
 		TTF_Font* police(TTF_OpenFont("data/Arial.ttf", 60));
     		texte=TTF_RenderText_Blended(police,("Victoire "+joueur->nom_joueur+ " !!!").c_str(), couleur);

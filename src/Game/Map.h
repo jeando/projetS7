@@ -26,7 +26,7 @@ class Map
         bool is_deplacement_possible(int vx, int vy);
         bool victoire();
         void tir();
-
+        void tir_ind(int pos_x, int pos_y);
 
     private:
         SDL_Surface* screen;
