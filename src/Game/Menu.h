@@ -15,7 +15,8 @@ class Menu_enregistrement
         void start();
         void draw();
         void update();
-
+        bool all_enreg();
+        bool is_readable( const std::string & file);
 
     private:
 		SDL_Surface* screen;

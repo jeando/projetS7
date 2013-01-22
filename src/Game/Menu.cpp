@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include<string>
 using namespace std;
 extern AL_Stream_Capture alsc;
 //extern AL_Stream_Capture_And_Play alsc;
@@ -415,7 +416,7 @@ Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, std::vector<std::str
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
 	screen->format->Amask)),
 police(TTF_OpenFont("data/Arial.ttf", 25)),
-list_util(list), index(ind)
+list_util(list), index(ind), nom_temp("")
 {
     if(ind!=-1)
     {
@@ -467,6 +468,7 @@ void Menu_enregistrement::draw()
         oss_nom << list_util[index];
         texte=TTF_RenderText_Blended(police, oss_nom.str().c_str(), couleur);
         SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+            SDL_FreeSurface(texte);
     }
 
     SDL_Rect rect2 = {350,25,204,43};
@@ -483,7 +485,6 @@ void Menu_enregistrement::draw()
             SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
             ostringstream oss;
             oss << nom_sond[i] << (j+1);
-            SDL_FreeSurface(texte);
             texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
             SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
@@ -506,6 +507,7 @@ void Menu_enregistrement::draw()
             SDL_FreeSurface(texte);
             texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
             SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
+            SDL_FreeSurface(texte);
 
         }
     }
@@ -516,7 +518,7 @@ void Menu_enregistrement::draw()
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
-    SDL_FreeSurface(texte);
+    //SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss4.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
@@ -619,7 +621,14 @@ bool Menu_enregistrement::gestion_clic()
                                     {
                                          //sauvegarde
                                         ostringstream oss;
-                                        oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+										if(index==-1)
+										{
+                                        	oss << "./data/" << list_util.size() << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+										}
+										else
+										{
+                                        	oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+										}
 										MyAL::save_sound(oss.str().c_str(), samples);
 
                                         oss_message << "son sauvegarde";
@@ -640,7 +649,10 @@ bool Menu_enregistrement::gestion_clic()
                                 {
 
                                     ostringstream oss;
-                                    oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+									if(index == -1)
+	                                    oss << "./data/" << list_util.size() << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
+									else
+	                                    oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
 
 
                                     SDL_Rect rect2 = {50,425,800,43};
@@ -690,7 +702,14 @@ bool Menu_enregistrement::gestion_clic()
                     && y>=525 && y<=(525+43))
                 {
                     cout << "Commencer" << endl;
-
+					if(nom_temp!="")
+					{
+					if(all_enreg())
+					{
+						if(index==-1)
+						{
+							index=list_util.size();
+						}
                     ofstream ofs("./data/joueur.lst");
                     for(int i=0; i<index; i++)
                     {
@@ -702,7 +721,7 @@ bool Menu_enregistrement::gestion_clic()
                         ofs << list_util[i] << endl;
                     }
 
-
+					ofs.close();
                     Joueur j(index, nom_temp);
                     Game g(screen,&alsc,j);
                     g.start();
@@ -712,6 +731,36 @@ bool Menu_enregistrement::gestion_clic()
                         fene_menu->flags);
 
                     return true;
+                }
+      SDL_Rect rect2 = {50,425,800,43};
+                        SDL_Surface* texte;
+                        SDL_Color couleur = {0, 0, 0, 42};
+                        SDL_FillRect(fene_menu, &rect2,
+SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                        ostringstream oss_message;
+
+                        oss_message << "Veillez enregister tous les sons";
+                        texte=TTF_RenderText_Blended(police,
+oss_message.str().c_str(), couleur);
+                        SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                        SDL_FreeSurface(texte);
+                    }
+                    else
+                    {
+                        SDL_Rect rect2 = {50,425,800,43};
+                        SDL_Surface* texte;
+                        SDL_Color couleur = {0, 0, 0, 42};
+                        SDL_FillRect(fene_menu, &rect2,
+SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                        ostringstream oss_message;
+
+                        oss_message << "Veillez entrer un nom";
+                        texte=TTF_RenderText_Blended(police,
+oss_message.str().c_str(), couleur);
+                        SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                        SDL_FreeSurface(texte);
+
+                    }
                 }
 
                 break;
@@ -726,4 +775,37 @@ bool Menu_enregistrement::gestion_clic()
     return false;
 }
 
+bool Menu_enregistrement::is_readable( const string & file )
+{
+    ifstream fichier( file.c_str() );
+    if(fichier.fail())
+		return false;
+	fichier.close();
+}
+
+bool Menu_enregistrement::all_enreg()
+{
+    for(int i=0; i<4; i++)
+    {
+        for(int j=0; j<2; j++)
+        {
+            ostringstream oss;
+            if(index==-1)
+            {
+                oss << "./data/" << list_util.size() << "_" << nom_sond[i] << "_" <<
+(j+1) << ".wav";
+            }
+            else
+            {
+                oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) <<
+".wav";
+            }
+            if(!is_readable(oss.str().c_str()))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
