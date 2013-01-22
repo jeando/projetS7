@@ -211,6 +211,129 @@ void fenetre_hamming(std::vector<double> input)
 		input[i]*=(0.54-0.46*cos(2*M_PI*i/(input.size()-1)));//coeff minimal aux bords, max au centre
 	}
 }
+std::vector<double> dynamic_time_warping2(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref,unsigned int delta)
+{
+	return dynamic_time_warping2(mesure, ref, delta,0, ref.begin()->size());
+}
+std::vector<double> get_min_dist_spectre(
+		std::vector<std::vector<double> >& mesure,
+		std::vector<std::vector<double> >& ref,
+		unsigned int delta,
+		unsigned int n,
+		unsigned int m,
+		unsigned int profondeur)
+{
+		std::vector<double> min_suivant;
+		for(unsigned int i=profondeur; i!=1; i--)
+		{
+			if(n+i<mesure.size())
+				min_suivant = get_min_dist_spectre(mesure, ref, min_suivant,
+					delta, n+i, m, i, profondeur);
+		}
+		return min_suivant;
+}
+std::vector<double> get_min_dist_spectre(
+		std::vector<std::vector<double> >& mesure,
+		std::vector<std::vector<double> >& ref,
+		std::vector<double> min_suivant,
+		unsigned int delta,
+		unsigned int n,
+		unsigned int m,
+		unsigned int profondeur,
+		unsigned int profondeur_total)
+{
+	std::vector<double> vdist((profondeur*delta)+m>ref.size()?ref.size()-m:profondeur*delta);
+	std::vector<double> min_val((profondeur-1)*delta+m>ref.size()?ref.size()-m:(profondeur-1)*delta);
+	for(unsigned i = 0; i<vdist.size(); i++)
+	{
+		 vdist[i]=sqrt(distance(mesure[n],ref[m+i]));
+	}
+	for(unsigned int i=0; i<min_suivant.size(); i++)
+	{
+		vdist[i]*=1.0/(profondeur_total-profondeur+1);
+		vdist[i]+=min_suivant[i]*(profondeur_total-profondeur)/(profondeur_total-profondeur+1);
+	}
+	if(min_val.size()==0)
+	{
+		min_val.push_back(*std::min_element(vdist.begin(), vdist.end()));
+		return min_val;
+	}
+	if(std::distance(vdist.begin()+delta, vdist.end())<0)
+		min_val[0]=*std::min_element(vdist.begin(), vdist.end());
+	else
+		min_val[0]=*std::min_element(vdist.begin(), vdist.begin()+delta);
+	for(unsigned i = 1; i<min_val.size(); i++)
+	{
+		if(vdist[i+delta-1]<min_val[i-1])
+		{
+			min_val[i]=vdist[i+delta-1];
+		}
+		else if(vdist[i-1]==min_val[i-1])
+		{
+			if(std::distance(vdist.begin()+delta, vdist.end())<0)
+				min_val[i]=*std::min_element(vdist.begin()+i, vdist.end());
+			else
+				min_val[i]=*std::min_element(vdist.begin()+i, vdist.begin()+delta+i);
+			//min_val[i]=*std::min_element(vdist.begin(),vdist.begin()+delta);
+		}
+		else
+		{
+			min_val[i]=min_val[i-1];
+		}
+	}
+//	std::cout << min_val[0] << std::endl;
+	return min_val;
+}
+
+	
+
+//	return
+//}
+std::vector<double> dynamic_time_warping2(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref,unsigned int delta,
+		unsigned int _indice_debut_f, unsigned int _indice_fin_f)
+{
+	std::vector<double> dist;//(mesure.size());
+	unsigned int n_ini(indice_debut(mesure));//mesure iterateur
+	unsigned int m_ini(indice_debut(ref));//ref iterateur
+	unsigned int n_end=mesure.size();//mesure iterateur
+	unsigned int m_end=ref.size();//ref iterateur
+	unsigned int n=n_ini;
+	//unsigned int n=indice_debut_t_mes;
+	unsigned int m=m_ini;
+//	unsigned int m=indice_debut_t_ref;
+	//std::cout << m_ini << " " << n_ini << " azertyuiop" <<std::endl;
+	//double v_moy = (n_end-indice_debut_t_mes)/(m_end-indice_debut_t_ref);
+	double v_moy =1;// (n_end-n_ini)/(m_end-m_ini);
+	for(;n<n_end; n++)
+	{
+		double min(std::numeric_limits<double>::max());
+		double tmp_dst;
+		unsigned int indice_min;
+		//m+=static_cast<int>(floor(v_moy));
+		std::vector<double> v_min_val = get_min_dist_spectre(mesure, ref,
+				delta, n, m, 20);
+		for(unsigned int k = 0; k< v_min_val.size(); k++)
+		{
+			if(v_min_val[k]<min)
+			{
+				min = v_min_val[k];
+				indice_min = k;
+			}
+		}
+		if(min == std::numeric_limits<double>::max())
+		{
+			std::cout << v_moy << std::endl;
+			return dist;
+		}
+		m+=indice_min;
+		dist.push_back(sqrt(min));
+	}
+	return dist;
+}
 std::vector<double> dynamic_time_warping(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref,unsigned int delta)
@@ -632,6 +755,17 @@ std::vector<struct surface_energie> detection_haut_potentiel_energie(std::vector
 	{
 		max.push_back(*std::max_element(spectre.begin(), spectre.end()));
 	}
-
+	
 	return se;
 }
+inline std::vector<double> max_f(std::vector<std::vector<double> >& spectro)
+{
+	std::vector<double> max;
+	spectro = filtre_gaussien(spectro);
+	for(std::vector<double> spectre : spectro)
+	{
+		max.push_back(*std::max_element(spectre.begin(), spectre.end()));
+	}
+	return max;
+}
+

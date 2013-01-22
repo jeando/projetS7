@@ -6,6 +6,31 @@
 #include"ft.h"
 #include"event_audio.h"
 #include"Game/Joueur.h"
+
+std::vector<double> dynamic_time_warping2(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref,unsigned int delta);
+std::vector<double> dynamic_time_warping2(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref,unsigned int delta,
+		unsigned int _indice_debut_f, unsigned int _indice_fin_f);
+std::vector<double> get_min_dist_spectre(
+		std::vector<std::vector<double> >& mesure,
+		std::vector<std::vector<double> >& ref,
+		std::vector<double> min_suivant,
+		unsigned int delta,
+		unsigned int n,
+		unsigned int m,
+		unsigned int profondeur,
+		unsigned int profondeur_total);
+std::vector<double> get_min_dist_spectre(
+		std::vector<std::vector<double> >& mesure,
+		std::vector<std::vector<double> >& ref,
+		unsigned int delta,
+		unsigned int n,
+		unsigned int m,
+		unsigned int profondeur = 3);
+inline std::vector<double> max_f(std::vector<std::vector<double> >& spectro);
 events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur);
 
 std::vector<double> autocorrelation(std::vector<double> input);
