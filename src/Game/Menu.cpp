@@ -331,7 +331,7 @@ void Menu_option::draw()
     texte = TTF_RenderText_Blended(police, oss1.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    for(int i=0; i<6; i++)
+    for(int i=0; (i<6 && (i<=capt_devices.size() || i<=out_devices.size())); i++)
     {
         rect1.y=118+i*68;
         rect1.x=25;
@@ -377,7 +377,7 @@ void Menu_option::update()
     SDL_Color couleur = {0, 0, 0, 42};
     SDL_Surface* texte;
 
-    for(unsigned int i=incr_gch; (i<capt_devices.size() && i<incr_gch+5); i++)
+    for(unsigned int i=incr_gch; (i<capt_devices.size() && i<incr_gch+6); i++)
     {
         rect1.y=125+(i-incr_gch)*68;
         ostringstream oss;
@@ -389,7 +389,7 @@ void Menu_option::update()
     }
 
     rect1.x=475;
-    for(unsigned int i=incr_dte; (i<out_devices.size() && i<incr_dte+5); i++)
+    for(unsigned int i=incr_dte; (i<out_devices.size() && i<incr_dte+6); i++)
     {
         rect1.y=125+(i-incr_dte)*68;
 
