@@ -275,6 +275,26 @@ void Map::tir()
         rect.y = static_cast<Sint16>((croa_croa.position_y+1)*size_box_y);
     }
 
+    SDL_Rect rect2 = {30,0,30,30};
+    chrono::milliseconds dura(200);
+    SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
+    SDL_BlitSurface(surface,&rect,screen,&rect);
+    SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
+    cout << "test" << endl;
+    this_thread::sleep_for(dura);
+
+    rect2.x=60;
+    SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
+    SDL_BlitSurface(surface,&rect,screen,&rect);
+    SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
+    this_thread::sleep_for(dura);
+
+    rect2.x=90;
+    SDL_BlitSurface(surfaces_map["tree"],&rect2,surface,&rect);
+    SDL_BlitSurface(surface,&rect,screen,&rect);
+    SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
+    this_thread::sleep_for(dura);
+
     SDL_BlitSurface(surfaces_map["background"],nullptr,surface,&rect);
     SDL_BlitSurface(surface,&rect,screen,&rect);
     SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
