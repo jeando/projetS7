@@ -59,27 +59,9 @@ bool Game::gestionSDL_Event()
                     case SDLK_RIGHT:
                         map.change_speed(1,0);
                         break;
-                    case SDLK_SPACE:
-                            map.tir_ind(1,0);
-    						map.tir_ind(1,-1);
-							map.tir_ind(0,-1);
-							map.tir_ind(-1,-1);
-							map.tir_ind(-1,0);
-							map.tir_ind(-1,1);
-							map.tir_ind(0,1);
-							map.tir_ind(1,1);
-                        break;
-                    case SDLK_f:
-                            map.tir_ind(1,0);
-    						map.tir_ind(1,-1);
-							map.tir_ind(0,-1);
-							map.tir_ind(-1,-1);
-							map.tir_ind(-1,0);
-							map.tir_ind(-1,1);
-							map.tir_ind(0,1);
-							map.tir_ind(1,1);
-                        break;
-                    case SDLK_t:
+                    case SDLK_SPACE: 
+					case SDLK_f:
+					case SDLK_t:
                             map.tir_ind(1,0);
     						map.tir_ind(1,-1);
 							map.tir_ind(0,-1);
