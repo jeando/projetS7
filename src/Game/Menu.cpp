@@ -885,7 +885,7 @@ bool Menu_enregistrement::gestion_clic()
                                     ostringstream oss_message;
                                     ostringstream oss1;
 
-                                    oss1 << "veillez parler";
+                                    oss1 << "veuillez parler";
                                     texte=TTF_RenderText_Blended(police, oss1.str().c_str(), couleur);
                                     SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
                                     SDL_FreeSurface(texte);
@@ -921,7 +921,7 @@ bool Menu_enregistrement::gestion_clic()
                                     {
                                         SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 17, 206, 112));
 
-                                        oss_message << "pas de debut detecte dans le son, veillez recommencer";
+                                        oss_message << "pas de debut detecte dans le son, veuillez recommencer";
                                         texte=TTF_RenderText_Blended(police, oss_message.str().c_str(), couleur);
                                         SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
                                         SDL_FreeSurface(texte);
@@ -1025,7 +1025,7 @@ bool Menu_enregistrement::gestion_clic()
 
                             ostringstream oss_message;
 
-                            oss_message << "Veillez enregister tous les sons";
+                            oss_message << "Veuillez enregister tous les sons";
                             texte=TTF_RenderText_Blended(police,
                                     oss_message.str().c_str(), couleur);
                             SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
@@ -1041,7 +1041,7 @@ bool Menu_enregistrement::gestion_clic()
                             SDL_MapRGB(fene_menu->format, 17, 206, 112));
                         ostringstream oss_message;
 
-                        oss_message << "Veillez entrer un nom";
+                        oss_message << "Veuillez entrer un nom";
                         texte=TTF_RenderText_Blended(police,
                                     oss_message.str().c_str(), couleur);
                         SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
