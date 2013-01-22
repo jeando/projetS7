@@ -344,14 +344,14 @@ void Menu_option::draw()
     texte = TTF_RenderText_Blended(police, oss.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    rect1.x=275;
+    rect1.x=475;
     ostringstream oss1;
     oss1 << "     Audio";
     SDL_FreeSurface(texte);
     texte = TTF_RenderText_Blended(police, oss1.str().c_str(), couleur);
     SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
-    for(int i=0; (i<6 && (i<=capt_devices.size() || i<=out_devices.size())); i++)
+    for(int i=0; (i<6 && (i<capt_devices.size() || i<out_devices.size())); i++)
     {
         rect1.y=118+i*68;
         rect1.x=25;
