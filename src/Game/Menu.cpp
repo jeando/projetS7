@@ -132,13 +132,6 @@ bool Menu::gestion_clic()
                 int x = event.button.x;
                 int y = event.button.y;
 
-                /*if(x>=rect1.x && x<=(rect1.x+204)
-                   && y>=rect1.y && y<=(rect1.y+43))
-                {
-                        cout << "commencer" << endl;
-                        Game g(screen,&alsc,joueur);
-                        g.start();
-                }*/
                 if(x>=rect2.x && x<=(rect2.x+204)
                    && y>=rect2.y && y<=(rect2.y+43))
                 {
@@ -154,6 +147,12 @@ bool Menu::gestion_clic()
                    && y>=rect3.y && y<=(rect3.y+43))
                 {
                         cout << "Option" << endl;
+                        Menu_option mo(screen);
+                        mo.start();
+						screen=SDL_SetVideoMode(fene_menu->w,
+								fene_menu->h,
+								fene_menu->format->BitsPerPixel ,
+								fene_menu->flags);
                 }
                 else if(x>=rect4.x && x<=(rect4.x+204)
                    && y>=rect4.y && y<=(rect4.y+43))
@@ -172,6 +171,132 @@ bool Menu::gestion_clic()
         }
     }
     return false;
+}
+
+Menu_option::Menu_option(SDL_Surface* scre)
+:screen(SDL_SetVideoMode(500, 400, scre->format->BitsPerPixel, scre->flags
+		//	SDL_HWSURFACE | SDL_DOUBLEBUF
+		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
+		screen->w,
+    screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
+	screen->format->Amask)),
+		police(TTF_OpenFont("data/Arial.ttf", 25)), incr_gch(0), incr_dte(0)
+{
+    capt_devices = MyAL::get_capture_devices();
+    out_devices = MyAL::get_devices();
+    draw();
+    update();
+}
+
+bool Menu_option::gestion_clic()
+{
+    SDL_Event event;
+    int x;
+    int y;
+
+    while(SDL_PollEvent(&event))
+    {
+        switch(event.type)
+        {
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym)
+                {
+                    case SDLK_ESCAPE:
+                        return true;
+                        break;
+        			default:
+            			break;
+                }
+            case SDL_MOUSEBUTTONDOWN:
+                switch(event.button.button)
+                {
+                    x = event.button.x;
+                    y = event.button.y;
+
+                    case SDL_BUTTON_LEFT:
+						{
+                        cout << "x: " << x << "; y: " << y << endl;
+                        return false;
+                        break;
+						}
+                    case SDL_BUTTON_WHEELUP:
+                        if(incr_gch>=1 && x<250)
+                        {
+                            incr_gch--;
+                        }
+                        if(incr_dte>=1 && x>250)
+                        {
+                            incr_dte--;
+                        }
+                        break;
+                    case SDL_BUTTON_WHEELDOWN:
+                        if(incr_gch<capt_devices.size()-1 && x<250)
+                        {
+                            incr_gch++;
+                        }
+                        if(incr_dte<out_devices.size()-1 && x>250)
+                        {
+                            incr_dte++;
+                        }
+                        break;
+                }
+                break;
+            case SDL_QUIT:
+                return true;
+                break;
+            default:
+                break;
+        }
+    }
+    return false;
+}
+
+void Menu_option::start()
+{
+    std::chrono::milliseconds dura(200);
+    while(!gestion_clic())
+    {
+        update();
+		std::this_thread::sleep_for(dura);
+    }
+    return;
+}
+
+void Menu_option::draw()
+{
+    SDL_WM_SetCaption("Options", nullptr);
+    SDL_FillRect(fene_menu, nullptr, SDL_MapRGB(fene_menu->format, 17, 206, 112));
+
+    SDL_Surface* commencer = IMG_Load( "../../images/buttun_begin.png" );
+    SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
+    SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
+
+    //TTF_Font* police = TTF_OpenFont("./data/Arial.ttf", 25);
+    SDL_Color couleur = {0, 0, 0, 42};
+    //SDL_Surface* texte;
+    //SDL_Surface* texte2;
+
+    SDL_Rect rect1={0,0,0,0};
+
+
+    SDL_FreeSurface(commencer);
+    //SDL_FreeSurface(texte);
+    //SDL_FreeSurface(texte2);
+    SDL_FreeSurface(standard);
+    SDL_FreeSurface(quitter);
+}
+
+void Menu_option::update()
+{
+    SDL_BlitSurface(fene_menu,nullptr,screen,nullptr);
+
+    SDL_Flip(screen);
+}
+
+Menu_option::~Menu_option()
+{
+	SDL_FreeSurface(fene_menu);
+	TTF_CloseFont(police);
 }
 
 Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
