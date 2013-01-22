@@ -202,7 +202,15 @@ void Map::update()//, unsigned int x, unsigned int y);
 	if(croa_croa.vitesse_x<0){
 		croa_croa.etat_y=2;
 	}//*/
-			//alsc->start_stream_capture();		
+			//alsc->start_stream_capture();	
+
+		int coord = (croa_croa.position_x)+w_map*(croa_croa.position_y);
+		if(croa_croa.etat_x==0 && ((list_items[coord]!=nullptr && list_items[coord]->nom_image=="end")
+            /*|| list_items[coord]==nullptr*/)){//message de victoire
+		std::cout<<"victoire"<<std::endl;
+		}
+
+	
             return;
         }
     }
