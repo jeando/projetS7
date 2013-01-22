@@ -733,16 +733,17 @@ bool Menu_enregistrement::gestion_clic()
 
                     return true;
                 }
-      SDL_Rect rect2 = {50,425,800,43};
+                        SDL_Rect rect2 = {50,425,800,43};
                         SDL_Surface* texte;
                         SDL_Color couleur = {0, 0, 0, 42};
                         SDL_FillRect(fene_menu, &rect2,
-SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                            SDL_MapRGB(fene_menu->format, 17, 206, 112));
+
                         ostringstream oss_message;
 
                         oss_message << "Veillez enregister tous les sons";
                         texte=TTF_RenderText_Blended(police,
-oss_message.str().c_str(), couleur);
+                                oss_message.str().c_str(), couleur);
                         SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
                         SDL_FreeSurface(texte);
                     }
@@ -752,12 +753,12 @@ oss_message.str().c_str(), couleur);
                         SDL_Surface* texte;
                         SDL_Color couleur = {0, 0, 0, 42};
                         SDL_FillRect(fene_menu, &rect2,
-SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                            SDL_MapRGB(fene_menu->format, 17, 206, 112));
                         ostringstream oss_message;
 
                         oss_message << "Veillez entrer un nom";
                         texte=TTF_RenderText_Blended(police,
-oss_message.str().c_str(), couleur);
+                                    oss_message.str().c_str(), couleur);
                         SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
                         SDL_FreeSurface(texte);
 
@@ -782,6 +783,7 @@ bool Menu_enregistrement::is_readable( const string & file )
     if(fichier.fail())
 		return false;
 	fichier.close();
+	return true;
 }
 
 bool Menu_enregistrement::all_enreg()
@@ -793,13 +795,13 @@ bool Menu_enregistrement::all_enreg()
             ostringstream oss;
             if(index==-1)
             {
-                oss << "./data/" << list_util.size() << "_" << nom_sond[i] << "_" <<
-(j+1) << ".wav";
+                oss << "./data/" << list_util.size() << "_" << nom_sond[i]
+                    << "_" << (j+1) << ".wav";
             }
             else
             {
-                oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) <<
-".wav";
+                oss << "./data/" << index << "_" << nom_sond[i] << "_"
+                    << (j+1) << ".wav";
             }
             if(!is_readable(oss.str().c_str()))
             {
