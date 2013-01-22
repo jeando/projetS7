@@ -391,7 +391,7 @@ void Menu_option::update()
     rect1.x=475;
     for(unsigned int i=incr_dte; (i<out_devices.size() && i<incr_dte+5); i++)
     {
-        rect1.y=125+(i-incr_gch)*68;
+        rect1.y=125+(i-incr_dte)*68;
 
         ostringstream oss;
         oss << out_devices[i];
