@@ -242,21 +242,25 @@ bool Map::is_deplacement_possible(int vx, int vy)
 
 bool Map::tir()
 {
-    if(list_items[croa_croa.position_x+1+croa_croa.position_y*w_map]->nom_image=="tree")
+    int coord = croa_croa.position_x+1+croa_croa.position_y*w_map;
+    if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
-        list_items[croa_croa.position_x+1+croa_croa.position_y*w_map]=nullptr;
+        list_items[coord]=nullptr;
     }
-    if(list_items[croa_croa.position_x+croa_croa.position_y*w_map-1]->nom_image=="tree")
+    coord=croa_croa.position_x+croa_croa.position_y*w_map-1;
+    if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
-        list_items[croa_croa.position_x+croa_croa.position_y*w_map-1]=nullptr;
+        list_items[coord]=nullptr;
     }
-    if(list_items[croa_croa.position_x-1+croa_croa.position_y*w_map]->nom_image=="tree")
+    coord=croa_croa.position_x-1+croa_croa.position_y*w_map;
+    if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
-        list_items[croa_croa.position_x-1+croa_croa.position_y*w_map]=nullptr;
+        list_items[coord]=nullptr;
     }
-    if(list_items[croa_croa.position_x+croa_croa.position_y*w_map+1]->nom_image=="tree")
+    coord=croa_croa.position_x+croa_croa.position_y*w_map+1;
+    if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
-        list_items[croa_croa.position_x+croa_croa.position_y*w_map+1]=nullptr;
+        list_items[coord]=nullptr;
     }
 }
 

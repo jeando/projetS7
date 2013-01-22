@@ -865,7 +865,7 @@ bool Menu_enregistrement::gestion_clic()
 
                 cout << "clik" << endl;
 
-                    for(int i=0; i<4; i++)
+                    for(int i=0; i<nom_sond.size(); i++)
                     {
                         if(y>=100+i*75 && y<143+i*75)
                         {
@@ -875,7 +875,7 @@ bool Menu_enregistrement::gestion_clic()
                                 {
                                     cout << "enre " << nom_sond[i] << j << endl;
 
-                                    SDL_Rect rect2 = {50,425,800,43};
+                                    SDL_Rect rect2 = {50,475,800,43};
                                     SDL_Surface* texte;
                                     SDL_Color couleur = {0, 0, 0, 42};
                                     SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 17, 206, 112));
@@ -935,7 +935,7 @@ bool Menu_enregistrement::gestion_clic()
 	                                    oss << "./data/" << index << "_" << nom_sond[i] << "_" << (j+1) << ".wav";
 
 
-                                    SDL_Rect rect2 = {50,425,800,43};
+                                    SDL_Rect rect2 = {50,475,800,43};
                                     SDL_Surface* texte;
                                     SDL_Color couleur = {0, 0, 0, 42};
                                     SDL_FillRect(fene_menu, &rect2, SDL_MapRGB(fene_menu->format, 17, 206, 112));
@@ -1012,7 +1012,7 @@ bool Menu_enregistrement::gestion_clic()
 
                     return true;
                 }
-                        SDL_Rect rect2 = {50,425,800,43};
+                        SDL_Rect rect2 = {50,475,800,43};
                         SDL_Surface* texte;
                         SDL_Color couleur = {0, 0, 0, 42};
                         SDL_FillRect(fene_menu, &rect2,
@@ -1028,7 +1028,7 @@ bool Menu_enregistrement::gestion_clic()
                     }
                     else
                     {
-                        SDL_Rect rect2 = {50,425,800,43};
+                        SDL_Rect rect2 = {50,475,800,43};
                         SDL_Surface* texte;
                         SDL_Color couleur = {0, 0, 0, 42};
                         SDL_FillRect(fene_menu, &rect2,
