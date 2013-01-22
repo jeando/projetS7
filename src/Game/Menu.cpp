@@ -247,9 +247,29 @@ bool Menu_option::gestion_clic()
                 {
                     case SDL_BUTTON_LEFT:
 						{
-                        cout << "x: " << event.button.x << "; y: " << event.button.y << endl;
-                        if(event.button.x>=475 && event.button.x<=(475+204)
-                           && event.button.y>=332 && event.button.y<=(332+43))
+                        for(int i=0; (i<6 && (i<=capt_devices.size() || i<=out_devices.size())); i++)
+                        {
+                            if(event.button.y>=118+i*68 && event.button.y<118+i*68+43)
+                            {
+                                if(event.button.x>=25 && event.button.x<25+400
+                                   && (i+incr_gch<capt_devices.size()))
+                                {
+                                    cout << (i+incr_gch) << ": " << capt_devices[i+incr_gch] << endl;
+                                }
+                                else if(event.button.x>=475 && event.button.x<475+400
+                                    && (i+incr_dte<out_devices.size()))
+                                {
+                                    cout << (i+incr_dte) << ": " << out_devices[i+incr_dte] << endl;
+                                }
+                            }
+                        }
+                        if(event.button.x>=225 && event.button.x<=(225+204)
+                           && event.button.y>=532 && event.button.y<=(532+43))
+                        {
+                            cout << "default" << endl;
+                        }
+                        else if(event.button.x>=475 && event.button.x<=(475+204)
+                           && event.button.y>=532 && event.button.y<=(532+43))
                         {
                                 cout << "Quitter" << endl;
                                 return true;
