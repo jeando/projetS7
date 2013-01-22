@@ -4,7 +4,7 @@ using namespace std;
 
 Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)
 :screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE|SDL_DOUBLEBUF)), alsc(_alsc), joueur(&_joueur),
-	map("../../images/lab_testjp4.png",screen, _alsc)
+	map("../../images/lab_test2.png",screen, _alsc)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
 }
@@ -58,6 +58,36 @@ bool Game::gestionSDL_Event()
                         break;
                     case SDLK_RIGHT:
                         map.change_speed(1,0);
+                        break;
+                    case SDLK_SPACE:
+                            map.tir_ind(1,0);
+    						map.tir_ind(1,-1);
+							map.tir_ind(0,-1);
+							map.tir_ind(-1,-1);
+							map.tir_ind(-1,0);
+							map.tir_ind(-1,1);
+							map.tir_ind(0,1);
+							map.tir_ind(1,1);
+                        break;
+                    case SDLK_f:
+                            map.tir_ind(1,0);
+    						map.tir_ind(1,-1);
+							map.tir_ind(0,-1);
+							map.tir_ind(-1,-1);
+							map.tir_ind(-1,0);
+							map.tir_ind(-1,1);
+							map.tir_ind(0,1);
+							map.tir_ind(1,1);
+                        break;
+                    case SDLK_t:
+                            map.tir_ind(1,0);
+    						map.tir_ind(1,-1);
+							map.tir_ind(0,-1);
+							map.tir_ind(-1,-1);
+							map.tir_ind(-1,0);
+							map.tir_ind(-1,1);
+							map.tir_ind(0,1);
+							map.tir_ind(1,1);
                         break;
                             default:
                                 break;
