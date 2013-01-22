@@ -124,20 +124,23 @@ void Game::start()
 	if(map.victoire())
 	{
 		cout<<"victoire !"<<endl;
-		
-		SDL_Rect rect2 = {350,25,204,43};
-    		SDL_FillRect(screen, &rect2, SDL_MapRGB(screen->format, 255, 255, 255));
 		SDL_Surface* texte;
-    		SDL_Color couleur = {0, 0, 0, 42};
-		SDL_BlitSurface(texte,nullptr,screen,&rect2);
-		TTF_Font* police(TTF_OpenFont("data/Arial.ttf", 25));
+    		SDL_Color couleur = {255, 0, 0, 70};
+		
+		//SDL_BlitSurface(texte,nullptr,screen,&rect2);
+		TTF_Font* police(TTF_OpenFont("data/Arial.ttf", 60));
     		texte=TTF_RenderText_Blended(police,("Victoire "+joueur->nom_joueur+ " !!!").c_str(), couleur);
+		SDL_Rect rect2 = {static_cast<Sint16>(screen->w/2-texte->w/2-1),
+					static_cast<Sint16>(screen->h/2-texte->h/2-1),
+					static_cast<Uint16>(texte->w+2),
+					static_cast<Uint16>(texte->h+2)};
+		SDL_FillRect(screen, &rect2, SDL_MapRGB(screen->format,17, 206, 112));
    		SDL_BlitSurface(texte,nullptr,screen,&rect2);
 		SDL_FreeSurface(texte);
 		TTF_CloseFont(police);
 		//SDL_UpdateRect(screen,rect2.x,rect2.y,rect2.w,rect2.h);
 		SDL_UpdateRects(screen,1,&rect2);
-		std::this_thread::sleep_for(dura*15);
+		std::this_thread::sleep_for(dura*40);
 		break;
 	}
 		std::this_thread::sleep_for(dura);
