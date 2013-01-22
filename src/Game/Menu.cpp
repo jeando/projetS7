@@ -607,13 +607,29 @@ bool Choix_Utilisateur::gestion_clic()
                                && y>=ligne && y<ligne+43
                                && (i+incr)<list_util.size())
                             {
-                                Joueur j(i+incr, list_util[i+incr]);
-                                Game g(screen,&alsc,j);
-                                g.start();
+				if(all_enreg(i+incr))
+				{
+                                	Joueur j(i+incr, list_util[i+incr]);
+                               		Game g(screen,&alsc,j);
+	                                g.start();
 								screen=SDL_SetVideoMode(fene_menu->w,
 									fene_menu->h,
 									fene_menu->format->BitsPerPixel ,
 									fene_menu->flags);
+				}
+				SDL_Rect rect2 = {50,275,800,43};
+                	        SDL_Surface* texte;
+                        	SDL_Color couleur = {0, 0, 0, 42};
+                	        SDL_FillRect(fene_menu, &rect2,
+               	            	SDL_MapRGB(fene_menu->format, 17, 206, 112));
+
+                      		ostringstream oss_message;
+
+                       		oss_message << "Veillez enregister tous les sons";
+                        	texte=TTF_RenderText_Blended(police,
+                                oss_message.str().c_str(), couleur);
+                        	SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                        	SDL_FreeSurface(texte);
                             }
 
                             //nouvel uti
@@ -1074,4 +1090,34 @@ bool Menu_enregistrement::all_enreg()
     }
     return true;
 }
+
+bool Choix_Utilisateur::is_readable( const string & file )
+{
+    ifstream fichier( file.c_str() );
+    if(fichier.fail())
+		return false;
+	fichier.close();
+	return true;
+}
+
+bool Choix_Utilisateur::all_enreg(unsigned int index)
+{
+    vector<string> nom_sond = {"gauche","droite","haut","bas"};
+    for(int i=0; i<4; i++)
+    {
+        for(int j=0; j<2; j++)
+        {
+            ostringstream oss;
+            oss << "./data/" << index << "_" << nom_sond[i] << "_"
+                 << (j+1) << ".wav";
+
+            if(!is_readable(oss.str().c_str()))
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 
