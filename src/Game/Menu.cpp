@@ -5,6 +5,7 @@
 #include <sstream>
 #include <fstream>
 #include<string>
+
 using namespace std;
 extern AL_Stream_Capture alsc;
 //extern AL_Stream_Capture_And_Play alsc;
