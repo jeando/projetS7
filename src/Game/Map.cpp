@@ -240,28 +240,44 @@ bool Map::is_deplacement_possible(int vx, int vy)
     return false;
 }
 
-bool Map::tir()
+void Map::tir()
 {
-    int coord = croa_croa.position_x+1+croa_croa.position_y*w_map;
+    int coord = (croa_croa.position_x+1)+croa_croa.position_y*w_map;
+    SDL_Rect rect;
+    rect.w=static_cast<Sint16>(size_box_x);
+    rect.h=static_cast<Sint16>(size_box_y);
+
     if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
         list_items[coord]=nullptr;
+        rect.x = static_cast<Sint16>((croa_croa.position_x+1)*size_box_x);
+        rect.y = static_cast<Sint16>((croa_croa.position_y)*size_box_y);
     }
-    coord=croa_croa.position_x+croa_croa.position_y*w_map-1;
+    coord=croa_croa.position_x+(croa_croa.position_y-1)*w_map;
     if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
         list_items[coord]=nullptr;
+        rect.x = static_cast<Sint16>((croa_croa.position_x)*size_box_x);
+        rect.y = static_cast<Sint16>((croa_croa.position_y-1)*size_box_y);
     }
-    coord=croa_croa.position_x-1+croa_croa.position_y*w_map;
+    coord=(croa_croa.position_x-1)+croa_croa.position_y*w_map;
     if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
         list_items[coord]=nullptr;
+        rect.x = static_cast<Sint16>((croa_croa.position_x-1)*size_box_x);
+        rect.y = static_cast<Sint16>((croa_croa.position_y)*size_box_y);
     }
-    coord=croa_croa.position_x+croa_croa.position_y*w_map+1;
+    coord=croa_croa.position_x+(croa_croa.position_y+1)*w_map;
     if(list_items[coord]!=nullptr && list_items[coord]->nom_image=="tree")
     {
         list_items[coord]=nullptr;
+        rect.x = static_cast<Sint16>((croa_croa.position_x)*size_box_x);
+        rect.y = static_cast<Sint16>((croa_croa.position_y+1)*size_box_y);
     }
+
+    SDL_BlitSurface(surfaces_map["background"],nullptr,surface,&rect);
+    SDL_BlitSurface(surface,&rect,screen,&rect);
+    SDL_UpdateRect(screen, rect.x, rect.y, rect.w, rect.h);
 }
 
 bool Map::change_speed(int vx, int vy)

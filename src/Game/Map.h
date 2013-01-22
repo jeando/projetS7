@@ -25,7 +25,7 @@ class Map
         bool change_speed(int vx, int vy);
         bool is_deplacement_possible(int vx, int vy);
         bool victoire();
-        bool tir();
+        void tir();
 
 
     private:
