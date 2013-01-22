@@ -607,29 +607,32 @@ bool Choix_Utilisateur::gestion_clic()
                                && y>=ligne && y<ligne+43
                                && (i+incr)<list_util.size())
                             {
-				if(all_enreg(i+incr))
-				{
+                                if(all_enreg(i+incr))
+                                {
                                 	Joueur j(i+incr, list_util[i+incr]);
                                		Game g(screen,&alsc,j);
 	                                g.start();
-								screen=SDL_SetVideoMode(fene_menu->w,
+                                    screen=SDL_SetVideoMode(fene_menu->w,
 									fene_menu->h,
 									fene_menu->format->BitsPerPixel ,
 									fene_menu->flags);
-				}
-				SDL_Rect rect2 = {50,275,800,43};
-                	        SDL_Surface* texte;
-                        	SDL_Color couleur = {0, 0, 0, 42};
-                	        SDL_FillRect(fene_menu, &rect2,
-               	            	SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                                }
+                                else
+                                {
+                                    SDL_Rect rect2 = {50,275,800,43};
+                                    SDL_Surface* texte;
+                                    SDL_Color couleur = {0, 0, 0, 42};
+                                    SDL_FillRect(fene_menu, &rect2,
+                                        SDL_MapRGB(fene_menu->format, 17, 206, 112));
 
-                      		ostringstream oss_message;
+                                    ostringstream oss_message;
 
-                       		oss_message << "Veuillez enregister tous les sons";
-                        	texte=TTF_RenderText_Blended(police,
-                                oss_message.str().c_str(), couleur);
-                        	SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
-                        	SDL_FreeSurface(texte);
+                                    oss_message << "Veuillez enregister tous les sons";
+                                    texte=TTF_RenderText_Blended(police,
+                                        oss_message.str().c_str(), couleur);
+                                    SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                                    SDL_FreeSurface(texte);
+                                }
                             }
 
                             //nouvel uti
@@ -984,47 +987,50 @@ bool Menu_enregistrement::gestion_clic()
                     cout << "Commencer" << endl;
 					if(nom_temp!="")
 					{
-					if(all_enreg())
-					{
-						if(index==-1)
-						{
-							index=list_util.size();
-						}
-                    ofstream ofs("./data/joueur.lst");
-                    for(int i=0; i<index; i++)
-                    {
-                        ofs << list_util[i] << endl;
-                    }
-                    ofs << nom_temp << endl;
-                    for(int i=index+1; i<list_util.size(); i++)
-                    {
-                        ofs << list_util[i] << endl;
-                    }
+                        if(all_enreg())
+                        {
+                            if(index==-1)
+                            {
+                                index=list_util.size();
+                            }
+                            ofstream ofs("./data/joueur.lst");
+                            for(int i=0; i<index; i++)
+                            {
+                                ofs << list_util[i] << endl;
+                            }
+                            ofs << nom_temp << endl;
+                            for(int i=index+1; i<list_util.size(); i++)
+                            {
+                                ofs << list_util[i] << endl;
+                            }
 
-					ofs.close();
-                    Joueur j(index, nom_temp);
-                    Game g(screen,&alsc,j);
-                    g.start();
-                    screen=SDL_SetVideoMode(fene_menu->w,
-                        fene_menu->h,
-                        fene_menu->format->BitsPerPixel ,
-                        fene_menu->flags);
+                            ofs.close();
+                            Joueur j(index, nom_temp);
+                            Game g(screen,&alsc,j);
+                            g.start();
+                            screen=SDL_SetVideoMode(fene_menu->w,
+                                fene_menu->h,
+                                fene_menu->format->BitsPerPixel ,
+                                fene_menu->flags);
 
-                    return true;
-                }
-                        SDL_Rect rect2 = {50,475,800,43};
-                        SDL_Surface* texte;
-                        SDL_Color couleur = {0, 0, 0, 42};
-                        SDL_FillRect(fene_menu, &rect2,
-                            SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                            return true;
+                        }
+                        else
+                        {
+                            SDL_Rect rect2 = {50,475,800,43};
+                            SDL_Surface* texte;
+                            SDL_Color couleur = {0, 0, 0, 42};
+                            SDL_FillRect(fene_menu, &rect2,
+                                SDL_MapRGB(fene_menu->format, 17, 206, 112));
 
-                        ostringstream oss_message;
+                            ostringstream oss_message;
 
-                        oss_message << "Veillez enregister tous les sons";
-                        texte=TTF_RenderText_Blended(police,
-                                oss_message.str().c_str(), couleur);
-                        SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
-                        SDL_FreeSurface(texte);
+                            oss_message << "Veillez enregister tous les sons";
+                            texte=TTF_RenderText_Blended(police,
+                                    oss_message.str().c_str(), couleur);
+                            SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                            SDL_FreeSurface(texte);
+                        }
                     }
                     else
                     {
