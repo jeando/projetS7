@@ -23,6 +23,10 @@ events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
 				dynamic_time_warping(spectro,joueur.spectro_bas1)));
 	vdist.push_back(distance(
 				dynamic_time_warping(spectro,joueur.spectro_bas2)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_tir1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_tir2)));
 	double min_val(vdist[0]);
 	int min_indice(0);
 //	std::cout << "azertyuiop" << std::endl;
@@ -55,8 +59,12 @@ events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
 			return SON_HAUT;
 		case 6:
 			return SON_BAS;
-		default:
+		case 7:
 			return SON_BAS;
+        case 8:
+            return SON_TIR;
+        default:
+            return SON_TIR;
 	}
 }
 
@@ -189,7 +197,7 @@ log(mel(
 	{
 		for(; i_en_Hz(i)<coeff_mel[j]; i++)
 		{
-			
+
 			output[j]+=input[i]*(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]);//triangle croiss
 			output[j-1]+=input[i]*(1-(i_en_Hz(i)-coeff_mel[j-1])/(coeff_mel[j]-coeff_mel[j-1]));//decroiss
 		}
@@ -287,7 +295,7 @@ std::vector<double> get_min_dist_spectre(
 	return min_val;
 }
 
-	
+
 
 //	return
 //}
@@ -378,7 +386,7 @@ std::vector<double> dynamic_time_warping(
 		//dist.push_back(abs(indice_min-m));
 //		dist.push_back(sqrt(min)/5*abs(indice_min-m));
 
-		
+
 		//dist.push_back(pow(min,0.5)*pow(1+abs(indice_min-m),0.25));
 
 
@@ -411,7 +419,7 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 		input.push_back(0);
 	}
 	//*/
-	input.resize(input.size()-i);	
+	input.resize(input.size()-i);
 	//pour chaque tranche
 	for(std::vector<double>::iterator it = input.begin();
 			std::distance(it,input.end())>0; it+=taille/2)
@@ -430,7 +438,7 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 
 
 	//	echelle_mel(tmp,sample_rate);
-		
+
 		output.push_back(tmp);
 	}
 	return output;
@@ -542,7 +550,7 @@ int indice_debut(std::vector<std::vector<double> > spectro)
 			}
 		}
 	}
-	
+
 	if(indice_bf.size()==1&&indice_bf.back()<indice_hf.back())
 		return indice_bf.back();
 	//if(indice_hf.size()==1&&max_hf>max_bf)
@@ -618,13 +626,13 @@ int indice_debut(std::vector<std::vector<double> > spectro)
 		return indice_bf_2[0];
 	if(indice_hf_2.size()==1&&indice_bf_2[0]>indice_hf_2[0])
 		return indice_hf_2[0];
-	
+
 //	std::cout << "a finir " << __FILE__ << " " << __LINE__ << std::endl;
-	
+
 	if(indice_bf_2[0]<indice_hf_2[0])
 		return indice_bf_2[0];
 	return indice_hf_2[0];
-	
+
 
 
 
@@ -645,7 +653,7 @@ int indice_debut(std::vector<std::vector<double> > spectro)
 	for(int i : indice_hf_2)
 		std::cout << i << std::endl;
 	std::cout << std::endl;
-	
+
 	std::vector<unsigned int> bon_indice_bf;
 //	std::vector<unsigned int> bon_indice_bf;
 	bool good;
@@ -700,7 +708,7 @@ int indice_debut(std::vector<std::vector<double> > spectro)
 		std::cout << bon_indice_bf[i] << std::endl;
 return -1;
 
-/*	
+/*
 	double max_val(norme[0]);
 	unsigned int indice_1(0);
 	unsigned int indice_2(0);
@@ -755,7 +763,7 @@ std::vector<struct surface_energie> detection_haut_potentiel_energie(std::vector
 	{
 		max.push_back(*std::max_element(spectre.begin(), spectre.end()));
 	}
-	
+
 	return se;
 }
 inline std::vector<double> max_f(std::vector<std::vector<double> >& spectro)

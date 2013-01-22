@@ -3,7 +3,7 @@
 using namespace std;
 
 Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)
-:screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE|SDL_DOUBLEBUF)), alsc(_alsc), joueur(&_joueur), map("../../images/lab_testjp3.png",screen, _alsc)
+:screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE|SDL_DOUBLEBUF)), alsc(_alsc), joueur(&_joueur), map("../../images/lab_test2.png",screen, _alsc)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
 }
@@ -94,6 +94,9 @@ bool Game::gestion_Audio()
         case SON_DROITE:
         //    deplacement = map.change_speed(1,0);
             map.change_speed(1,0);
+            break;
+        case SON_TIR:
+            map.tir();
             break;
         case RIEN:
             break;

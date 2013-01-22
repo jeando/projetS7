@@ -15,6 +15,7 @@ size_box_x(30), size_box_y(30), w_map(48), h_map(25),croa_croa(Frog("frog")),cpt
     surfaces_map["begin"]=IMG_Load( "../../images/begin.png" );
     surfaces_map["background"]=IMG_Load( "../../images/background.png" );
     surfaces_map["frog"]=IMG_Load( "../../images/frog.png" );
+    surfaces_map["tree"]=IMG_Load( "../../images/tree.png" );
 
     load_map(nom);
 }
@@ -81,14 +82,18 @@ void Map::load_map(string nom)
             if( red==fond->format->Rmask && green==0x00 && blue==0x00)
             {
                 list_items[i+j*w_map] = new Item("end");
-
-
             }
             //Si le fond etait vert
             if(  red==0x00 && green==fond->format->Gmask && blue==0x00)
             {
                 list_items[w_map*j+i] = new Item("wall");
             }
+            //Si le fond etait jaune
+            if(  red==fond->format->Rmask && green==fond->format->Gmask && blue==0x00)
+            {
+                list_items[w_map*j+i] = new Item("tree");
+            }
+
             //Si le fond etait bleu
             if( red==0x00 && green==0x00 && blue==fond->format->Bmask)
             {
@@ -202,7 +207,7 @@ void Map::update()//, unsigned int x, unsigned int y);
 	if(croa_croa.vitesse_x<0){
 		croa_croa.etat_y=2;
 	}//*/
-			//alsc->start_stream_capture();	
+			//alsc->start_stream_capture();
 		}
     }
 }
@@ -220,7 +225,7 @@ bool Map::is_deplacement_possible(int vx, int vy)
         && coord>0 //limite haute
         && croa_croa.position_x+vx>=0 //limite gauche
         )
-       && ((list_items[coord]!=nullptr && list_items[coord]->nom_image!="wall")
+       && ((list_items[coord]!=nullptr && list_items[coord]->nom_image!="wall" && list_items[coord]->nom_image!="tree")
             || list_items[coord]==nullptr))//gestion des elements presents sur le terrain
     {
         return true;
@@ -233,6 +238,26 @@ bool Map::is_deplacement_possible(int vx, int vy)
         croa_croa.etat_x-=4;
     }
     return false;
+}
+
+bool Map::tir()
+{
+    if(list_items[croa_croa.position_x+1+croa_croa.position_y*w_map]->nom_image=="tree")
+    {
+        list_items[croa_croa.position_x+1+croa_croa.position_y*w_map]=nullptr;
+    }
+    if(list_items[croa_croa.position_x+croa_croa.position_y*w_map-1]->nom_image=="tree")
+    {
+        list_items[croa_croa.position_x+croa_croa.position_y*w_map-1]=nullptr;
+    }
+    if(list_items[croa_croa.position_x-1+croa_croa.position_y*w_map]->nom_image=="tree")
+    {
+        list_items[croa_croa.position_x-1+croa_croa.position_y*w_map]=nullptr;
+    }
+    if(list_items[croa_croa.position_x+croa_croa.position_y*w_map+1]->nom_image=="tree")
+    {
+        list_items[croa_croa.position_x+croa_croa.position_y*w_map+1]=nullptr;
+    }
 }
 
 bool Map::change_speed(int vx, int vy)

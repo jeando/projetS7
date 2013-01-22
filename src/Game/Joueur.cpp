@@ -48,4 +48,12 @@ void Joueur::charger()
 	spectro_bas2 = equalize_spectrogramme(spectrogramme(
 				MyAL::sample_to_double(samples.first),
 				samples.second.samplerate));
+	samples =  MyAL::load_sound("data/"+id+"_tir_1.wav");
+	spectro_tir1 = equalize_spectrogramme(spectrogramme(
+				MyAL::sample_to_double(samples.first),
+				samples.second.samplerate));
+	samples =  MyAL::load_sound("data/"+id+"_tir_2.wav");
+	spectro_tir2 = equalize_spectrogramme(spectrogramme(
+				MyAL::sample_to_double(samples.first),
+				samples.second.samplerate));
 }

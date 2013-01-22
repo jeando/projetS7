@@ -19,6 +19,8 @@ class Joueur
         std::vector<std::vector<double> > spectro_droite2;
         std::vector<std::vector<double> > spectro_bas1;
         std::vector<std::vector<double> > spectro_bas2;
+        std::vector<std::vector<double> > spectro_tir1;
+        std::vector<std::vector<double> > spectro_tir2;
 
 };
 

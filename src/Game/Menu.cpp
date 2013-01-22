@@ -724,7 +724,7 @@ void Menu_enregistrement::draw()
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
     SDL_Surface* sond = IMG_Load("../../images/buttun_sound.png");
-    nom_sond = {"gauche","droite","haut","bas"};
+    nom_sond = {"gauche","droite","haut","bas","tir"};
 
     SDL_Rect rect1={0,0,0,0};
     SDL_Color couleur = {0, 0, 0, 42};
@@ -749,7 +749,7 @@ void Menu_enregistrement::draw()
 
     //boutons des sonds
     vector<string> mots;
-    for(int i=0; i<4; i++)
+    for(int i=0; i<nom_sond.size(); i++)
     {
         rect1.y=100+i*75;
         for(int j=0; j<2; j++)
@@ -1067,7 +1067,7 @@ bool Menu_enregistrement::is_readable( const string & file )
 
 bool Menu_enregistrement::all_enreg()
 {
-    for(int i=0; i<4; i++)
+    for(int i=0; i<nom_sond.size(); i++)
     {
         for(int j=0; j<2; j++)
         {
@@ -1102,8 +1102,8 @@ bool Choix_Utilisateur::is_readable( const string & file )
 
 bool Choix_Utilisateur::all_enreg(unsigned int index)
 {
-    vector<string> nom_sond = {"gauche","droite","haut","bas"};
-    for(int i=0; i<4; i++)
+    vector<string> nom_sond = {"gauche","droite","haut","bas","tir"};
+    for(int i=0; i<nom_sond.size(); i++)
     {
         for(int j=0; j<2; j++)
         {
