@@ -4,29 +4,40 @@
 #include<algorithm>
 #include<limits>
 
+std::vector<double> dynamic_time_warping4(
+		const std::vector<std::vector<double> >& mesure,
+		const std::vector<std::vector<double> >& ref,unsigned int delta)
+{
+	std::vector<double> tmp_min
+		= get_min_dist_spectre(mesure,ref,delta,0,0,mesure.size());
+	std::vector<double> min(1);
+	min[0]=*std::min_element(tmp_min.begin(), tmp_min.end());
+return min;	
+	
+}
 events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
 {
 	std::vector<double> vdist;
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_gauche1)));
+				dynamic_time_warping4(spectro,joueur.spectro_gauche1)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_gauche2)));
+				dynamic_time_warping4(spectro,joueur.spectro_gauche2)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_droite1)));
+				dynamic_time_warping4(spectro,joueur.spectro_droite1)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_droite2)));
+				dynamic_time_warping4(spectro,joueur.spectro_droite2)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_haut1)));
+				dynamic_time_warping4(spectro,joueur.spectro_haut1)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_haut2)));
+				dynamic_time_warping4(spectro,joueur.spectro_haut2)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_bas1)));
+				dynamic_time_warping4(spectro,joueur.spectro_bas1)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_bas2)));
+				dynamic_time_warping4(spectro,joueur.spectro_bas2)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_tir1)));
+				dynamic_time_warping4(spectro,joueur.spectro_tir1)));
 	vdist.push_back(distance(
-				dynamic_time_warping(spectro,joueur.spectro_tir2)));
+				dynamic_time_warping4(spectro,joueur.spectro_tir2)));
 	double min_val(vdist[0]);
 	int min_indice(0);
 //	std::cout << "azertyuiop" << std::endl;
@@ -101,7 +112,7 @@ std::vector<double> autocorrelation(std::vector<double> input)
 /**
 * decoupe le signal en une bande de taille delta et de debut t0
 */
-std::vector<double> decoupage(std::vector<double> input, unsigned int t0, const unsigned int DELTA)
+std::vector<double> decoupage(const std::vector<double>& input, unsigned int t0, const unsigned int DELTA)
 {
 	std::vector<double> output;
 	int tt = t0;
@@ -124,7 +135,7 @@ std::vector<double> decoupage(std::vector<double> input, unsigned int t0, const 
 
 	return output;
 }
-std::vector<double> amplitude_pond_log(std::vector<std::complex<double> > input)
+inline std::vector<double> amplitude_pond_log(const std::vector<std::complex<double> >& input)
 {
 	std::vector<double> output;
 	for(unsigned int i=0; i<input.size(); i++)
@@ -134,7 +145,7 @@ std::vector<double> amplitude_pond_log(std::vector<std::complex<double> > input)
 //	std::cout << output[input.size()/2] << std::endl;
 	return output;
 }
-std::vector<std::complex<double> > demi_signal(std::vector<std::complex<double> > input)
+inline std::vector<std::complex<double> > demi_signal(const std::vector<std::complex<double> >& input)
 {
 	std::vector<std::complex<double> > output;
 	for(unsigned int i=0; i<input.size()/2; i++)
@@ -143,10 +154,10 @@ std::vector<std::complex<double> > demi_signal(std::vector<std::complex<double> 
 	}
 	return output;
 }
-std::vector<double> amplitude(std::vector<std::complex<double> > input)
+inline std::vector<double> amplitude(const std::vector<std::complex<double> >& input)
 {
 	std::vector<double> output;
-	for(std::vector<std::complex<double> >::iterator it
+	for(std::vector<std::complex<double> >::const_iterator it
 			= input.begin(); it != input.end(); it++)
 	{
 		output.push_back(sqrt(std::norm(*it)));
@@ -161,7 +172,7 @@ inline unsigned int i_en_hz(unsigned int i)
 	return i * sample_rate / ( 2 * input.size() );
 }//*/
 #define mel(i) (1000*log(1+i/1000)/log(2))
-std::vector<double> echelle_mel(std::vector<double> input, int sample_rate)
+inline std::vector<double> echelle_mel(const std::vector<double>& input, int sample_rate)
 {
 
 
@@ -212,7 +223,7 @@ log(mel(
 /**
 * pour eviter les grosses discontinuites aux bords
 */
-void fenetre_hamming(std::vector<double> input)
+inline void fenetre_hamming(std::vector<double>& input)
 {
 	for(unsigned int i=0; i<input.size(); i++)
 	{
@@ -225,9 +236,9 @@ std::vector<double> dynamic_time_warping2(
 {
 	return dynamic_time_warping2(mesure, ref, delta,0, ref.begin()->size());
 }
-std::vector<double> get_min_dist_spectre(
-		std::vector<std::vector<double> >& mesure,
-		std::vector<std::vector<double> >& ref,
+inline std::vector<double> get_min_dist_spectre(
+		const std::vector<std::vector<double> >& mesure,
+		const std::vector<std::vector<double> >& ref,
 		unsigned int delta,
 		unsigned int n,
 		unsigned int m,
@@ -243,8 +254,8 @@ std::vector<double> get_min_dist_spectre(
 		return min_suivant;
 }
 inline std::vector<double> get_min_dist_spectre(
-		std::vector<std::vector<double> >& mesure,
-		std::vector<std::vector<double> >& ref,
+		const std::vector<std::vector<double> >& mesure,
+		const std::vector<std::vector<double> >& ref,
 		const std::vector<double>& min_suivant,
 		unsigned int delta,
 		unsigned int n,
@@ -399,14 +410,14 @@ std::vector<double> dynamic_time_warping0(
 	return dist;
 }
 std::vector<double> dynamic_time_warping(
-		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref,unsigned int delta)
+		const std::vector<std::vector<double> >& mesure,
+		const std::vector<std::vector<double> >& ref,unsigned int delta)
 {
 	return dynamic_time_warping(mesure, ref, delta, 0, ref.begin()->size());
 }
-std::vector<double> dynamic_time_warping(
-		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref,unsigned int delta,
+inline std::vector<double> dynamic_time_warping(
+		const std::vector<std::vector<double> >& mesure,
+		const std::vector<std::vector<double> >& ref,unsigned int delta,
 		unsigned int _indice_debut, unsigned int _indice_fin)
 {
 	std::vector<double> dist;//(mesure.size());
@@ -500,17 +511,22 @@ std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int s
 	return output;
 }
 std::vector<std::vector<double> > equalize_spectrogramme(
-		std::vector<std::vector<double> > spectro,
+		const std::vector<std::vector<double> >& spectro,
 		double val_min, double val_max)
 {
 	double max = get_max_val(filtre_gaussien(spectro,3));
 	double min = get_min_val(filtre_gaussien(spectro,3));
 	std::vector<std::vector<double> > spectro2(spectro.size());
-	for(std::vector<std::vector<double> >::iterator
-			it1=spectro.begin(), it2=spectro2.begin(); it1!=spectro.end(); it1++, it2++)
+	std::vector<std::vector<double> >::const_iterator it1;
+	std::vector<std::vector<double> >::iterator it2;
+	std::vector<double>::const_iterator it_1;
+	std::vector<double>::iterator it_2;
+	for(it1=spectro.begin(), it2=spectro2.begin();
+			it1!=spectro.end(); it1++, it2++)
 	{
 		*it2=std::vector<double>(it1->size());
-		for(std::vector<double>::iterator it_1 = it1->begin(), it_2=it2->begin(); it_1!=it1->end(); it_1++, it_2++)
+		it_2 = it2->begin();
+		for(it_1 = it1->begin(), it_2=it2->begin(); it_1!=it1->end(); it_1++, it_2++)
 		{
 //			*it_2=val_max * (*it_1) / max;
 			*it_2=(*it_1-min) * (val_max - val_min) /( max - min) + val_min;
@@ -524,7 +540,7 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 
 }
 
-std::vector<std::vector<double> > filtre_gaussien(std::vector<std::vector<double> > spectro, int size)
+std::vector<std::vector<double> > filtre_gaussien(const std::vector<std::vector<double> >& spectro, int size)
 {
 	std::vector<std::vector<double> > spectro2;
 	spectro2.push_back(std::vector<double>(spectro[0].size()));

@@ -1,10 +1,10 @@
 git
-dependance (pour libsndfile)
+svn
 autogen
 autoconf
 automake
 libtool
-
+gawk
 
 
 commencer par executer autogen.sh puis rebuild.sh
