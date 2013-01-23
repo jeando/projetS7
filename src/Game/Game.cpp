@@ -4,7 +4,7 @@ using namespace std;
 
 Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)
 :screen(SDL_SetVideoMode(1441, 751, 32, SDL_HWSURFACE|SDL_DOUBLEBUF)), alsc(_alsc), joueur(&_joueur),
-	map("../../images/lab_test2.png",screen, _alsc)
+	map("../../images/lab_testjp5.png",screen, _alsc)
 {
         SDL_WM_SetCaption("Word recognition", NULL);
 }
@@ -153,3 +153,4 @@ void Game::start()
 	alsc->stop_stream_capture();
     return;
 }
+
