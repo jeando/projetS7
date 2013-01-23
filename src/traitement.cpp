@@ -3,7 +3,7 @@
 #include<iostream>
 #include<algorithm>
 #include<limits>
-
+#define VERSION_DTW 1
 std::vector<double> dynamic_time_warping4(
 		const std::vector<std::vector<double> >& mesure,
 		const std::vector<std::vector<double> >& ref,unsigned int delta)
@@ -18,6 +18,31 @@ return min;
 events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
 {
 	std::vector<double> vdist;
+	if(VERSION_DTW==1)
+	{
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_gauche1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_gauche2)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_droite1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_droite2)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_haut1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_haut2)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_bas1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_bas2)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_tir1)));
+	vdist.push_back(distance(
+				dynamic_time_warping(spectro,joueur.spectro_tir2)));
+	}
+	else
+	{
 	vdist.push_back(distance(
 				dynamic_time_warping4(spectro,joueur.spectro_gauche1)));
 	vdist.push_back(distance(
@@ -38,6 +63,7 @@ events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur)
 				dynamic_time_warping4(spectro,joueur.spectro_tir1)));
 	vdist.push_back(distance(
 				dynamic_time_warping4(spectro,joueur.spectro_tir2)));
+	}
 	double min_val(vdist[0]);
 	int min_indice(0);
 //	std::cout << "azertyuiop" << std::endl;
