@@ -242,10 +242,10 @@ std::vector<double> get_min_dist_spectre(
 		}
 		return min_suivant;
 }
-std::vector<double> get_min_dist_spectre(
+inline std::vector<double> get_min_dist_spectre(
 		std::vector<std::vector<double> >& mesure,
 		std::vector<std::vector<double> >& ref,
-		std::vector<double> min_suivant,
+		const std::vector<double>& min_suivant,
 		unsigned int delta,
 		unsigned int n,
 		unsigned int m,
@@ -339,6 +339,62 @@ std::vector<double> dynamic_time_warping2(
 		}
 		m+=indice_min;
 		dist.push_back(sqrt(min));
+	}
+	return dist;
+}
+std::vector<double> dynamic_time_warping0(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref,unsigned int delta)
+{
+	return dynamic_time_warping(mesure, ref, delta, 0, ref.begin()->size());
+}
+std::vector<double> dynamic_time_warping0(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref,unsigned int delta,
+		unsigned int _indice_debut, unsigned int _indice_fin)
+{
+	std::vector<double> dist;//(mesure.size());
+	unsigned int n_ini(0);//mesure iterateur
+	unsigned int m_ini(0);//ref iterateur
+	unsigned int n_end=mesure.size();//mesure iterateur
+	unsigned int m_end=ref.size();//ref iterateur
+	unsigned int n=n_ini;
+	unsigned int m=m_ini;
+	//std::cout << m_ini << " " << n_ini << " azertyuiop" <<std::endl;
+	double v_moy = (n_end-n_ini)/(m_end-m_ini);
+	for(;n<n_end; n++)
+	{
+		double min(std::numeric_limits<double>::max());
+		double tmp_dst;
+		unsigned int indice_min;
+		m+=static_cast<int>(floor(v_moy));
+		for(unsigned int k = (m<delta+m_ini?m_ini:(m-delta)); k< m+delta && k<m_end; k++)
+		{
+			tmp_dst = distance(mesure[n],ref[k],_indice_debut, _indice_fin);
+//			if(pow(tmp_dst,0.5)*pow((1+abs(m-k))<min,0.25))
+			if(tmp_dst<min)
+			{
+				min = tmp_dst;
+				indice_min = k;
+			}
+		}
+		if(min == std::numeric_limits<double>::max())
+		{
+			std::cout << v_moy << std::endl;
+			return dist;
+		}
+		//dist.push_back(abs(indice_min-m));
+//		dist.push_back(sqrt(min)/5*abs(indice_min-m));
+
+
+		//dist.push_back(pow(min,0.5)*pow(1+abs(indice_min-m),0.25));
+
+
+		m=indice_min;
+//		if(m+v_moy+delta>m_end)
+//			break;
+		dist.push_back(sqrt(min));
+//		dist.push_back(sqrt(min*sqrt(distance(ref[m]))));
 	}
 	return dist;
 }

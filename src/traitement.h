@@ -7,6 +7,13 @@
 #include"event_audio.h"
 #include"Game/Joueur.h"
 
+std::vector<double> dynamic_time_warping0(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref,unsigned int delta);
+std::vector<double> dynamic_time_warping0(
+		std::vector<std::vector<double> > mesure,
+		std::vector<std::vector<double> > ref,unsigned int delta,
+		unsigned int _indice_debut_f, unsigned int _indice_fin_f);
 std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref,unsigned int delta);
@@ -14,10 +21,10 @@ std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref,unsigned int delta,
 		unsigned int _indice_debut_f, unsigned int _indice_fin_f);
-std::vector<double> get_min_dist_spectre(
+inline std::vector<double> get_min_dist_spectre(
 		std::vector<std::vector<double> >& mesure,
 		std::vector<std::vector<double> >& ref,
-		std::vector<double> min_suivant,
+		const std::vector<double>& min_suivant,
 		unsigned int delta,
 		unsigned int n,
 		unsigned int m,
