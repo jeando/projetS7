@@ -277,6 +277,7 @@ inline std::vector<double> get_min_dist_spectre(
 			if(n+i<mesure.size())
 				min_suivant = get_min_dist_spectre(mesure, ref, min_suivant,
 					delta, n+i, m, i, profondeur);
+
 		}
 		return min_suivant;
 }
@@ -342,6 +343,7 @@ std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > ref,unsigned int delta,
 		unsigned int _indice_debut_f, unsigned int _indice_fin_f)
 {
+	indice_evol.clear();
 	std::vector<double> dist;//(mesure.size());
 	unsigned int n_ini(indice_debut(mesure));//mesure iterateur
 	unsigned int m_ini(indice_debut(ref));//ref iterateur
@@ -376,6 +378,7 @@ std::vector<double> dynamic_time_warping2(
 			return dist;
 		}
 		m+=indice_min;
+		indice_evol.push_back(m);
 		dist.push_back(sqrt(min));
 	}
 	return dist;
