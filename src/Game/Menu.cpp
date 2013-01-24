@@ -190,7 +190,9 @@ Menu_option::Menu_option(SDL_Surface* scre)
         istringstream iss(capt[i]);
         string tmp;
         string nom="";
-        for(int i=0; i<3; i++)
+
+        //traitement des mots trop longs
+        for(int j=0; j<3; j++)
         {
             getline(iss,tmp, ' ');
             if(tmp=="")
@@ -199,6 +201,20 @@ Menu_option::Menu_option(SDL_Surface* scre)
             }
             nom+=" ";
             nom+=tmp;
+        }
+
+        for(int j=1; j<nom.size(); j++)
+        {
+            int ascii = ((int)nom[j]);
+            cout << " " << nom[j] << ascii;
+            if(ascii==-87)//"é"
+            {
+                nom[j]='e';
+            }
+            if(ascii==-61)
+            {
+                nom[j]='.';
+            }
         }
         capt_devices.push_back(nom);
     }
@@ -217,6 +233,19 @@ Menu_option::Menu_option(SDL_Surface* scre)
             }
             nom+=" ";
             nom+=tmp;
+        }
+        for(int j=1; j<nom.size(); j++)
+        {
+            int ascii = ((int)nom[j]);
+            cout << " " << nom[j] << ascii;
+            if(ascii==-87)//"é"
+            {
+                nom[j]='e';
+            }
+            if(ascii==-61)
+            {
+                nom[j]='.';
+            }
         }
         out_devices.push_back(nom);
     }
