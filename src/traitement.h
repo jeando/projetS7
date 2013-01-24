@@ -7,6 +7,7 @@
 #include"event_audio.h"
 #include"Game/Joueur.h"
 
+inline std::vector<std::complex<double> > demi_signal(const std::vector<std::complex<double> >& input);
 std::vector<double> dynamic_time_warping4(
 		const std::vector<std::vector<double> >& mesure,
 		const std::vector<std::vector<double> >& ref,unsigned int delta=3);
@@ -46,7 +47,8 @@ events_audio analyse(std::vector<std::vector<double> > spectro, Joueur& joueur);
 std::vector<double> autocorrelation(std::vector<double> input);
 std::vector<double> decoupage(const std::vector<double>& input, unsigned int t0, const unsigned int DELTA);
 
-inline std::vector<double> amplitude(const std::vector<std::complex<double> >& input);
+std::vector<double> amplitude(const std::vector<std::complex<double> >& input);
+inline std::vector<double> amplitude_pond_log(const std::vector<std::complex<double> >& input);
 std::vector<std::vector<double> > spectrogramme(std::vector<double> input, int sample_rate,bool with_mel = true);
 inline std::vector<double> echelle_mel(const std::vector<double>& input, int sample_rate);
 /*!

@@ -17,12 +17,17 @@ inline unsigned int get_couleur(double val_pix)
 template<typename T>
 void draw_vect(SDL_Surface* screen, std::vector<T> vect)
 {
+	draw_vect(screen, vect, screen->h);
+}
+template<typename T>
+void draw_vect(SDL_Surface* screen, std::vector<T> vect, unsigned int size_h)
+{
 //#include<limits>
 //T min = (1<<((sizeof(T)<<3)-1))-1);
 	//T min = std::numeric_limits<T>::max();
 //	T max = std::numeric_limits<T>::min();
-	if(screen->w!=vect.size())
-		screen = SDL_SetVideoMode(vect.size(),screen->h,screen->format->BitsPerPixel,screen->flags);
+	if(screen->w!=vect.size()||screen->h!=size_h)
+		screen = SDL_SetVideoMode(vect.size(),size_h,screen->format->BitsPerPixel,screen->flags);
 	SDL_FillRect(screen, nullptr, SDL_MapRGB(screen->format,0,0,0));
 	T max = * std::max_element(vect.begin(),vect.end());
 	unsigned int pos(0);
@@ -71,6 +76,35 @@ void draw_mat(SDL_Surface* screen, std::vector<std::vector<T> > vect,
 		rect.x+=rect.w;
 		rect.y=0;
 //		std::cout << pos_x << " " << pos_y << std::endl;
+	}
+	SDL_Flip(screen);
+}
+template<typename T>
+void draw_spectro_3D(SDL_Surface* screen,
+		std::vector<std::vector<T> > spectro,
+		unsigned int h_max, double theta, unsigned int space_x)
+{
+	screen = SDL_SetVideoMode(
+			(space_x+spectro.begin()->size())*spectro.size()+space_x,
+		spectro.begin()->size()*sin(theta)+h_max,
+		screen->format->BitsPerPixel,screen->flags);
+	T max(get_max_val(spectro));
+	int pos_x_ini(space_x);
+	int pos_x_2(0);
+	int pos_y(0);
+	for(typename std::vector<std::vector<T> >::iterator it = spectro.begin();
+			it!=spectro.end(); it++)
+	{
+		for(typename std::vector<T>::iterator it_2= it->begin();
+				it_2!=it->end();it_2++){
+			pos_y=pos_x_2*sin(theta);
+			vlineColor(screen, pos_x_ini + pos_x_2, screen->h-pos_y,
+					screen->h-(h_max*((*it_2)*1.0/max)+pos_y),get_couleur(255* (*it_2)/max));
+			pos_x_2++;
+		}
+		pos_x_ini+=pos_x_2+space_x;
+		pos_y=0;
+		pos_x_2=0;
 	}
 	SDL_Flip(screen);
 }

@@ -180,7 +180,7 @@ inline std::vector<std::complex<double> > demi_signal(const std::vector<std::com
 	}
 	return output;
 }
-inline std::vector<double> amplitude(const std::vector<std::complex<double> >& input)
+std::vector<double> amplitude(const std::vector<std::complex<double> >& input)
 {
 	std::vector<double> output;
 	for(std::vector<std::complex<double> >::const_iterator it
