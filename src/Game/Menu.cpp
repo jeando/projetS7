@@ -213,7 +213,8 @@ Menu_option::Menu_option(SDL_Surface* scre)
             }
             if(ascii==-61)
             {
-                nom[j]='.';
+                nom.replace(j,1,"");
+                j--;
             }
         }
         capt_devices.push_back(nom);
@@ -244,7 +245,8 @@ Menu_option::Menu_option(SDL_Surface* scre)
             }
             if(ascii==-61)
             {
-                nom[j]='.';
+                nom.replace(j,1,"");
+                j--;
             }
         }
         out_devices.push_back(nom);
