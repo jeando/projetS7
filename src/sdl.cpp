@@ -20,6 +20,24 @@ void draw_vect(SDL_Surface* screen, std::vector<T> vect)
 	draw_vect(screen, vect, screen->h);
 }
 template<typename T>
+void draw_vect(SDL_Surface* screen, std::vector<T> vect, unsigned int size_h, unsigned int size_x_for_one)
+{
+	if(screen->w!=vect.size()*size_x_for_one||screen->h!=size_h)
+		screen = SDL_SetVideoMode(vect.size()*size_x_for_one,size_h,screen->format->BitsPerPixel,screen->flags);
+	SDL_FillRect(screen, nullptr, SDL_MapRGB(screen->format,0,0,0));
+	T max = * std::max_element(vect.begin(),vect.end());
+	unsigned int pos(0);
+	for(typename std::vector<T>::iterator it= vect.begin();it!=vect.end();it++)
+	{
+		for(unsigned int i=0; i<size_x_for_one; i++)
+		{
+			vlineColor(screen, pos, screen->h, screen->h*(1-(*it)*1.0/max),get_couleur(255* (*it)/max));
+			pos++;
+		}
+	}
+	SDL_Flip(screen);
+}
+template<typename T>
 void draw_vect(SDL_Surface* screen, std::vector<T> vect, unsigned int size_h)
 {
 //#include<limits>

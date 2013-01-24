@@ -4,6 +4,7 @@
 #include<algorithm>
 #include<limits>
 #define VERSION_DTW 1
+std::vector<int> indice_evol;
 std::vector<double> dynamic_time_warping4(
 		const std::vector<std::vector<double> >& mesure,
 		const std::vector<std::vector<double> >& ref,unsigned int delta)
@@ -383,7 +384,7 @@ std::vector<double> dynamic_time_warping0(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref,unsigned int delta)
 {
-	return dynamic_time_warping(mesure, ref, delta, 0, ref.begin()->size());
+	return dynamic_time_warping0(mesure, ref, delta, 0, ref.begin()->size());
 }
 std::vector<double> dynamic_time_warping0(
 		std::vector<std::vector<double> > mesure,
@@ -397,6 +398,7 @@ std::vector<double> dynamic_time_warping0(
 	unsigned int m_end=ref.size();//ref iterateur
 	unsigned int n=n_ini;
 	unsigned int m=m_ini;
+	indice_evol.clear();
 	//std::cout << m_ini << " " << n_ini << " azertyuiop" <<std::endl;
 	double v_moy = (n_end-n_ini)/(m_end-m_ini);
 	for(;n<n_end; n++)
@@ -428,11 +430,13 @@ std::vector<double> dynamic_time_warping0(
 
 
 		m=indice_min;
+		indice_evol.push_back(m);
 //		if(m+v_moy+delta>m_end)
 //			break;
 		dist.push_back(sqrt(min));
 //		dist.push_back(sqrt(min*sqrt(distance(ref[m]))));
 	}
+	indice_evol.push_back(mesure.size());
 	return dist;
 }
 std::vector<double> dynamic_time_warping(
@@ -455,6 +459,8 @@ inline std::vector<double> dynamic_time_warping(
 	unsigned int m=m_ini;
 	//std::cout << m_ini << " " << n_ini << " azertyuiop" <<std::endl;
 	double v_moy = (n_end-n_ini)/(m_end-m_ini);
+	indice_evol.clear();
+
 	for(;n<n_end; n++)
 	{
 		double min(std::numeric_limits<double>::max());
@@ -484,11 +490,13 @@ inline std::vector<double> dynamic_time_warping(
 
 
 		m=indice_min;
+		indice_evol.push_back(m);
 //		if(m+v_moy+delta>m_end)
 //			break;
 		dist.push_back(sqrt(min));
 //		dist.push_back(sqrt(min*sqrt(distance(ref[m]))));
 	}
+		indice_evol.push_back(mesure.size());
 	return dist;
 }
 
