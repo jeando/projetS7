@@ -975,7 +975,7 @@ bool Menu_enregistrement::gestion_clic()
                                         SDL_BlitSurface(sond,&rect1,fene_menu,&rect2);
                                         SDL_UpdateRect(screen, rect2.x, rect2.y, rect2.w, rect2.h);
                                         ostringstream oss2;
-                                        oss2 << "lire2";
+                                        oss2 << "lire";
                                         rect2.x=285+j*400;
                                         SDL_FreeSurface(texte);
                                         texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);
