@@ -190,7 +190,9 @@ Menu_option::Menu_option(SDL_Surface* scre)
         istringstream iss(capt[i]);
         string tmp;
         string nom="";
-        for(int i=0; i<3; i++)
+
+        //traitement des mots trop longs
+        for(int j=0; j<3; j++)
         {
             getline(iss,tmp, ' ');
             if(tmp=="")
@@ -199,6 +201,21 @@ Menu_option::Menu_option(SDL_Surface* scre)
             }
             nom+=" ";
             nom+=tmp;
+        }
+
+        for(int j=1; j<nom.size(); j++)
+        {
+            int ascii = ((int)nom[j]);
+            cout << " " << nom[j] << ascii;
+            if(ascii==-87)//"é"
+            {
+                nom[j]='e';
+            }
+            if(ascii==-61)
+            {
+                nom.replace(j,1,"");
+                j--;
+            }
         }
         capt_devices.push_back(nom);
     }
@@ -217,6 +234,20 @@ Menu_option::Menu_option(SDL_Surface* scre)
             }
             nom+=" ";
             nom+=tmp;
+        }
+        for(int j=1; j<nom.size(); j++)
+        {
+            int ascii = ((int)nom[j]);
+            cout << " " << nom[j] << ascii;
+            if(ascii==-87)//"é"
+            {
+                nom[j]='e';
+            }
+            if(ascii==-61)
+            {
+                nom.replace(j,1,"");
+                j--;
+            }
         }
         out_devices.push_back(nom);
     }
@@ -727,6 +758,7 @@ void Menu_enregistrement::draw()
     SDL_Surface* standard = IMG_Load( "../../images/buttun.png" );
     SDL_Surface* quitter = IMG_Load( "../../images/buttun_quit.png" );
     SDL_Surface* sond = IMG_Load("../../images/buttun_sound.png");
+    SDL_Surface* sond2 = IMG_Load("../../images/buttun_sound2.png");
     nom_sond = {"gauche","droite","haut","bas","tir"};
 
     SDL_Rect rect1={0,0,0,0};
@@ -776,7 +808,18 @@ void Menu_enregistrement::draw()
 
 
             rect1.x=275+j*400;
-            SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
+            ostringstream ossR;
+            ossR << "./data/" << index << "_" << nom_sond[i] << "_"
+                 << (j+1) << ".wav";
+
+            if(is_readable(ossR.str().c_str()))
+            {
+                SDL_BlitSurface(sond,nullptr,fene_menu,&rect1);
+            }
+            else
+            {
+                SDL_BlitSurface(sond2,nullptr,fene_menu,&rect1);
+            }
             ostringstream oss2;
             oss2 << "lire";
             rect1.x=285+j*400;
@@ -916,6 +959,13 @@ bool Menu_enregistrement::gestion_clic()
                                         texte=TTF_RenderText_Blended(police, oss_message.str().c_str(), couleur);
                                         SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
                                         SDL_FreeSurface(texte);
+
+                                        AL_Play alp;
+                                        alp.put_sound_in_buffer(oss.str().c_str());
+                                        alp.play();
+                                        while(alp.is_playing());
+                                        alp.stop_playing();
+
                                     }
                                     else
                                     {
