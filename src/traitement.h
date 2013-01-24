@@ -13,14 +13,14 @@ std::vector<double> dynamic_time_warping4(
 		const std::vector<std::vector<double> >& ref,unsigned int delta=3);
 std::vector<double> dynamic_time_warping0(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref,unsigned int delta);
+		std::vector<std::vector<double> > ref,unsigned int delta= 3);
 std::vector<double> dynamic_time_warping0(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref,unsigned int delta,
 		unsigned int _indice_debut_f, unsigned int _indice_fin_f);
 std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref,unsigned int delta);
+		std::vector<std::vector<double> > ref,unsigned int delta=3);
 std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref,unsigned int delta,
@@ -64,7 +64,7 @@ std::vector<std::vector<double> > equalize_spectrogramme(
 
 std::vector<double> dynamic_time_warping(
 		const std::vector<std::vector<double> >& mesure,
-		const std::vector<std::vector<double> >& ref,unsigned int delta=10);
+		const std::vector<std::vector<double> >& ref,unsigned int delta=3);
 inline std::vector<double> dynamic_time_warping(
 		const std::vector<std::vector<double> >& mesure,
 		const std::vector<std::vector<double> >& ref,unsigned int delta,

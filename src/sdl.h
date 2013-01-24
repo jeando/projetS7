@@ -9,6 +9,8 @@ void draw_vect(SDL_Surface* screen, std::vector<T> vect);
 template<typename T>
 void draw_vect(SDL_Surface* screen, std::vector<T> vect, unsigned int size_h);
 template<typename T>
+void draw_vect(SDL_Surface* screen, std::vector<T> vect, unsigned int size_h, unsigned int size_x_for_one);
+template<typename T>
 void draw_mat(SDL_Surface* screen, std::vector<std::vector<T> > vect,
 		unsigned int size_x=1, unsigned int size_y=1);
 template<typename T>
