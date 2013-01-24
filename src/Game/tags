@@ -1,0 +1,611 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ACLOCAL	Makefile	/^ACLOCAL = ${SHELL} \/home\/favreau\/projetS7\/missing aclocal-1.13$/;"	m
+ACLOCAL_M4	Makefile	/^ACLOCAL_M4 = $(top_srcdir)\/aclocal.m4$/;"	m
+AMTAR	Makefile	/^AMTAR = $${TAR-tar}$/;"	m
+AM_CXXFLAGS	Makefile	/^AM_CXXFLAGS = $(INTI_CFLAGS) $(SDL_CFLAGS)$/;"	m
+AM_DEFAULT_VERBOSITY	Makefile	/^AM_DEFAULT_VERBOSITY = 1$/;"	m
+AM_V_CC	Makefile	/^AM_V_CC = $(am__v_CC_$(V))$/;"	m
+AM_V_CCLD	Makefile	/^AM_V_CCLD = $(am__v_CCLD_$(V))$/;"	m
+AM_V_CXX	Makefile	/^AM_V_CXX = $(am__v_CXX_$(V))$/;"	m
+AM_V_CXXLD	Makefile	/^AM_V_CXXLD = $(am__v_CXXLD_$(V))$/;"	m
+AM_V_GEN	Makefile	/^AM_V_GEN = $(am__v_GEN_$(V))$/;"	m
+AM_V_P	Makefile	/^AM_V_P = $(am__v_P_$(V))$/;"	m
+AM_V_at	Makefile	/^AM_V_at = $(am__v_at_$(V))$/;"	m
+AM_V_lt	Makefile	/^AM_V_lt = $(am__v_lt_$(V))$/;"	m
+AUTOCONF	Makefile	/^AUTOCONF = ${SHELL} \/home\/favreau\/projetS7\/missing autoconf$/;"	m
+AUTOHEADER	Makefile	/^AUTOHEADER = ${SHELL} \/home\/favreau\/projetS7\/missing autoheader$/;"	m
+AUTOMAKE	Makefile	/^AUTOMAKE = ${SHELL} \/home\/favreau\/projetS7\/missing automake-1.13$/;"	m
+AWK	Makefile	/^AWK = gawk$/;"	m
+CC	Makefile	/^CC = gcc$/;"	m
+CCDEPMODE	Makefile	/^CCDEPMODE = depmode=gcc3$/;"	m
+CCLD	Makefile	/^CCLD = $(CC)$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -g -O2$/;"	m
+COMPILE	Makefile	/^COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \\$/;"	m
+CONFIG_CLEAN_FILES	Makefile	/^CONFIG_CLEAN_FILES =$/;"	m
+CONFIG_CLEAN_VPATH_FILES	Makefile	/^CONFIG_CLEAN_VPATH_FILES =$/;"	m
+CPP	Makefile	/^CPP = gcc -E$/;"	m
+CPPFLAGS	Makefile	/^CPPFLAGS = $/;"	m
+CTAGS	Makefile	/^CTAGS = ctags$/;"	m
+CXX	Makefile	/^CXX = g++$/;"	m
+CXXCOMPILE	Makefile	/^CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \\$/;"	m
+CXXDEPMODE	Makefile	/^CXXDEPMODE = depmode=gcc3$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS = -g -ansi -Wall -Wextra -Wold-style-cast -Woverloaded-virtual -D_DEBUG_ -std=c++0x$/;"	m
+CXXLD	Makefile	/^CXXLD = $(CXX)$/;"	m
+CXXLINK	Makefile	/^CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \\$/;"	m
+CYGPATH_W	Makefile	/^CYGPATH_W = echo$/;"	m
+Choix_Utilisateur	Menu.cpp	/^Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)$/;"	f	class:Choix_Utilisateur	signature:(SDL_Surface* scre)
+Choix_Utilisateur	Menu.h	/^        Choix_Utilisateur(SDL_Surface* scre);$/;"	p	class:Choix_Utilisateur	access:public	signature:(SDL_Surface* scre)
+Choix_Utilisateur	Menu.h	/^class Choix_Utilisateur$/;"	c
+Choix_Utilisateur::Choix_Utilisateur	Menu.cpp	/^Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)$/;"	f	class:Choix_Utilisateur	signature:(SDL_Surface* scre)
+Choix_Utilisateur::Choix_Utilisateur	Menu.h	/^        Choix_Utilisateur(SDL_Surface* scre);$/;"	p	class:Choix_Utilisateur	access:public	signature:(SDL_Surface* scre)
+Choix_Utilisateur::draw	Menu.cpp	/^void Choix_Utilisateur::draw()$/;"	f	class:Choix_Utilisateur	signature:()
+Choix_Utilisateur::draw	Menu.h	/^        void draw();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+Choix_Utilisateur::fene_menu	Menu.h	/^        SDL_Surface* fene_menu;$/;"	m	class:Choix_Utilisateur	access:private
+Choix_Utilisateur::gestion_clic	Menu.cpp	/^bool Choix_Utilisateur::gestion_clic()$/;"	f	class:Choix_Utilisateur	signature:()
+Choix_Utilisateur::gestion_clic	Menu.h	/^        bool gestion_clic();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+Choix_Utilisateur::incr	Menu.h	/^        int incr;$/;"	m	class:Choix_Utilisateur	access:private
+Choix_Utilisateur::list_util	Menu.h	/^        std::vector<std::string> list_util;$/;"	m	class:Choix_Utilisateur	access:private
+Choix_Utilisateur::list_util_sdl	Menu.h	/^        std::vector<SDL_Surface*> list_util_sdl;$/;"	m	class:Choix_Utilisateur	access:private
+Choix_Utilisateur::police	Menu.h	/^    	TTF_Font* police;$/;"	m	class:Choix_Utilisateur	access:private
+Choix_Utilisateur::screen	Menu.h	/^		SDL_Surface* screen;$/;"	m	class:Choix_Utilisateur	access:private
+Choix_Utilisateur::start	Menu.cpp	/^void Choix_Utilisateur::start()$/;"	f	class:Choix_Utilisateur	signature:()
+Choix_Utilisateur::start	Menu.h	/^        void start();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+Choix_Utilisateur::update	Menu.cpp	/^void Choix_Utilisateur::update()$/;"	f	class:Choix_Utilisateur	signature:()
+Choix_Utilisateur::update	Menu.h	/^        void update();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+Choix_Utilisateur::~Choix_Utilisateur	Menu.cpp	/^Choix_Utilisateur::~Choix_Utilisateur()$/;"	f	class:Choix_Utilisateur	signature:()
+Choix_Utilisateur::~Choix_Utilisateur	Menu.h	/^		virtual ~Choix_Utilisateur();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+DEFAULT_INCLUDES	Makefile	/^DEFAULT_INCLUDES = -I.$/;"	m
+DEFS	Makefile	/^DEFS = -DPACKAGE_NAME=\\"reconnaissance_voix\\" -DPACKAGE_TARNAME=\\"reconnaissance_voix\\" -DPACKAGE_VERSION=\\"0.1\\" -DPACKAGE_STRING=\\"reconnaissance_voix\\ 0.1\\" -DPACKAGE_BUGREPORT=\\"\\" -DPACKAGE_URL=\\"\\" -DPACKAGE=\\"reconnaissance_voix\\" -DVERSION=\\"0.1\\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE__BOOL=1$/;"	m
+DEPDIR	Makefile	/^DEPDIR = .deps$/;"	m
+DISTFILES	Makefile	/^DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)$/;"	m
+DIST_COMMON	Makefile	/^DIST_COMMON = $(srcdir)\/Makefile.in $(srcdir)\/Makefile.am \\$/;"	m
+DIST_SOURCES	Makefile	/^DIST_SOURCES = $(Jeu_SOURCES)$/;"	m
+Drawable	Drawable.cpp	/^Drawable::Drawable(string img)$/;"	f	class:Drawable	signature:(string img)
+Drawable	Drawable.h	/^        Drawable(std::string img);$/;"	p	class:Drawable	access:public	signature:(std::string img)
+Drawable	Drawable.h	/^class Drawable {$/;"	c
+Drawable::Drawable	Drawable.cpp	/^Drawable::Drawable(string img)$/;"	f	class:Drawable	signature:(string img)
+Drawable::Drawable	Drawable.h	/^        Drawable(std::string img);$/;"	p	class:Drawable	access:public	signature:(std::string img)
+Drawable::draw	Drawable.cpp	/^void Drawable::draw(SDL_Surface* screen)$/;"	f	class:Drawable	signature:(SDL_Surface* screen)
+Drawable::draw	Drawable.h	/^        virtual void draw(SDL_Surface* screen);$/;"	p	class:Drawable	access:public	signature:(SDL_Surface* screen)
+Drawable::my_image	Drawable.h	/^        SDL_Surface* my_image;$/;"	m	class:Drawable	access:protected
+Drawable::set_image	Drawable.cpp	/^void Drawable::set_image(string img)$/;"	f	class:Drawable	signature:(string img)
+Drawable::set_image	Drawable.h	/^        void set_image(std::string img);$/;"	p	class:Drawable	access:public	signature:(std::string img)
+Drawable::~Drawable	Drawable.cpp	/^Drawable::~Drawable()$/;"	f	class:Drawable	signature:()
+Drawable::~Drawable	Drawable.h	/^        virtual ~Drawable();$/;"	p	class:Drawable	access:public	signature:()
+ECHO_C	Makefile	/^ECHO_C = $/;"	m
+ECHO_N	Makefile	/^ECHO_N = -n$/;"	m
+ECHO_T	Makefile	/^ECHO_T = $/;"	m
+EGREP	Makefile	/^EGREP = \/usr\/bin\/grep -E$/;"	m
+ETAGS	Makefile	/^ETAGS = etags$/;"	m
+EXEEXT	Makefile	/^EXEEXT = $/;"	m
+FROG_H_INCLUDED	Frog.h	2;"	d
+Frog	Frog.cpp	/^Frog::Frog(string nom)$/;"	f	class:Frog	signature:(string nom)
+Frog	Frog.h	/^        Frog(std::string nom);$/;"	p	class:Frog	access:public	signature:(std::string nom)
+Frog	Frog.h	/^class Frog$/;"	c
+Frog::Frog	Frog.cpp	/^Frog::Frog(string nom)$/;"	f	class:Frog	signature:(string nom)
+Frog::Frog	Frog.h	/^        Frog(std::string nom);$/;"	p	class:Frog	access:public	signature:(std::string nom)
+Frog::etat_x	Frog.h	/^        int etat_x;$/;"	m	class:Frog	access:public
+Frog::etat_y	Frog.h	/^        int etat_y;$/;"	m	class:Frog	access:public
+Frog::nom_image	Frog.h	/^        const std::string nom_image;$/;"	m	class:Frog	access:public
+Frog::position_x	Frog.h	/^        int position_x;$/;"	m	class:Frog	access:public
+Frog::position_y	Frog.h	/^        int position_y;$/;"	m	class:Frog	access:public
+Frog::vitesse_x	Frog.h	/^        int vitesse_x;$/;"	m	class:Frog	access:public
+Frog::vitesse_y	Frog.h	/^        int vitesse_y;$/;"	m	class:Frog	access:public
+GAME_H_INCLUDED	Game.h	2;"	d
+GREP	Makefile	/^GREP = \/usr\/bin\/grep$/;"	m
+Game	Game.cpp	/^Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)$/;"	f	class:Game	signature:(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)
+Game	Game.h	/^        Game(SDL_Surface* scre, AL_Stream_Capture* _alsc,Joueur& _joueur);$/;"	p	class:Game	access:public	signature:(SDL_Surface* scre, AL_Stream_Capture* _alsc,Joueur& _joueur)
+Game	Game.h	/^class Game$/;"	c
+Game::Game	Game.cpp	/^Game::Game(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)$/;"	f	class:Game	signature:(SDL_Surface* scre, AL_Stream_Capture* _alsc, Joueur& _joueur)
+Game::Game	Game.h	/^        Game(SDL_Surface* scre, AL_Stream_Capture* _alsc,Joueur& _joueur);$/;"	p	class:Game	access:public	signature:(SDL_Surface* scre, AL_Stream_Capture* _alsc,Joueur& _joueur)
+Game::alsc	Game.h	/^	AL_Stream_Capture* alsc;$/;"	m	class:Game	access:private
+Game::gestionSDL_Event	Game.cpp	/^bool Game::gestionSDL_Event()$/;"	f	class:Game	signature:()
+Game::gestionSDL_Event	Game.h	/^        bool gestionSDL_Event();$/;"	p	class:Game	access:public	signature:()
+Game::gestion_Audio	Game.cpp	/^bool Game::gestion_Audio()$/;"	f	class:Game	signature:()
+Game::gestion_Audio	Game.h	/^        bool gestion_Audio();$/;"	p	class:Game	access:public	signature:()
+Game::joueur	Game.h	/^	Joueur* joueur;$/;"	m	class:Game	access:private
+Game::map	Game.h	/^        Map map;$/;"	m	class:Game	access:private
+Game::menu	Game.h	/^        Menu* menu;$/;"	m	class:Game	access:private
+Game::pause	Game.cpp	/^void Game::pause()$/;"	f	class:Game	signature:()
+Game::pause	Game.h	/^        void pause();$/;"	p	class:Game	access:public	signature:()
+Game::score	Game.h	/^        Score score;$/;"	m	class:Game	access:private
+Game::screen	Game.h	/^        SDL_Surface* screen;$/;"	m	class:Game	access:private
+Game::start	Game.cpp	/^void Game::start()$/;"	f	class:Game	signature:()
+Game::start	Game.h	/^        void start();$/;"	p	class:Game	access:public	signature:()
+Game::~Game	Game.cpp	/^Game::~Game()$/;"	f	class:Game	signature:()
+Game::~Game	Game.h	/^        ~Game();$/;"	p	class:Game	access:public	signature:()
+HAVE_SDL_CONFIG	Makefile	/^HAVE_SDL_CONFIG = true$/;"	m
+INSTALL	Makefile	/^INSTALL = \/usr\/bin\/install -c$/;"	m
+INSTALL_DATA	Makefile	/^INSTALL_DATA = ${INSTALL} -m 644$/;"	m
+INSTALL_HEADER	Makefile	/^INSTALL_HEADER = $(INSTALL_DATA)$/;"	m
+INSTALL_PROGRAM	Makefile	/^INSTALL_PROGRAM = ${INSTALL}$/;"	m
+INSTALL_SCRIPT	Makefile	/^INSTALL_SCRIPT = ${INSTALL}$/;"	m
+INSTALL_STRIP_PROGRAM	Makefile	/^INSTALL_STRIP_PROGRAM = $(install_sh) -c -s$/;"	m
+ITEM_H_INCLUDED	Item.h	2;"	d
+Item	Item.cpp	/^Item::Item(string nom)$/;"	f	class:Item	signature:(string nom)
+Item	Item.h	/^        Item(std::string nom);$/;"	p	class:Item	access:public	signature:(std::string nom)
+Item	Item.h	/^class Item$/;"	c
+Item::Item	Item.cpp	/^Item::Item(string nom)$/;"	f	class:Item	signature:(string nom)
+Item::Item	Item.h	/^        Item(std::string nom);$/;"	p	class:Item	access:public	signature:(std::string nom)
+Item::nom_image	Item.h	/^        const std::string nom_image;$/;"	m	class:Item	access:public
+JOUEUR_H_INCLUDED	Joueur.h	2;"	d
+Jeu_DEPENDENCIES	Makefile	/^Jeu_DEPENDENCIES = $(am__DEPENDENCIES_1)$/;"	m
+Jeu_LDADD	Makefile	/^Jeu_LDADD = $(INTI_LIBS) $(SDL_LIBS) -lSDL_image -lSDL_ttf$/;"	m
+Jeu_OBJECTS	Makefile	/^Jeu_OBJECTS = $(am_Jeu_OBJECTS)$/;"	m
+Jeu_SOURCES	Makefile	/^Jeu_SOURCES = Map.cpp Map.h Drawable.h Drawable.cpp main.cpp Item.h Item.cpp Frog.h Frog.cpp Game.h Game.cpp Menu.h Menu.cpp Score.h Score.cpp ..\/MyAL.h ..\/MyAL.cpp Joueur.h Joueur.cpp ..\/traitement.cpp ..\/traitement.h ..\/ft.h ..\/ft.cpp$/;"	m
+Joueur	Joueur.cpp	/^Joueur::Joueur(int i, string nom)$/;"	f	class:Joueur	signature:(int i, string nom)
+Joueur	Joueur.h	/^        Joueur(int i, std::string nom);$/;"	p	class:Joueur	access:public	signature:(int i, std::string nom)
+Joueur	Joueur.h	/^class Joueur$/;"	c
+Joueur::Joueur	Joueur.cpp	/^Joueur::Joueur(int i, string nom)$/;"	f	class:Joueur	signature:(int i, string nom)
+Joueur::Joueur	Joueur.h	/^        Joueur(int i, std::string nom);$/;"	p	class:Joueur	access:public	signature:(int i, std::string nom)
+Joueur::charger	Joueur.cpp	/^void Joueur::charger()$/;"	f	class:Joueur	signature:()
+Joueur::charger	Joueur.h	/^        void charger();$/;"	p	class:Joueur	access:public	signature:()
+Joueur::id	Joueur.h	/^		std::string id;$/;"	m	class:Joueur	access:public
+Joueur::nom_joueur	Joueur.h	/^        std::string nom_joueur;$/;"	m	class:Joueur	access:public
+Joueur::spectro_bas1	Joueur.h	/^        std::vector<std::vector<double> > spectro_bas1;$/;"	m	class:Joueur	access:public
+Joueur::spectro_bas2	Joueur.h	/^        std::vector<std::vector<double> > spectro_bas2;$/;"	m	class:Joueur	access:public
+Joueur::spectro_droite1	Joueur.h	/^        std::vector<std::vector<double> > spectro_droite1;$/;"	m	class:Joueur	access:public
+Joueur::spectro_droite2	Joueur.h	/^        std::vector<std::vector<double> > spectro_droite2;$/;"	m	class:Joueur	access:public
+Joueur::spectro_gauche1	Joueur.h	/^        std::vector<std::vector<double> > spectro_gauche1;$/;"	m	class:Joueur	access:public
+Joueur::spectro_gauche2	Joueur.h	/^        std::vector<std::vector<double> > spectro_gauche2;$/;"	m	class:Joueur	access:public
+Joueur::spectro_haut1	Joueur.h	/^        std::vector<std::vector<double> > spectro_haut1;$/;"	m	class:Joueur	access:public
+Joueur::spectro_haut2	Joueur.h	/^        std::vector<std::vector<double> > spectro_haut2;$/;"	m	class:Joueur	access:public
+LDFLAGS	Makefile	/^LDFLAGS = $/;"	m
+LIBOBJS	Makefile	/^LIBOBJS = $/;"	m
+LIBS	Makefile	/^LIBS = -lSDL_gfx -lopenal -lsndfile -lm $/;"	m
+LINK	Makefile	/^LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@$/;"	m
+LTLIBOBJS	Makefile	/^LTLIBOBJS = $/;"	m
+MAKEINFO	Makefile	/^MAKEINFO = ${SHELL} \/home\/favreau\/projetS7\/missing makeinfo$/;"	m
+MAP_H_INCLUDED	Map.h	2;"	d
+MENU_H_INCLUDED	Menu.h	2;"	d
+MKDIR_P	Makefile	/^MKDIR_P = \/usr\/bin\/mkdir -p$/;"	m
+Map	Map.cpp	/^Map::Map(string nom, SDL_Surface* _screen, AL_Stream_Capture* _alsc)$/;"	f	class:Map	signature:(string nom, SDL_Surface* _screen, AL_Stream_Capture* _alsc)
+Map	Map.h	/^        Map(std::string which_map, SDL_Surface* screen, AL_Stream_Capture* alcs);$/;"	p	class:Map	access:public	signature:(std::string which_map, SDL_Surface* screen, AL_Stream_Capture* alcs)
+Map	Map.h	/^class Map$/;"	c
+Map::Map	Map.cpp	/^Map::Map(string nom, SDL_Surface* _screen, AL_Stream_Capture* _alsc)$/;"	f	class:Map	signature:(string nom, SDL_Surface* _screen, AL_Stream_Capture* _alsc)
+Map::Map	Map.h	/^        Map(std::string which_map, SDL_Surface* screen, AL_Stream_Capture* alcs);$/;"	p	class:Map	access:public	signature:(std::string which_map, SDL_Surface* screen, AL_Stream_Capture* alcs)
+Map::alsc	Map.h	/^		AL_Stream_Capture* alsc;$/;"	m	class:Map	access:private
+Map::change_speed	Map.cpp	/^bool Map::change_speed(int vx, int vy)$/;"	f	class:Map	signature:(int vx, int vy)
+Map::change_speed	Map.h	/^        bool change_speed(int vx, int vy);$/;"	p	class:Map	access:public	signature:(int vx, int vy)
+Map::cpt_position	Map.h	/^	unsigned int cpt_position;$/;"	m	class:Map	access:private
+Map::croa_croa	Map.h	/^        Frog croa_croa;$/;"	m	class:Map	access:private
+Map::draw	Map.cpp	/^void Map::draw()$/;"	f	class:Map	signature:()
+Map::draw	Map.h	/^        void draw();$/;"	p	class:Map	access:public	signature:()
+Map::h_map	Map.h	/^        unsigned int h_map;$/;"	m	class:Map	access:private
+Map::is_deplacement_possible	Map.cpp	/^bool Map::is_deplacement_possible(int vx, int vy)$/;"	f	class:Map	signature:(int vx, int vy)
+Map::is_deplacement_possible	Map.h	/^        bool is_deplacement_possible(int vx, int vy);$/;"	p	class:Map	access:public	signature:(int vx, int vy)
+Map::list_items	Map.h	/^        std::vector<Item*> list_items;$/;"	m	class:Map	access:private
+Map::load_map	Map.cpp	/^void Map::load_map(string nom)$/;"	f	class:Map	signature:(string nom)
+Map::load_map	Map.h	/^        void load_map(std::string nom);$/;"	p	class:Map	access:public	signature:(std::string nom)
+Map::save_map	Map.h	/^        void save_map(std::string nom);$/;"	p	class:Map	access:public	signature:(std::string nom)
+Map::screen	Map.h	/^        SDL_Surface* screen;$/;"	m	class:Map	access:private
+Map::size_box_x	Map.h	/^        unsigned int size_box_x;$/;"	m	class:Map	access:private
+Map::size_box_y	Map.h	/^        unsigned int size_box_y;$/;"	m	class:Map	access:private
+Map::surface	Map.h	/^        SDL_Surface* surface;$/;"	m	class:Map	access:private
+Map::surfaces_map	Map.h	/^        std::map<std::string,SDL_Surface*> surfaces_map;$/;"	m	class:Map	access:private
+Map::update	Map.cpp	/^void Map::update()\/\/, unsigned int x, unsigned int y);$/;"	f	class:Map	signature:()
+Map::update	Map.h	/^        void update();\/\/, unsigned int x, unsigned int y);$/;"	p	class:Map	access:public	signature:()
+Map::w_map	Map.h	/^        unsigned int w_map;$/;"	m	class:Map	access:private
+Map::~Map	Map.cpp	/^Map::~Map()$/;"	f	class:Map	signature:()
+Map::~Map	Map.h	/^        ~Map();$/;"	p	class:Map	access:public	signature:()
+Menu	Menu.cpp	/^Menu::Menu(SDL_Surface* scre)$/;"	f	class:Menu	signature:(SDL_Surface* scre)
+Menu	Menu.h	/^        Menu(SDL_Surface* scre);$/;"	p	class:Menu	access:public	signature:(SDL_Surface* scre)
+Menu	Menu.h	/^class Menu$/;"	c
+Menu::Menu	Menu.cpp	/^Menu::Menu(SDL_Surface* scre)$/;"	f	class:Menu	signature:(SDL_Surface* scre)
+Menu::Menu	Menu.h	/^        Menu(SDL_Surface* scre);$/;"	p	class:Menu	access:public	signature:(SDL_Surface* scre)
+Menu::alsc	Menu.h	/^        AL_Stream_Capture alsc;$/;"	m	class:Menu	access:private
+Menu::draw	Menu.cpp	/^void Menu::draw()$/;"	f	class:Menu	signature:()
+Menu::draw	Menu.h	/^        void draw();$/;"	p	class:Menu	access:public	signature:()
+Menu::fene_menu	Menu.h	/^        SDL_Surface* fene_menu;$/;"	m	class:Menu	access:private
+Menu::gestion_clic	Menu.cpp	/^bool Menu::gestion_clic()$/;"	f	class:Menu	signature:()
+Menu::gestion_clic	Menu.h	/^        bool gestion_clic();$/;"	p	class:Menu	access:public	signature:()
+Menu::joueur	Menu.h	/^        Joueur* joueur;$/;"	m	class:Menu	access:private
+Menu::police	Menu.h	/^    	TTF_Font* police;$/;"	m	class:Menu	access:private
+Menu::rect1	Menu.h	/^        SDL_Rect rect1;$/;"	m	class:Menu	access:private
+Menu::rect2	Menu.h	/^        SDL_Rect rect2;$/;"	m	class:Menu	access:private
+Menu::rect3	Menu.h	/^        SDL_Rect rect3;$/;"	m	class:Menu	access:private
+Menu::rect4	Menu.h	/^        SDL_Rect rect4;$/;"	m	class:Menu	access:private
+Menu::screen	Menu.h	/^        SDL_Surface* screen;$/;"	m	class:Menu	access:private
+Menu::start	Menu.cpp	/^void Menu::start()$/;"	f	class:Menu	signature:()
+Menu::start	Menu.h	/^        void start();$/;"	p	class:Menu	access:public	signature:()
+Menu::update	Menu.cpp	/^void Menu::update()$/;"	f	class:Menu	signature:()
+Menu::update	Menu.h	/^        void update();$/;"	p	class:Menu	access:public	signature:()
+Menu::~Menu	Menu.cpp	/^Menu::~Menu()$/;"	f	class:Menu	signature:()
+Menu::~Menu	Menu.h	/^        virtual ~Menu();$/;"	p	class:Menu	access:public	signature:()
+Menu_enregistrement	Menu.cpp	/^Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, std::vector<std::string> list, int ind)$/;"	f	class:Menu_enregistrement	signature:(SDL_Surface* scre, std::vector<std::string> list, int ind)
+Menu_enregistrement	Menu.h	/^        Menu_enregistrement(SDL_Surface* scre, std::vector<std::string> list, int ind);$/;"	p	class:Menu_enregistrement	access:public	signature:(SDL_Surface* scre, std::vector<std::string> list, int ind)
+Menu_enregistrement	Menu.h	/^class Menu_enregistrement$/;"	c
+Menu_enregistrement::Menu_enregistrement	Menu.cpp	/^Menu_enregistrement::Menu_enregistrement(SDL_Surface* scre, std::vector<std::string> list, int ind)$/;"	f	class:Menu_enregistrement	signature:(SDL_Surface* scre, std::vector<std::string> list, int ind)
+Menu_enregistrement::Menu_enregistrement	Menu.h	/^        Menu_enregistrement(SDL_Surface* scre, std::vector<std::string> list, int ind);$/;"	p	class:Menu_enregistrement	access:public	signature:(SDL_Surface* scre, std::vector<std::string> list, int ind)
+Menu_enregistrement::draw	Menu.cpp	/^void Menu_enregistrement::draw()$/;"	f	class:Menu_enregistrement	signature:()
+Menu_enregistrement::draw	Menu.h	/^        void draw();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+Menu_enregistrement::fene_menu	Menu.h	/^        SDL_Surface* fene_menu;$/;"	m	class:Menu_enregistrement	access:private
+Menu_enregistrement::gestion_clic	Menu.cpp	/^bool Menu_enregistrement::gestion_clic()$/;"	f	class:Menu_enregistrement	signature:()
+Menu_enregistrement::gestion_clic	Menu.h	/^        bool gestion_clic();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+Menu_enregistrement::index	Menu.h	/^		int index;$/;"	m	class:Menu_enregistrement	access:private
+Menu_enregistrement::list_util	Menu.h	/^        std::vector<std::string> list_util;$/;"	m	class:Menu_enregistrement	access:private
+Menu_enregistrement::nom_sond	Menu.h	/^        std::vector<std::string> nom_sond;$/;"	m	class:Menu_enregistrement	access:private
+Menu_enregistrement::nom_temp	Menu.h	/^        std::string nom_temp;$/;"	m	class:Menu_enregistrement	access:private
+Menu_enregistrement::police	Menu.h	/^    	TTF_Font* police;$/;"	m	class:Menu_enregistrement	access:private
+Menu_enregistrement::screen	Menu.h	/^		SDL_Surface* screen;$/;"	m	class:Menu_enregistrement	access:private
+Menu_enregistrement::start	Menu.cpp	/^void Menu_enregistrement::start()$/;"	f	class:Menu_enregistrement	signature:()
+Menu_enregistrement::start	Menu.h	/^        void start();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+Menu_enregistrement::update	Menu.cpp	/^void Menu_enregistrement::update()$/;"	f	class:Menu_enregistrement	signature:()
+Menu_enregistrement::update	Menu.h	/^        void update();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+Menu_enregistrement::~Menu_enregistrement	Menu.cpp	/^Menu_enregistrement::~Menu_enregistrement()$/;"	f	class:Menu_enregistrement	signature:()
+Menu_enregistrement::~Menu_enregistrement	Menu.h	/^		virtual ~Menu_enregistrement();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+MyAL::save_sound	Menu.cpp	/^										MyAL::save_sound(oss.str().c_str(), samples);$/;"	p	class:MyAL	file:	signature:(oss.str().c_str(), samples)
+NORMAL_INSTALL	Makefile	/^NORMAL_INSTALL = :$/;"	m
+NORMAL_UNINSTALL	Makefile	/^NORMAL_UNINSTALL = :$/;"	m
+OBJEXT	Makefile	/^OBJEXT = o$/;"	m
+PACKAGE	Makefile	/^PACKAGE = reconnaissance_voix$/;"	m
+PACKAGE_BUGREPORT	Makefile	/^PACKAGE_BUGREPORT = $/;"	m
+PACKAGE_NAME	Makefile	/^PACKAGE_NAME = reconnaissance_voix$/;"	m
+PACKAGE_STRING	Makefile	/^PACKAGE_STRING = reconnaissance_voix 0.1$/;"	m
+PACKAGE_TARNAME	Makefile	/^PACKAGE_TARNAME = reconnaissance_voix$/;"	m
+PACKAGE_URL	Makefile	/^PACKAGE_URL = $/;"	m
+PACKAGE_VERSION	Makefile	/^PACKAGE_VERSION = 0.1$/;"	m
+PATH_SEPARATOR	Makefile	/^PATH_SEPARATOR = :$/;"	m
+POST_INSTALL	Makefile	/^POST_INSTALL = :$/;"	m
+POST_UNINSTALL	Makefile	/^POST_UNINSTALL = :$/;"	m
+PRE_INSTALL	Makefile	/^PRE_INSTALL = :$/;"	m
+PRE_UNINSTALL	Makefile	/^PRE_UNINSTALL = :$/;"	m
+PROGRAMS	Makefile	/^PROGRAMS = $(bin_PROGRAMS)$/;"	m
+SCORE_H_INCLUDED	Score.h	2;"	d
+SDL_CFLAGS	Makefile	/^SDL_CFLAGS = -I\/usr\/include\/SDL -D_GNU_SOURCE=1 -D_REENTRANT$/;"	m
+SDL_CONFIG	Makefile	/^SDL_CONFIG = \/usr\/bin\/sdl-config$/;"	m
+SDL_LIBS	Makefile	/^SDL_LIBS = -L\/usr\/lib -lSDL -lpthread$/;"	m
+SET_MAKE	Makefile	/^SET_MAKE = $/;"	m
+SHELL	Makefile	/^SHELL = \/bin\/sh$/;"	m
+SOURCES	Makefile	/^SOURCES = $(Jeu_SOURCES)$/;"	m
+STRIP	Makefile	/^STRIP = $/;"	m
+Score	Score.cpp	/^Score::Score()$/;"	f	class:Score	signature:()
+Score	Score.h	/^        Score();$/;"	p	class:Score	access:public	signature:()
+Score	Score.h	/^class Score$/;"	c
+Score::Score	Score.cpp	/^Score::Score()$/;"	f	class:Score	signature:()
+Score::Score	Score.h	/^        Score();$/;"	p	class:Score	access:public	signature:()
+Score::decrement	Score.cpp	/^void Score::decrement()$/;"	f	class:Score	signature:()
+Score::decrement	Score.h	/^        void decrement();$/;"	p	class:Score	access:public	signature:()
+Score::get_score	Score.cpp	/^int Score::get_score()$/;"	f	class:Score	signature:()
+Score::get_score	Score.h	/^        int get_score();$/;"	p	class:Score	access:public	signature:()
+Score::increment	Score.cpp	/^void Score::increment()$/;"	f	class:Score	signature:()
+Score::increment	Score.h	/^        void increment();$/;"	p	class:Score	access:public	signature:()
+Score::score	Score.h	/^        unsigned int score;$/;"	m	class:Score	access:private
+TTF_RenderText_Blended	Menu.cpp	/^      	list_util_sdl.push_back(TTF_RenderText_Blended(police, tmp.c_str(), couleur));$/;"	p	file:	signature:(police, tmp.c_str(), couleur)
+VERSION	Makefile	/^VERSION = 0.1$/;"	m
+_DRAWABLE_H	Drawable.h	2;"	d
+abs_builddir	Makefile	/^abs_builddir = \/home\/favreau\/projetS7\/src\/Game$/;"	m
+abs_srcdir	Makefile	/^abs_srcdir = \/home\/favreau\/projetS7\/src\/Game$/;"	m
+abs_top_builddir	Makefile	/^abs_top_builddir = \/home\/favreau\/projetS7$/;"	m
+abs_top_srcdir	Makefile	/^abs_top_srcdir = \/home\/favreau\/projetS7$/;"	m
+ac_ct_CC	Makefile	/^ac_ct_CC = gcc$/;"	m
+ac_ct_CXX	Makefile	/^ac_ct_CXX = g++$/;"	m
+alp	Menu.cpp	/^                                    AL_Play alp;$/;"	l
+alsc	Game.h	/^	AL_Stream_Capture* alsc;$/;"	m	class:Game	access:private
+alsc	Map.h	/^		AL_Stream_Capture* alsc;$/;"	m	class:Map	access:private
+alsc	Menu.h	/^        AL_Stream_Capture alsc;$/;"	m	class:Menu	access:private
+alsc	main.cpp	/^AL_Stream_Capture alsc;$/;"	v
+am_Jeu_OBJECTS	Makefile	/^am_Jeu_OBJECTS = Map.$(OBJEXT) Drawable.$(OBJEXT) main.$(OBJEXT) \\$/;"	m
+am__DEPENDENCIES_1	Makefile	/^am__DEPENDENCIES_1 =$/;"	m
+am__aclocal_m4_deps	Makefile	/^am__aclocal_m4_deps = $(top_srcdir)\/configure.ac$/;"	m
+am__can_run_installinfo	Makefile	/^am__can_run_installinfo = \\$/;"	m
+am__cd	Makefile	/^am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd$/;"	m
+am__configure_deps	Makefile	/^am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \\$/;"	m
+am__define_uniq_tagged_files	Makefile	/^am__define_uniq_tagged_files = \\$/;"	m
+am__depfiles_maybe	Makefile	/^am__depfiles_maybe = depfiles$/;"	m
+am__include	Makefile	/^am__include = include$/;"	m
+am__installdirs	Makefile	/^am__installdirs = "$(DESTDIR)$(bindir)"$/;"	m
+am__leading_dot	Makefile	/^am__leading_dot = .$/;"	m
+am__make_dryrun	Makefile	/^am__make_dryrun = \\$/;"	m
+am__mv	Makefile	/^am__mv = mv -f$/;"	m
+am__quote	Makefile	/^am__quote = $/;"	m
+am__tagged_files	Makefile	/^am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)$/;"	m
+am__tar	Makefile	/^am__tar = $${TAR-tar} chof - "$$tardir"$/;"	m
+am__uniquify_input	Makefile	/^am__uniquify_input = $(AWK) '\\$/;"	m
+am__untar	Makefile	/^am__untar = $${TAR-tar} xf -$/;"	m
+am__v_CCLD_	Makefile	/^am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))$/;"	m
+am__v_CCLD_0	Makefile	/^am__v_CCLD_0 = @echo "  CCLD    " $@;$/;"	m
+am__v_CCLD_1	Makefile	/^am__v_CCLD_1 = $/;"	m
+am__v_CC_	Makefile	/^am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))$/;"	m
+am__v_CC_0	Makefile	/^am__v_CC_0 = @echo "  CC      " $@;$/;"	m
+am__v_CC_1	Makefile	/^am__v_CC_1 = $/;"	m
+am__v_CXXLD_	Makefile	/^am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))$/;"	m
+am__v_CXXLD_0	Makefile	/^am__v_CXXLD_0 = @echo "  CXXLD   " $@;$/;"	m
+am__v_CXXLD_1	Makefile	/^am__v_CXXLD_1 = $/;"	m
+am__v_CXX_	Makefile	/^am__v_CXX_ = $(am__v_CXX_$(AM_DEFAULT_VERBOSITY))$/;"	m
+am__v_CXX_0	Makefile	/^am__v_CXX_0 = @echo "  CXX     " $@;$/;"	m
+am__v_CXX_1	Makefile	/^am__v_CXX_1 = $/;"	m
+am__v_GEN_	Makefile	/^am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))$/;"	m
+am__v_GEN_0	Makefile	/^am__v_GEN_0 = @echo "  GEN     " $@;$/;"	m
+am__v_GEN_1	Makefile	/^am__v_GEN_1 = $/;"	m
+am__v_P_	Makefile	/^am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))$/;"	m
+am__v_P_0	Makefile	/^am__v_P_0 = false$/;"	m
+am__v_P_1	Makefile	/^am__v_P_1 = :$/;"	m
+am__v_at_	Makefile	/^am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))$/;"	m
+am__v_at_0	Makefile	/^am__v_at_0 = @$/;"	m
+am__v_at_1	Makefile	/^am__v_at_1 = $/;"	m
+am__v_lt_	Makefile	/^am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))$/;"	m
+am__v_lt_0	Makefile	/^am__v_lt_0 = --silent$/;"	m
+am__v_lt_1	Makefile	/^am__v_lt_1 = $/;"	m
+bin_PROGRAMS	Makefile	/^bin_PROGRAMS = Jeu$(EXEEXT)$/;"	m
+bindir	Makefile	/^bindir = ${exec_prefix}\/bin$/;"	m
+blue	Map.cpp	/^    int  red, green, blue; \/\/ Variables servant à stocker la couleur du pixel choisi$/;"	l
+bpp	Map.cpp	/^    int bpp = fond->format->BytesPerPixel;$/;"	l
+build_alias	Makefile	/^build_alias = $/;"	m
+builddir	Makefile	/^builddir = .$/;"	m
+ch	Menu.cpp	/^                        Choix_Utilisateur ch(screen);$/;"	p	file:	signature:(screen)
+change_speed	Map.cpp	/^bool Map::change_speed(int vx, int vy)$/;"	f	class:Map	signature:(int vx, int vy)
+change_speed	Map.h	/^        bool change_speed(int vx, int vy);$/;"	p	class:Map	access:public	signature:(int vx, int vy)
+charger	Joueur.cpp	/^void Joueur::charger()$/;"	f	class:Joueur	signature:()
+charger	Joueur.h	/^        void charger();$/;"	p	class:Joueur	access:public	signature:()
+close	Menu.cpp	/^    liste_utilisateurs.close();$/;"	p	file:	signature:()
+commencer	Menu.cpp	/^    SDL_Surface* commencer = IMG_Load( "..\/..\/images\/buttun_begin.png" );$/;"	l
+coord	Map.cpp	/^    int coord = (croa_croa.position_x+vx)+w_map*(croa_croa.position_y+vy);$/;"	l
+couleur	Menu.cpp	/^                                    SDL_Color couleur = {0, 0, 0, 42};$/;"	l
+couleur	Menu.cpp	/^    SDL_Color couleur = {0, 0, 0, 42};$/;"	l
+cpt	Map.cpp	/^    int cpt=0;$/;"	l
+cpt_position	Map.h	/^	unsigned int cpt_position;$/;"	m	class:Map	access:private
+croa_croa	Map.h	/^        Frog croa_croa;$/;"	m	class:Map	access:private
+datadir	Makefile	/^datadir = ${datarootdir}$/;"	m
+datarootdir	Makefile	/^datarootdir = ${prefix}\/share$/;"	m
+debut_x	Map.cpp	/^                int debut_x=i;$/;"	l
+debut_y	Map.cpp	/^                int debut_y=j;$/;"	l
+decrement	Score.cpp	/^void Score::decrement()$/;"	f	class:Score	signature:()
+decrement	Score.h	/^        void decrement();$/;"	p	class:Score	access:public	signature:()
+depcomp	Makefile	/^depcomp = $(SHELL) $(top_srcdir)\/depcomp$/;"	m
+docdir	Makefile	/^docdir = ${datarootdir}\/doc\/${PACKAGE_TARNAME}$/;"	m
+draw	Drawable.cpp	/^void Drawable::draw(SDL_Surface* screen)$/;"	f	class:Drawable	signature:(SDL_Surface* screen)
+draw	Drawable.h	/^        virtual void draw(SDL_Surface* screen);$/;"	p	class:Drawable	access:public	signature:(SDL_Surface* screen)
+draw	Game.cpp	/^    map.draw();$/;"	p	file:	signature:()
+draw	Map.cpp	/^void Map::draw()$/;"	f	class:Map	signature:()
+draw	Map.h	/^        void draw();$/;"	p	class:Map	access:public	signature:()
+draw	Menu.cpp	/^void Choix_Utilisateur::draw()$/;"	f	class:Choix_Utilisateur	signature:()
+draw	Menu.cpp	/^void Menu::draw()$/;"	f	class:Menu	signature:()
+draw	Menu.cpp	/^void Menu_enregistrement::draw()$/;"	f	class:Menu_enregistrement	signature:()
+draw	Menu.h	/^        void draw();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+draw	Menu.h	/^        void draw();$/;"	p	class:Menu	access:public	signature:()
+draw	Menu.h	/^        void draw();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+dvidir	Makefile	/^dvidir = ${docdir}$/;"	m
+endl	Game.cpp	/^    cout << "pause!" << endl;$/;"	l
+endl	Joueur.cpp	/^	std::cout << id << std::endl;$/;"	m	class:std	file:
+endl	Map.cpp	/^    cout << nom << endl;$/;"	l
+endl	Menu.cpp	/^                                    cout << "enre " << nom_sond[i] << j << endl;$/;"	l
+endl	Menu.cpp	/^                                cout << "Quitter" << endl;$/;"	l
+endl	Menu.cpp	/^                                cout << "nouvel uti" << endl;$/;"	l
+endl	Menu.cpp	/^                                cout << "re-enreg" << endl;$/;"	l
+endl	Menu.cpp	/^                        cout << "Choix utilisateur" << endl;$/;"	l
+endl	Menu.cpp	/^                        cout << "Option" << endl;$/;"	l
+endl	Menu.cpp	/^                        cout << "Quitter" << endl;$/;"	l
+endl	Menu.cpp	/^                        ofs << list_util[i] << endl;$/;"	l
+endl	Menu.cpp	/^                    cout << "Commencer" << endl;$/;"	l
+endl	Menu.cpp	/^                    cout << "Quitter" << endl;$/;"	l
+endl	Menu.cpp	/^                    ofs << nom_temp << endl;$/;"	l
+endl	Menu.cpp	/^                cout << "clik" << endl;$/;"	l
+endl	Menu.cpp	/^        cout << i << endl;$/;"	l
+etat_x	Frog.h	/^        int etat_x;$/;"	m	class:Frog	access:public
+etat_y	Frog.h	/^        int etat_y;$/;"	m	class:Frog	access:public
+event	Game.cpp	/^    SDL_Event event;$/;"	l
+event	Menu.cpp	/^    SDL_Event event;$/;"	l
+exec_prefix	Makefile	/^exec_prefix = ${prefix}$/;"	m
+fene_menu	Menu.h	/^        SDL_Surface* fene_menu;$/;"	m	class:Choix_Utilisateur	access:private
+fene_menu	Menu.h	/^        SDL_Surface* fene_menu;$/;"	m	class:Menu	access:private
+fene_menu	Menu.h	/^        SDL_Surface* fene_menu;$/;"	m	class:Menu_enregistrement	access:private
+fond	Map.cpp	/^    SDL_Surface* fond = IMG_Load(img);$/;"	l
+g	Menu.cpp	/^                                Game g(screen,&alsc,j);$/;"	p	file:	signature:(screen,&alsc,j)
+g	Menu.cpp	/^                    Game g(screen,&alsc,j);$/;"	p	file:	signature:(screen,&alsc,j)
+gestionSDL_Event	Game.cpp	/^bool Game::gestionSDL_Event()$/;"	f	class:Game	signature:()
+gestionSDL_Event	Game.h	/^        bool gestionSDL_Event();$/;"	p	class:Game	access:public	signature:()
+gestion_Audio	Game.cpp	/^bool Game::gestion_Audio()$/;"	f	class:Game	signature:()
+gestion_Audio	Game.h	/^        bool gestion_Audio();$/;"	p	class:Game	access:public	signature:()
+gestion_clic	Menu.cpp	/^bool Choix_Utilisateur::gestion_clic()$/;"	f	class:Choix_Utilisateur	signature:()
+gestion_clic	Menu.cpp	/^bool Menu::gestion_clic()$/;"	f	class:Menu	signature:()
+gestion_clic	Menu.cpp	/^bool Menu_enregistrement::gestion_clic()$/;"	f	class:Menu_enregistrement	signature:()
+gestion_clic	Menu.h	/^        bool gestion_clic();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+gestion_clic	Menu.h	/^        bool gestion_clic();$/;"	p	class:Menu	access:public	signature:()
+gestion_clic	Menu.h	/^        bool gestion_clic();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+get_score	Score.cpp	/^int Score::get_score()$/;"	f	class:Score	signature:()
+get_score	Score.h	/^        int get_score();$/;"	p	class:Score	access:public	signature:()
+green	Map.cpp	/^    int  red, green, blue; \/\/ Variables servant à stocker la couleur du pixel choisi$/;"	l
+h_map	Map.h	/^        unsigned int h_map;$/;"	m	class:Map	access:private
+host_alias	Makefile	/^host_alias = $/;"	m
+htmldir	Makefile	/^htmldir = ${docdir}$/;"	m
+i	Joueur.cpp	/^	oss << i;$/;"	l
+id	Joueur.h	/^		std::string id;$/;"	m	class:Joueur	access:public
+image	Drawable.cpp	/^    const char* image = img.c_str();$/;"	l
+img	Map.cpp	/^    const char* img = nom.c_str();$/;"	l
+includedir	Makefile	/^includedir = ${prefix}\/include$/;"	m
+incr	Menu.h	/^        int incr;$/;"	m	class:Choix_Utilisateur	access:private
+increment	Score.cpp	/^void Score::increment()$/;"	f	class:Score	signature:()
+increment	Score.h	/^        void increment();$/;"	p	class:Score	access:public	signature:()
+index	Menu.h	/^		int index;$/;"	m	class:Menu_enregistrement	access:private
+infodir	Makefile	/^infodir = ${datarootdir}\/info$/;"	m
+ini_ttf	Menu.cpp	/^		ini_ttf()$/;"	f	class:ini_ttf	access:public	signature:()
+ini_ttf	Menu.cpp	/^class ini_ttf$/;"	c	file:
+ini_ttf	Menu.cpp	/^}ini_ttf;$/;"	v	typeref:class:ini_ttf
+ini_ttf::ini_ttf	Menu.cpp	/^		ini_ttf()$/;"	f	class:ini_ttf	access:public	signature:()
+ini_ttf::~ini_ttf	Menu.cpp	/^		~ini_ttf()$/;"	f	class:ini_ttf	access:public	signature:()
+install_sh	Makefile	/^install_sh = ${SHELL} \/home\/favreau\/projetS7\/install-sh$/;"	m
+install_sh_DATA	Makefile	/^install_sh_DATA = $(install_sh) -c -m 644$/;"	m
+install_sh_PROGRAM	Makefile	/^install_sh_PROGRAM = $(install_sh) -c$/;"	m
+install_sh_SCRIPT	Makefile	/^install_sh_SCRIPT = $(install_sh) -c$/;"	m
+is_deplacement_possible	Map.cpp	/^bool Map::is_deplacement_possible(int vx, int vy)$/;"	f	class:Map	signature:(int vx, int vy)
+is_deplacement_possible	Map.h	/^        bool is_deplacement_possible(int vx, int vy);$/;"	p	class:Map	access:public	signature:(int vx, int vy)
+j	Menu.cpp	/^                    Joueur j(index, nom_temp);$/;"	p	file:	signature:(index, nom_temp)
+joueur	Game.h	/^	Joueur* joueur;$/;"	m	class:Game	access:private
+joueur	Menu.h	/^        Joueur* joueur;$/;"	m	class:Menu	access:private
+libdir	Makefile	/^libdir = ${exec_prefix}\/lib$/;"	m
+libexecdir	Makefile	/^libexecdir = ${exec_prefix}\/libexec$/;"	m
+ligne	Menu.cpp	/^                            int ligne = 21+i*43+i*21;$/;"	l
+list_items	Map.h	/^        std::vector<Item*> list_items;$/;"	m	class:Map	access:private
+list_util	Menu.cpp	/^        oss_nom << list_util[index];$/;"	l
+list_util	Menu.h	/^        std::vector<std::string> list_util;$/;"	m	class:Choix_Utilisateur	access:private
+list_util	Menu.h	/^        std::vector<std::string> list_util;$/;"	m	class:Menu_enregistrement	access:private
+list_util_sdl	Menu.h	/^        std::vector<SDL_Surface*> list_util_sdl;$/;"	m	class:Choix_Utilisateur	access:private
+load_map	Map.cpp	/^void Map::load_map(string nom)$/;"	f	class:Map	signature:(string nom)
+load_map	Map.h	/^        void load_map(std::string nom);$/;"	p	class:Map	access:public	signature:(std::string nom)
+localedir	Makefile	/^localedir = ${datarootdir}\/locale$/;"	m
+localstatedir	Makefile	/^localstatedir = ${prefix}\/var$/;"	m
+m	main.cpp	/^        Menu m(screen);$/;"	p	file:	signature:(screen)
+main	main.cpp	/^int main()$/;"	f	signature:()
+mandir	Makefile	/^mandir = ${datarootdir}\/man$/;"	m
+map	Game.h	/^        Map map;$/;"	m	class:Game	access:private
+me	Menu.cpp	/^                                Menu_enregistrement me(screen,list_util,-1);$/;"	p	file:	signature:(screen,list_util,-1)
+me	Menu.cpp	/^                                Menu_enregistrement me(screen,list_util,i+incr);$/;"	p	file:	signature:(screen,list_util,i+incr)
+menu	Game.h	/^        Menu* menu;$/;"	m	class:Game	access:private
+mkdir_p	Makefile	/^mkdir_p = $(MKDIR_P)$/;"	m
+mkinstalldirs	Makefile	/^mkinstalldirs = $(install_sh) -d$/;"	m
+my_image	Drawable.h	/^        SDL_Surface* my_image;$/;"	m	class:Drawable	access:protected
+nom_image	Frog.h	/^        const std::string nom_image;$/;"	m	class:Frog	access:public
+nom_image	Item.h	/^        const std::string nom_image;$/;"	m	class:Item	access:public
+nom_joueur	Joueur.h	/^        std::string nom_joueur;$/;"	m	class:Joueur	access:public
+nom_sond	Menu.h	/^        std::vector<std::string> nom_sond;$/;"	m	class:Menu_enregistrement	access:private
+nom_temp	Menu.cpp	/^    oss_nom << nom_temp;$/;"	l
+nom_temp	Menu.h	/^        std::string nom_temp;$/;"	m	class:Menu_enregistrement	access:private
+oldincludedir	Makefile	/^oldincludedir = \/usr\/include$/;"	m
+oss	Menu.cpp	/^                                        ostringstream oss;$/;"	l
+oss	Menu.cpp	/^                                    ostringstream oss;$/;"	l
+oss	Menu.cpp	/^            ostringstream oss;$/;"	l
+oss	Menu.cpp	/^    ostringstream oss;$/;"	l
+oss1	Menu.cpp	/^            ostringstream oss1;$/;"	l
+oss2	Menu.cpp	/^            ostringstream oss2;$/;"	l
+oss2	Menu.cpp	/^    ostringstream oss2;$/;"	l
+oss3	Menu.cpp	/^    ostringstream oss3;$/;"	l
+oss4	Menu.cpp	/^    ostringstream oss4;$/;"	l
+oss5	Menu.cpp	/^    ostringstream oss5;$/;"	l
+oss_message	Menu.cpp	/^                                    ostringstream oss_message;$/;"	l
+oss_nom	Menu.cpp	/^        ostringstream oss_nom;$/;"	l
+oss_nom	Menu.cpp	/^    ostringstream oss_nom;$/;"	l
+pPixels	Map.cpp	/^    Uint8* pPixels = nullptr;$/;"	l
+pause	Game.cpp	/^void Game::pause()$/;"	f	class:Game	signature:()
+pause	Game.h	/^        void pause();$/;"	p	class:Game	access:public	signature:()
+pdfdir	Makefile	/^pdfdir = ${docdir}$/;"	m
+pkgdatadir	Makefile	/^pkgdatadir = $(datadir)\/reconnaissance_voix$/;"	m
+pkgincludedir	Makefile	/^pkgincludedir = $(includedir)\/reconnaissance_voix$/;"	m
+pkglibdir	Makefile	/^pkglibdir = $(libdir)\/reconnaissance_voix$/;"	m
+pkglibexecdir	Makefile	/^pkglibexecdir = $(libexecdir)\/reconnaissance_voix$/;"	m
+play	Menu.cpp	/^                                        alp.play();$/;"	p	file:	signature:()
+police	Menu.h	/^    	TTF_Font* police;$/;"	m	class:Choix_Utilisateur	access:private
+police	Menu.h	/^    	TTF_Font* police;$/;"	m	class:Menu	access:private
+police	Menu.h	/^    	TTF_Font* police;$/;"	m	class:Menu_enregistrement	access:private
+position_x	Frog.h	/^        int position_x;$/;"	m	class:Frog	access:public
+position_y	Frog.h	/^        int position_y;$/;"	m	class:Frog	access:public
+prefix	Makefile	/^prefix = \/usr\/local$/;"	m
+program_transform_name	Makefile	/^program_transform_name = s,x,x,$/;"	m
+psdir	Makefile	/^psdir = ${docdir}$/;"	m
+push_back	Menu.cpp	/^      	list_util.push_back(tmp);$/;"	p	file:	signature:(tmp)
+put_sound_in_buffer	Menu.cpp	/^                                        alp.put_sound_in_buffer(oss.str().c_str());$/;"	p	file:	signature:(oss.str().c_str())
+quitter	Menu.cpp	/^    SDL_Surface* quitter = IMG_Load( "..\/..\/images\/buttun_quit.png" );$/;"	l
+rect	Map.cpp	/^        SDL_Rect rect={$/;"	l
+rect	Map.cpp	/^    SDL_Rect rect = {0,0,0,0};$/;"	l
+rect1	Menu.cpp	/^    SDL_Rect rect1={0,0,0,0};$/;"	l
+rect1	Menu.cpp	/^    SDL_Rect rect1={40,0,0,0};$/;"	l
+rect1	Menu.h	/^        SDL_Rect rect1;$/;"	m	class:Menu	access:private
+rect2	Map.cpp	/^        SDL_Rect rect2 = {$/;"	l
+rect2	Map.cpp	/^    SDL_Rect rect2;$/;"	l
+rect2	Menu.cpp	/^                                    SDL_Rect rect2 = {50,425,800,43};$/;"	l
+rect2	Menu.cpp	/^    SDL_Rect rect2 = {350,25,204,43};$/;"	l
+rect2	Menu.h	/^        SDL_Rect rect2;$/;"	m	class:Menu	access:private
+rect3	Menu.h	/^        SDL_Rect rect3;$/;"	m	class:Menu	access:private
+rect4	Menu.h	/^        SDL_Rect rect4;$/;"	m	class:Menu	access:private
+red	Map.cpp	/^    int  red, green, blue; \/\/ Variables servant à stocker la couleur du pixel choisi$/;"	l
+resize	Map.cpp	/^    list_items.resize(w_map*h_map);$/;"	p	file:	signature:(w_map*h_map)
+samples	Joueur.cpp	/^    std::pair<std::vector<ALshort>,SF_INFO> samples;$/;"	l
+samples	Menu.cpp	/^                                    vector<ALshort> samples;$/;"	l
+save_map	Map.h	/^        void save_map(std::string nom);$/;"	p	class:Map	access:public	signature:(std::string nom)
+save_sound	Menu.cpp	/^										MyAL::save_sound(oss.str().c_str(), samples);$/;"	p	class:MyAL	file:	signature:(oss.str().c_str(), samples)
+sbindir	Makefile	/^sbindir = ${exec_prefix}\/sbin$/;"	m
+score	Game.h	/^        Score score;$/;"	m	class:Game	access:private
+score	Score.h	/^        unsigned int score;$/;"	m	class:Score	access:private
+screen	Game.h	/^        SDL_Surface* screen;$/;"	m	class:Game	access:private
+screen	Map.h	/^        SDL_Surface* screen;$/;"	m	class:Map	access:private
+screen	Menu.h	/^		SDL_Surface* screen;$/;"	m	class:Choix_Utilisateur	access:private
+screen	Menu.h	/^		SDL_Surface* screen;$/;"	m	class:Menu_enregistrement	access:private
+screen	Menu.h	/^        SDL_Surface* screen;$/;"	m	class:Menu	access:private
+set_image	Drawable.cpp	/^void Drawable::set_image(string img)$/;"	f	class:Drawable	signature:(string img)
+set_image	Drawable.h	/^        void set_image(std::string img);$/;"	p	class:Drawable	access:public	signature:(std::string img)
+set_joueur	Game.cpp	/^	alsc->set_joueur(joueur);$/;"	p	file:	signature:(joueur)
+sharedstatedir	Makefile	/^sharedstatedir = ${prefix}\/com$/;"	m
+size_box_x	Map.h	/^        unsigned int size_box_x;$/;"	m	class:Map	access:private
+size_box_y	Map.h	/^        unsigned int size_box_y;$/;"	m	class:Map	access:private
+sleep_for	Game.cpp	/^		std::this_thread::sleep_for(dura);$/;"	p	class:std::this_thread	file:	signature:(dura)
+sleep_for	Menu.cpp	/^		std::this_thread::sleep_for(dura);$/;"	p	class:std::this_thread	file:	signature:(dura)
+sond	Menu.cpp	/^    SDL_Surface* sond = IMG_Load("..\/..\/images\/buttun_sound.png");$/;"	l
+spectro_bas1	Joueur.h	/^        std::vector<std::vector<double> > spectro_bas1;$/;"	m	class:Joueur	access:public
+spectro_bas2	Joueur.h	/^        std::vector<std::vector<double> > spectro_bas2;$/;"	m	class:Joueur	access:public
+spectro_droite1	Joueur.h	/^        std::vector<std::vector<double> > spectro_droite1;$/;"	m	class:Joueur	access:public
+spectro_droite2	Joueur.h	/^        std::vector<std::vector<double> > spectro_droite2;$/;"	m	class:Joueur	access:public
+spectro_gauche1	Joueur.h	/^        std::vector<std::vector<double> > spectro_gauche1;$/;"	m	class:Joueur	access:public
+spectro_gauche2	Joueur.h	/^        std::vector<std::vector<double> > spectro_gauche2;$/;"	m	class:Joueur	access:public
+spectro_haut1	Joueur.h	/^        std::vector<std::vector<double> > spectro_haut1;$/;"	m	class:Joueur	access:public
+spectro_haut2	Joueur.h	/^        std::vector<std::vector<double> > spectro_haut2;$/;"	m	class:Joueur	access:public
+srcdir	Makefile	/^srcdir = .$/;"	m
+standard	Menu.cpp	/^    SDL_Surface* standard = IMG_Load( "..\/..\/images\/buttun.png" );$/;"	l
+start	Game.cpp	/^void Game::start()$/;"	f	class:Game	signature:()
+start	Game.h	/^        void start();$/;"	p	class:Game	access:public	signature:()
+start	Menu.cpp	/^                                g.start();$/;"	p	file:	signature:()
+start	Menu.cpp	/^                                me.start();$/;"	p	file:	signature:()
+start	Menu.cpp	/^                        ch.start();$/;"	p	file:	signature:()
+start	Menu.cpp	/^                    g.start();$/;"	p	file:	signature:()
+start	Menu.cpp	/^void Choix_Utilisateur::start()$/;"	f	class:Choix_Utilisateur	signature:()
+start	Menu.cpp	/^void Menu::start()$/;"	f	class:Menu	signature:()
+start	Menu.cpp	/^void Menu_enregistrement::start()$/;"	f	class:Menu_enregistrement	signature:()
+start	Menu.h	/^        void start();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+start	Menu.h	/^        void start();$/;"	p	class:Menu	access:public	signature:()
+start	Menu.h	/^        void start();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+start	main.cpp	/^        m.start();$/;"	p	file:	signature:()
+std::endl	Joueur.cpp	/^	std::cout << id << std::endl;$/;"	m	class:std	file:
+std::this_thread::sleep_for	Game.cpp	/^		std::this_thread::sleep_for(dura);$/;"	p	class:std::this_thread	file:	signature:(dura)
+std::this_thread::sleep_for	Menu.cpp	/^		std::this_thread::sleep_for(dura);$/;"	p	class:std::this_thread	file:	signature:(dura)
+stop	Menu.cpp	/^                                        alp.stop();$/;"	p	file:	signature:()
+stop_stream_capture	Game.cpp	/^	alsc->stop_stream_capture();$/;"	p	file:	signature:()
+subdir	Makefile	/^subdir = src\/Game$/;"	m
+surface	Map.h	/^        SDL_Surface* surface;$/;"	m	class:Map	access:private
+surfaces_map	Map.h	/^        std::map<std::string,SDL_Surface*> surfaces_map;$/;"	m	class:Map	access:private
+sysconfdir	Makefile	/^sysconfdir = ${prefix}\/etc$/;"	m
+target_alias	Makefile	/^target_alias = $/;"	m
+test	Game.cpp	/^    events_audio test = alsc->poll_event_continue();$/;"	l
+texte	Menu.cpp	/^                                    SDL_Surface* texte;$/;"	l
+texte	Menu.cpp	/^    SDL_Surface* texte = TTF_RenderText_Blended(police, oss2.str().c_str(), couleur);$/;"	l
+texte	Menu.cpp	/^    SDL_Surface* texte;$/;"	l
+texte2	Menu.cpp	/^    SDL_Surface* texte2;$/;"	l
+tmp	Menu.cpp	/^		liste_utilisateurs>>tmp;$/;"	l
+tmp	Menu.cpp	/^    string tmp;$/;"	l
+top_build_prefix	Makefile	/^top_build_prefix = ..\/..\/$/;"	m
+top_builddir	Makefile	/^top_builddir = ..\/..$/;"	m
+top_srcdir	Makefile	/^top_srcdir = ..\/..$/;"	m
+transform	Makefile	/^transform = $(program_transform_name)$/;"	m
+update	Game.cpp	/^        map.update();$/;"	p	file:	signature:()
+update	Game.cpp	/^    map.update();$/;"	p	file:	signature:()
+update	Map.cpp	/^void Map::update()\/\/, unsigned int x, unsigned int y);$/;"	f	class:Map	signature:()
+update	Map.h	/^        void update();\/\/, unsigned int x, unsigned int y);$/;"	p	class:Map	access:public	signature:()
+update	Menu.cpp	/^void Choix_Utilisateur::update()$/;"	f	class:Choix_Utilisateur	signature:()
+update	Menu.cpp	/^void Menu::update()$/;"	f	class:Menu	signature:()
+update	Menu.cpp	/^void Menu_enregistrement::update()$/;"	f	class:Menu_enregistrement	signature:()
+update	Menu.h	/^        void update();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+update	Menu.h	/^        void update();$/;"	p	class:Menu	access:public	signature:()
+update	Menu.h	/^        void update();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+vitesse_x	Frog.h	/^        int vitesse_x;$/;"	m	class:Frog	access:public
+vitesse_y	Frog.h	/^        int vitesse_y;$/;"	m	class:Frog	access:public
+w_map	Map.h	/^        unsigned int w_map;$/;"	m	class:Map	access:private
+x	Menu.cpp	/^                        int x = event.button.x;$/;"	l
+x	Menu.cpp	/^                int x = event.button.x;$/;"	l
+y	Menu.cpp	/^                        int y = event.button.y;$/;"	l
+y	Menu.cpp	/^                int y = event.button.y;$/;"	l
+~Choix_Utilisateur	Menu.cpp	/^Choix_Utilisateur::~Choix_Utilisateur()$/;"	f	class:Choix_Utilisateur	signature:()
+~Choix_Utilisateur	Menu.h	/^		virtual ~Choix_Utilisateur();$/;"	p	class:Choix_Utilisateur	access:public	signature:()
+~Drawable	Drawable.cpp	/^Drawable::~Drawable()$/;"	f	class:Drawable	signature:()
+~Drawable	Drawable.h	/^        virtual ~Drawable();$/;"	p	class:Drawable	access:public	signature:()
+~Game	Game.cpp	/^Game::~Game()$/;"	f	class:Game	signature:()
+~Game	Game.h	/^        ~Game();$/;"	p	class:Game	access:public	signature:()
+~Map	Map.cpp	/^Map::~Map()$/;"	f	class:Map	signature:()
+~Map	Map.h	/^        ~Map();$/;"	p	class:Map	access:public	signature:()
+~Menu	Menu.cpp	/^Menu::~Menu()$/;"	f	class:Menu	signature:()
+~Menu	Menu.h	/^        virtual ~Menu();$/;"	p	class:Menu	access:public	signature:()
+~Menu_enregistrement	Menu.cpp	/^Menu_enregistrement::~Menu_enregistrement()$/;"	f	class:Menu_enregistrement	signature:()
+~Menu_enregistrement	Menu.h	/^		virtual ~Menu_enregistrement();$/;"	p	class:Menu_enregistrement	access:public	signature:()
+~ini_ttf	Menu.cpp	/^		~ini_ttf()$/;"	f	class:ini_ttf	access:public	signature:()
