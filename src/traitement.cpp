@@ -259,9 +259,9 @@ inline void fenetre_hamming(std::vector<double>& input)
 }
 std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref,unsigned int delta)
+		std::vector<std::vector<double> > ref,unsigned int delta,int prof)
 {
-	return dynamic_time_warping2(mesure, ref, delta,0, ref.begin()->size());
+	return dynamic_time_warping2(mesure, ref, delta,0, ref.begin()->size(),prof);
 }
 inline std::vector<double> get_min_dist_spectre(
 		const std::vector<std::vector<double> >& mesure,
@@ -341,7 +341,7 @@ inline std::vector<double> get_min_dist_spectre(
 std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref,unsigned int delta,
-		unsigned int _indice_debut_f, unsigned int _indice_fin_f)
+		unsigned int _indice_debut_f, unsigned int _indice_fin_f,int prof)
 {
 	indice_evol.clear();
 	std::vector<double> dist;//(mesure.size());
@@ -363,7 +363,7 @@ std::vector<double> dynamic_time_warping2(
 		unsigned int indice_min;
 		//m+=static_cast<int>(floor(v_moy));
 		std::vector<double> v_min_val = get_min_dist_spectre(mesure, ref,
-				delta, n, m, 20);
+				delta, n, m, prof);
 		for(unsigned int k = 0; k< v_min_val.size(); k++)
 		{
 			if(v_min_val[k]<min)

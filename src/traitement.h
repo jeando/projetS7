@@ -20,11 +20,11 @@ std::vector<double> dynamic_time_warping0(
 		unsigned int _indice_debut_f, unsigned int _indice_fin_f);
 std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > mesure,
-		std::vector<std::vector<double> > ref,unsigned int delta=3);
+		std::vector<std::vector<double> > ref,unsigned int delta=3, int prof =20);
 std::vector<double> dynamic_time_warping2(
 		std::vector<std::vector<double> > mesure,
 		std::vector<std::vector<double> > ref,unsigned int delta,
-		unsigned int _indice_debut_f, unsigned int _indice_fin_f);
+		unsigned int _indice_debut_f, unsigned int _indice_fin_f,int prof);
 inline std::vector<double> get_min_dist_spectre(
 		const std::vector<std::vector<double> >& mesure,
 		const std::vector<std::vector<double> >& ref,
