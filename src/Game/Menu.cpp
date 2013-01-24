@@ -968,7 +968,7 @@ bool Menu_enregistrement::gestion_clic()
 
 
                                         SDL_Surface* sond = IMG_Load("../../images/buttun_sound.png");
-                                        SDL_Rect rect1 = {0,0,0,0};
+                                        SDL_Rect rect1 = {0,0,100,43};
                                         SDL_Rect rect2 = {
                                             static_cast<Sint16>(275+j*400),
                                             static_cast<Sint16>(100+i*75),100,43};
