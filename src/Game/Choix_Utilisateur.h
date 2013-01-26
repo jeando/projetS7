@@ -27,6 +27,7 @@ class Choix_Utilisateur
         //std::map<int,std::string> list_util;
         std::vector<SDL_Surface*> list_util_sdl;
         int incr;
+        int actif;
 };
 
 

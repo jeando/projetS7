@@ -13,14 +13,14 @@ extern AL_Stream_Capture alsc;
 
 Choix_Utilisateur::Choix_Utilisateur(SDL_Surface* scre)
 //:screen(scre), fene_menu(SDL_CreateRGBSurface(scre->flags, scre->w,
-:screen(SDL_SetVideoMode(750, 400, scre->format->BitsPerPixel, scre->flags
+:screen(SDL_SetVideoMode(550, 400, scre->format->BitsPerPixel, scre->flags
 		//	SDL_HWSURFACE | SDL_DOUBLEBUF
 		)), fene_menu(SDL_CreateRGBSurface(screen->flags,
 		screen->w,
     screen->h, screen->format->BitsPerPixel, screen->format->Rmask, screen->format->Gmask, screen->format->Bmask,
 	screen->format->Amask)),
 		police(TTF_OpenFont("data/Arial.ttf", 25)),
-		incr(0)
+		incr(0), actif(-1)
 {
     //screen = SDL_SetVideoMode(750, 400, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
@@ -81,7 +81,6 @@ void Choix_Utilisateur::draw()
 
     for(unsigned int i=0; (i<=list_util.size() && i<4); i++)
     {
-        cout << i << endl;
         //les utilisateurs
         rect1.x=25;
         rect1.y=21+i*43+i*21;
@@ -93,14 +92,19 @@ void Choix_Utilisateur::draw()
         SDL_BlitSurface(texte,nullptr,fene_menu,&rect1);
 
         //commencer
-        rect1.x=525;
+        /*rect1.x=525;
         SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
-        SDL_BlitSurface(texte2,nullptr,fene_menu,&rect1);
+        SDL_BlitSurface(texte2,nullptr,fene_menu,&rect1);*/
     }
 
-    //bouton quitter
-    rect1.x=299;
     rect1.y=325;
+    //bouton commencer
+    rect1.x=25;
+    SDL_BlitSurface(commencer,nullptr,fene_menu,&rect1);
+    SDL_BlitSurface(texte2,nullptr,fene_menu,&rect1);
+
+    //bouton quitter
+    rect1.x=275;
     SDL_BlitSurface(quitter,nullptr,fene_menu,&rect1);
     ostringstream oss4;
     oss4 << "     Quitter";
@@ -122,10 +126,10 @@ void Choix_Utilisateur::update()
 
     SDL_Rect rect1={40,0,0,0};
 
-    for(unsigned int i=incr; (i<list_util.size() && i<incr+4); i++)
+    for(int i=incr; (i<list_util.size() && i<incr+4); i++)
     {
         rect1.y=21+(i-incr)*43+(i-incr)*21;
-		SDL_BlitSurface(list_util_sdl[i],nullptr,screen,&rect1);
+        SDL_BlitSurface(list_util_sdl[i],nullptr,screen,&rect1);
     }
 
     SDL_Flip(screen);
@@ -169,6 +173,35 @@ bool Choix_Utilisateur::gestion_clic()
                         for(unsigned int i=0; (i<=list_util.size() && i<4); i++)
                         {
                             int ligne = 21+i*43+i*21;
+                            //nom utilisateur
+                            if(x>=25 && x<25+204
+                               && y>=ligne && y<ligne+43
+                               && (i+incr)<list_util.size())
+                            {
+                                if(actif !=-1)
+                                {
+                                    SDL_Surface* act = IMG_Load("../../images/buttun.png");
+                                    SDL_Rect rect1 = {0,0,204,43};
+                                    SDL_Rect rect2 = {25,
+                                        static_cast<Sint16>(21+(actif-incr)*(43+21)),204,43};
+
+                                    SDL_BlitSurface(act,&rect1,fene_menu,&rect2);
+                                    SDL_UpdateRect(screen, rect2.x, rect2.y, rect2.w, rect2.h);
+                                    SDL_FreeSurface(act);
+                                }
+
+                                actif = i+incr;
+
+                                SDL_Surface* act = IMG_Load("../../images/buttun_actif.png");
+                                SDL_Rect rect1 = {0,0,204,43};
+                                SDL_Rect rect2 = {25,
+                                    static_cast<Sint16>(21+(i)*(43+21)),204,43};
+
+                                SDL_BlitSurface(act,&rect1,fene_menu,&rect2);
+                                SDL_UpdateRect(screen, rect2.x, rect2.y, rect2.w, rect2.h);
+                                SDL_FreeSurface(act);
+                            }
+
                             //re-enreg
                             if(x>=275 && x<274+204
                                && y>=ligne && y<ligne+43
@@ -182,40 +215,6 @@ bool Choix_Utilisateur::gestion_clic()
 								fene_menu->format->BitsPerPixel ,
 								fene_menu->flags);
                             }
-
-                            //commencer
-                            if(x>=525 && x<525+204
-                               && y>=ligne && y<ligne+43
-                               && (i+incr)<list_util.size())
-                            {
-                                if(all_enreg(i+incr))
-                                {
-                                	Joueur j(i+incr, list_util[i+incr]);
-                               		Game g(screen,&alsc,j);
-	                                g.start();
-                                    screen=SDL_SetVideoMode(fene_menu->w,
-									fene_menu->h,
-									fene_menu->format->BitsPerPixel ,
-									fene_menu->flags);
-                                }
-                                else
-                                {
-                                    SDL_Rect rect2 = {50,275,800,43};
-                                    SDL_Surface* texte;
-                                    SDL_Color couleur = {0, 0, 0, 42};
-                                    SDL_FillRect(fene_menu, &rect2,
-                                        SDL_MapRGB(fene_menu->format, 17, 206, 112));
-
-                                    ostringstream oss_message;
-
-                                    oss_message << "Veuillez enregister tous les sons";
-                                    texte=TTF_RenderText_Blended(police,
-                                        oss_message.str().c_str(), couleur);
-                                    SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
-                                    SDL_FreeSurface(texte);
-                                }
-                            }
-
                             //nouvel uti
                             if(x>=25 && x<25+204
                                && y>=ligne && y<ligne+43
@@ -232,7 +231,56 @@ bool Choix_Utilisateur::gestion_clic()
 
                         }
 
-                        if(x>=299 && x<=(299+204)
+                        //commencer
+                        if(x>=25 && x<25+204
+                            && y>=325 && y<325+43)
+                        {
+                            if(actif!=-1 && actif<list_util.size())
+                            {
+                                if(all_enreg(actif))
+                                {
+                                    Joueur j(actif, list_util[actif]);
+                                    Game g(screen,&alsc,j);
+                                    g.start();
+                                    screen=SDL_SetVideoMode(fene_menu->w,
+                                    fene_menu->h,
+                                    fene_menu->format->BitsPerPixel ,
+                                    fene_menu->flags);
+                                }
+                                else
+                                {
+                                    SDL_Rect rect2 = {50,275,800,43};
+                                    SDL_Surface* texte;
+                                    SDL_Color couleur = {0, 0, 0, 42};
+                                    SDL_FillRect(fene_menu, &rect2,
+                                        SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                                        ostringstream oss_message;
+
+                                    oss_message << "Veuillez enregister tous les sons";
+                                    texte=TTF_RenderText_Blended(police,
+                                    oss_message.str().c_str(), couleur);
+                                    SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                                    SDL_FreeSurface(texte);
+                                }
+                            }
+                            else
+                            {
+                                SDL_Rect rect2 = {50,275,800,43};
+                                SDL_Surface* texte;
+                                SDL_Color couleur = {0, 0, 0, 42};
+                                SDL_FillRect(fene_menu, &rect2,
+                                    SDL_MapRGB(fene_menu->format, 17, 206, 112));
+                                    ostringstream oss_message;
+
+                                oss_message << "Veuillez selectionner un utilisateur";
+                                texte=TTF_RenderText_Blended(police,
+                                oss_message.str().c_str(), couleur);
+                                SDL_BlitSurface(texte,nullptr,fene_menu,&rect2);
+                                SDL_FreeSurface(texte);
+                            }
+                        }
+
+                        if(x>=275 && x<=(275+204)
                            && y>=325 && y<=(325+43))
                         {
                                 cout << "Quitter" << endl;
@@ -245,12 +293,54 @@ bool Choix_Utilisateur::gestion_clic()
                         if(incr>=1)
                         {
                             incr--;
+
+                            if(actif!=-1)
+                            {
+                                SDL_Surface* act = IMG_Load("../../images/buttun.png");
+                                SDL_Rect rect1 = {0,0,204,43};
+                                SDL_Rect rect2 = {25,
+                                    static_cast<Sint16>(21+(actif-incr-1)*(43+21)),204,43};
+
+                                SDL_BlitSurface(act,&rect1,fene_menu,&rect2);
+                                SDL_UpdateRect(screen, rect2.x, rect2.y, rect2.w, rect2.h);
+                                SDL_FreeSurface(act);
+
+                                SDL_Surface* act2 = IMG_Load("../../images/buttun_actif.png");
+                                SDL_Rect rect3 = {0,0,204,43};
+                                SDL_Rect rect4 = {25,
+                                    static_cast<Sint16>(21+(actif-incr)*(43+21)),204,43};
+
+                                SDL_BlitSurface(act2,&rect3,fene_menu,&rect4);
+                                SDL_UpdateRect(screen, rect4.x, rect4.y, rect4.w, rect4.h);
+                                SDL_FreeSurface(act2);
+                            }
                         }
                         break;
                     case SDL_BUTTON_WHEELDOWN:
                         if(incr<list_util.size()-1)
                         {
                             incr++;
+
+                            if(actif!=-1)
+                            {
+                                SDL_Surface* act = IMG_Load("../../images/buttun.png");
+                                SDL_Rect rect1 = {0,0,204,43};
+                                SDL_Rect rect2 = {25,
+                                    static_cast<Sint16>(21+(actif-incr+1)*(43+21)),204,43};
+
+                                SDL_BlitSurface(act,&rect1,fene_menu,&rect2);
+                                SDL_UpdateRect(screen, rect2.x, rect2.y, rect2.w, rect2.h);
+                                SDL_FreeSurface(act);
+
+                                SDL_Surface* act2 = IMG_Load("../../images/buttun_actif.png");
+                                SDL_Rect rect3 = {0,0,204,43};
+                                SDL_Rect rect4 = {25,
+                                    static_cast<Sint16>(21+(actif-incr)*(43+21)),204,43};
+
+                                SDL_BlitSurface(act2,&rect3,fene_menu,&rect4);
+                                SDL_UpdateRect(screen, rect4.x, rect4.y, rect4.w, rect4.h);
+                                SDL_FreeSurface(act2);
+                            }
                         }
                         break;
                 }
